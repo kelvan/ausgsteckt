@@ -1,0 +1,5 @@
+django>=1.10,<1.11
+psycopg2
+overpass
+pyproj
+gdal
