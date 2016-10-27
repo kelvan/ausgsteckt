@@ -1,0 +1,13 @@
+{% load leaflet_tags %}
+
+<html>
+  <head>
+    {% leaflet_css %}
+  </head>
+  <body>
+    {% block content %}
+      {% leaflet_map "ausgstecktmap" %}
+    {% endblock %}
+    {% leaflet_js %}
+  </body>
+</html>
