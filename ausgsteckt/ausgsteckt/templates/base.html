@@ -1,13 +1,14 @@
-{% load leaflet_tags %}
+{% load staticfiles leaflet_tags %}
 
 <html>
   <head>
-    {% leaflet_css %}
+    <title>{% block title %}Ausgsteckt{% endblock %}</title>
+    {% block extracss %}{% endblock %}
+    <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
   </head>
   <body>
-    {% block content %}
-      {% leaflet_map "ausgstecktmap" %}
-    {% endblock %}
-    {% leaflet_js %}
+    {% block content %}{% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    {% block extrajs %}{% endblock %}
   </body>
 </html>

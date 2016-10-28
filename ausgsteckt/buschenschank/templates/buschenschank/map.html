@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load staticfiles leaflet_tags %}
+
+{% block extracss %}
+  {% leaflet_css %}
+{% endblock %}
+
+{% block extrajs %}
+  {% leaflet_js %}
+  <script>
+    function main_map_init (map, options) {
+
+    var dataurl = "{% url 'buschenschank.geojson' %}";
+    // Download GeoJSON via Ajax
+    $.getJSON(dataurl, function (data) {
+        // Add GeoJSON layer
+        L.geoJson(data).addTo(map);
+    });
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+  {% leaflet_map 'ausgstecktmap' callback="main_map_init" %}
+{% endblock %}

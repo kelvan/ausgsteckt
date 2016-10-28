@@ -4,3 +4,4 @@ overpass
 pyproj
 gdal
 django-leaflet
+git+https://github.com/W7PEA/django-geojson.git@python35#egg=django-geojson
