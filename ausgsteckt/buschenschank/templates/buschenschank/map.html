@@ -9,18 +9,28 @@
 {% block extrajs %}
   {% leaflet_js %}
   <script>
+    function onEachFeature(feature, layer) {
+      layer.on('click', function (e) {
+        console.log(feature.id);
+        $.ajax("{% url 'buschenschank_details' '000' %}".replace('000', feature.id), {dataType: "json", success: function(data) {
+            console.log(data);
+          }
+        })
+      });
+    }
+  
     function main_map_init (map, options) {
-
-    var dataurl = "{% url 'buschenschank.geojson' %}";
-    // Download GeoJSON via Ajax
-    $.getJSON(dataurl, function (data) {
+      var dataurl = "{% url 'buschenschank.geojson' %}";
+      // Download GeoJSON via Ajax
+      $.getJSON(dataurl, function (data) {
         // Add GeoJSON layer
-        L.geoJson(data).addTo(map);
-    });
-  }
+        L.geoJson(data, {onEachFeature: onEachFeature}).addTo(map);
+      });
+    }
   </script>
 {% endblock %}
 
 {% block content %}
+  <h1>Aussteckkalender</h1>
   {% leaflet_map 'ausgstecktmap' callback="main_map_init" %}
 {% endblock %}
