@@ -22,12 +22,44 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
         return self.coordinates.x
 
     @property
+    def country(self):
+        return self.tags.get('addr:country')
+
+    @property
+    def postcode(self):
+        return self.tags.get('addr:postcode')
+
+    @property
+    def city(self):
+        return self.tags.get('addr:city')
+
+    @property
+    def street(self):
+        return self.tags.get('addr:street')
+
+    @property
+    def housenumber(self):
+        return self.tags.get('addr:housenumber')
+
+    @property
+    def address(self):
+        addr = '%s %s, %s %s' % (
+            self.street or '<street unknown>',
+            self.housenumber or '<number unknown>',
+            self.postcode or '<postcode unknown>',
+            self.city or '<city unknown>'
+        )
+        if self.country:
+            addr += ', ' + self.country
+        return addr
+
+    @property
     def website(self):
-        return self.tags.get('website', None)
-        
+        return self.tags.get('website')
+
     def __str__(self):
         return self.name
-        
+
     class Meta:
         verbose_name = 'Buschenschank'
         verbose_name_plural = 'Buschenschänken'
