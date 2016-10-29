@@ -12,8 +12,17 @@
     function onEachFeature(feature, layer) {
       layer.on('click', function (e) {
         console.log(feature.id);
-        $.ajax("{% url 'buschenschank_details' '000' %}".replace('000', feature.id), {dataType: "json", success: function(data) {
-            console.log(data);
+        $.ajax("{% url 'buschenschank_details' '000' %}".replace('000', feature.id), {success: function(data) {
+            $('#buschenschank_maps').removeClass('col-md-12');
+            $('#buschenschank_maps').addClass('col-md-8');
+            $('#buschenschank_details').removeClass('col-md-0');
+            $('#buschenschank_details').addClass('col-md-4');
+            $('#buschenschank_maps').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+            function(e){
+              $('#buschenschank_details_content').html(data);
+              $('#buschenschank_details').show();
+              $('#buschenschank_maps').off();
+            });
           }
         })
       });
@@ -27,10 +36,28 @@
         L.geoJson(data, {onEachFeature: onEachFeature}).addTo(map);
       });
     }
+    function close_details() {
+      $('#buschenschank_details_content').html('');
+      $('#buschenschank_details').removeClass('col-md-4');
+      $('#buschenschank_details').addClass('col-md-0');
+      $('#buschenschank_details').hide();
+      $('#buschenschank_maps').removeClass('col-md-8');
+      $('#buschenschank_maps').addClass('col-md-12');
+    }
   </script>
 {% endblock %}
 
 {% block content %}
   <h1>Aussteckkalender</h1>
-  {% leaflet_map 'ausgstecktmap' callback="main_map_init" %}
+  <div class="container-fluid">
+    <div class="row">
+      <div id="buschenschank_maps" class="col-md-12">
+        {% leaflet_map 'ausgstecktmap' callback="main_map_init" %}
+      </div>
+      <div id="buschenschank_details" class="col-md-0">
+        <span class="glyphicon glyphicon-chevron-left sidebar-close" onclick="close_details()" aria-hidden="true">Close</span>
+        <div id="buschenschank_details_content"></div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
