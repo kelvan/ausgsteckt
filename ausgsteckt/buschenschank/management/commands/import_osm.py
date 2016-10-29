@@ -1,9 +1,8 @@
 import logging
 from itertools import chain
 
-import overpass
+import overpy
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
 
@@ -21,22 +20,25 @@ class Command(BaseCommand):
     help = 'Import Buschenschank/Heuriger from OSM'
 
     def save_buschenschank(self, element):
-        buschenschank = Buschenschank.objects.filter(osm_id=element['id']).first()
+        buschenschank = Buschenschank.objects.filter(osm_id=element.id).first()
         if buschenschank is None:
-            buschenschank = Buschenschank(osm_id=element['id'])
-            
-        name = element['tags'].get('name')
+            buschenschank = Buschenschank(osm_id=element.id)
+
+        name = element.tags.get('name')
         if name is None:
             return False
         buschenschank.name = name
-        buschenschank.coordinates = Point(element['lon'], element['lat'])
-        buschenschank.tags = element['tags']
+        buschenschank.coordinates = Point(float(element.lon), float(element.lat))
+        buschenschank.tags = element.tags
         buschenschank.save()
-        
+
     def handle(self, *args, **options):
-        # TODO fetch areas too, replace location with center of polygon
-        api = overpass.API()
-        buschenschank = api.Get('node["cuisine"="buschenschank"]', responseformat='json').get('elements', [])
-        heuriger = api.Get('node["cuisine"="heuriger"]', responseformat='json').get('elements', [])
+        api = overpy.Overpass()
+        buschenschank = api.query(
+            '(node["cuisine"~"buschenschank"];way["cuisine"~"buschenschank"];relation["cuisine"~"buschenschank"]);out center meta;'
+        ).nodes
+        heuriger = api.query(
+            '(node["cuisine"~"heuriger"];way["cuisine"~"heuriger"];relation["cuisine"~"heuriger"]);out center meta;'
+        ).nodes
         for element in chain(buschenschank, heuriger):
             self.save_buschenschank(element)
