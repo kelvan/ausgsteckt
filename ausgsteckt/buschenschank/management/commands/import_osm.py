@@ -20,13 +20,16 @@ class Command(BaseCommand):
     help = 'Import Buschenschank/Heuriger from OSM'
 
     def save_buschenschank(self, element):
-        buschenschank = Buschenschank.objects.filter(osm_id=element.id).first()
-        if buschenschank is None:
-            buschenschank = Buschenschank(osm_id=element.id)
-
         name = element.tags.get('name')
         if name is None:
+            logger.warn('Nameless node found: %d' % element.id)
             return False
+
+        buschenschank = Buschenschank.objects.filter(osm_id=element.id).first()
+        if buschenschank is None:
+            logger.info('New Buschenschank found: {name}'.format(**element.tags))
+            buschenschank = Buschenschank(osm_id=element.id)
+
         buschenschank.name = name
         buschenschank.coordinates = Point(float(element.lon), float(element.lat))
         buschenschank.tags = element.tags
