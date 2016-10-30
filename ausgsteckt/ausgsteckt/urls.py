@@ -11,6 +11,7 @@ from buschenschank.views import BuschenschankDetails
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     
+    url(r'^$', TemplateView.as_view(template_name='buschenschank/map.html'), name='index'),
     url(r'^map/$', TemplateView.as_view(template_name='buschenschank/map.html'), name='buschenschank_map'),
     url(r'^buschenschank/details/(?P<pk>\d+)$', BuschenschankDetails.as_view(), name='buschenschank_details'),
     url(
