@@ -43,15 +43,16 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
 
     @property
     def address(self):
-        addr = '%s %s, %s %s' % (
-            self.street or '<street unknown>',
-            self.housenumber or '<number unknown>',
-            self.postcode or '<postcode unknown>',
-            self.city or '<city unknown>'
-        )
-        if self.country:
-            addr += ', ' + self.country
-        return addr
+        if self.street or self.housenumber or self.postcode or self.city:
+            addr = '%s %s, %s %s' % (
+                self.street or '<street unknown>',
+                self.housenumber or '<number unknown>',
+                self.postcode or '<postcode unknown>',
+                self.city or '<city unknown>'
+            )
+            if self.country:
+                addr += ', ' + self.country
+            return addr
 
     @property
     def website(self):

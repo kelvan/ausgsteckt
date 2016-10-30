@@ -1,10 +1,25 @@
-{% spaceless %}<dl class="dl-horizontal">
-  <dt>Name</dt>
+{% load i18n %}{% spaceless %}
+
+<dl class="dl-horizontal">
+  <dt>{% trans 'Name' %}</dt>
   <dd>{{ buschenschank.name }}</dd>
-  {% for tag, value in buschenschank.tags.items %}
-    {% if tag != 'name' %}
+  {% if buschenschank.address %}
+    <dt>{% trans 'Address' %}</dt>
+    <dd>{{ buschenschank.address }}</dd>
+  {% endif %}
+  {% if buschenschank.website %}
+    <dt>{% trans 'Website' %}</dt>
+    <dd><a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a></dd>
+  {% endif %}
+
+  {# TODO Show on map button #}
+
+  <br>
+  <span class="toggle glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#tags"><strong>Tags</strong></span><br>
+  <div id="tags" class="collapse">
+    {% for tag, value in buschenschank.tags.items %}
       <dt>{{ tag }}</dt>
       <dd>{{ value }}</dd>
-    {% endif %}
-  {% endfor %}
+    {% endfor %}
+  </div>
 </dl>{% endspaceless %}

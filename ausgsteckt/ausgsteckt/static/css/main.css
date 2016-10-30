@@ -12,6 +12,9 @@
   .sidebar-close {
     cursor: pointer;
   }
+  .toggle {
+    cursor: pointer;
+  }
   #buschenschank_details {
     display: none;
   }
