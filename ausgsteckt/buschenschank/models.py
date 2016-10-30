@@ -38,6 +38,10 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
         return self.tags.get('addr:street')
 
     @property
+    def place(self):
+        return self.tags.get('addr:place')
+
+    @property
     def housenumber(self):
         return self.tags.get('addr:housenumber')
 
@@ -45,7 +49,7 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
     def address(self):
         if self.street or self.housenumber or self.postcode or self.city:
             addr = '%s %s, %s %s' % (
-                self.street or '<street unknown>',
+                self.street or self.place or '<street unknown>',
                 self.housenumber or '<number unknown>',
                 self.postcode or '<postcode unknown>',
                 self.city or '<city unknown>'
@@ -56,7 +60,15 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
 
     @property
     def website(self):
-        return self.tags.get('website')
+        return self.tags.get('website') or self.tags.get('contact:website')
+
+    @property
+    def phone(self):
+        return self.tags.get('contact:phone') or self.tags.get('phone')
+
+    @property
+    def email(self):
+        return self.tags.get('contact:email') or self.tags.get('email')
 
     def __str__(self):
         return self.name
