@@ -7,6 +7,14 @@
     <dt>{% trans 'Address' %}</dt>
     <dd>{{ buschenschank.address }}</dd>
   {% endif %}
+  {% if buschenschank.email %}
+    <dt>{% trans 'Email' %}</dt>
+    <dd>{{ buschenschank.email|urlize }}</dd>
+  {% endif %}
+  {% if buschenschank.phone %}
+    <dt>{% trans 'Phone' %}</dt>
+    <dd><a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a></dd>
+  {% endif %}
   {% if buschenschank.website %}
     <dt>{% trans 'Website' %}</dt>
     <dd><a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a></dd>
@@ -19,7 +27,7 @@
   <div id="tags" class="collapse">
     {% for tag, value in buschenschank.tags.items %}
       <dt>{{ tag }}</dt>
-      <dd>{{ value }}</dd>
+      <dd>{{ value|urlize }}</dd>
     {% endfor %}
   </div>
 </dl>{% endspaceless %}
