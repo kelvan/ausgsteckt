@@ -71,6 +71,8 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
                 logger.info(
                     'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)
                 )
+            else:
+                return False
 
             buschenschank.name = name
             buschenschank.coordinates = Point(float(lon), float(lat))
