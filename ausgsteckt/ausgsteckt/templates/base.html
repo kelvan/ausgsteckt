@@ -3,9 +3,10 @@
 <html>
   <head>
     <title>{% block title %}Ausgsteckt{% endblock %}</title>
-    {% block extracss %}{% endblock %}
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
     <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
     <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    {% block extracss %}{% endblock %}
   </head>
   <body>
     {% block content %}{% endblock %}
