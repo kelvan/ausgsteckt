@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.generic.detail import BaseDetailView, SingleObjectTemplateResponseMixin
 
 
-class JSONResponseMixin(object):
+class JSONResponseMixin:
     """
     A mixin that can be used to render a JSON response.
     """
