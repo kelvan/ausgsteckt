@@ -70,6 +70,9 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
     def email(self):
         return self.tags.get('contact:email') or self.tags.get('email')
 
+    def get_absolute_url(self):
+        return 'https://openstreetmap.org/node/%d' % self.osm_id
+
     def __str__(self):
         return self.name
 
