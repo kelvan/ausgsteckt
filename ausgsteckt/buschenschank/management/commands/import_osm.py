@@ -39,6 +39,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         super().__init__(*args, **kwargs)
         self.new = 0
         self.updated = 0
+        self.skipped = 0
 
     def process_item(self, element):
         osm_id = element['id']
@@ -46,7 +47,8 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         name = tags.get('name')
 
         if name is None:
-            logger.warn('Nameless node found: %d' % osm_id)
+            logger.warn('Skip nameless node: %d' % osm_id)
+            self.skipped += 1
             return False
         elif name == 'Heuriger':
             logger.warn('Badly named node: %d' % osm_id)
@@ -58,6 +60,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
                 b.delete()
             else:
                 logger.info('Skip disused: %s', name)
+            self.skipped += 1
             return False
 
         lat = element['lat']
@@ -67,10 +70,12 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
             if buschenschank is None:
                 logger.info('New Buschenschank found: {tags[name]}'.format(**element))
                 buschenschank = Buschenschank(osm_id=osm_id)
+                self.new += 1
             elif buschenschank.modified < element['timestamp']:
                 logger.info(
                     'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)
                 )
+                self.updated += 1
             else:
                 return False
 
@@ -89,6 +94,13 @@ class Command(BaseCommand):
             headers={'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
         )
         if response.ok:
-            parseString(response.text, BuschenschankSaxParser())
+            parser = BuschenschankSaxParser()
+            parseString(response.text, parser)
+            logger.info(
+                'Import finished: {new} added, {updated} updated, {skipped} skipped'.format(
+                    new=parser.new, updated=parser.updated,
+                    skipped=parser.skipped
+                )
+            )
         else:
             logger.error('Not possible to get XML: %d' % response.status_code)
