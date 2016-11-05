@@ -59,6 +59,14 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
             return addr
 
     @property
+    def opening_hours(self):
+        return self.tags.get('opening_hours')
+
+    @property
+    def opening_hours_url(self):
+        return self.tags.get('opening_hours:url')
+
+    @property
     def website(self):
         return self.tags.get('website') or self.tags.get('contact:website')
 
