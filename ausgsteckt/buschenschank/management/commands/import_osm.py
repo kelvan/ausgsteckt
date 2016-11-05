@@ -42,30 +42,31 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         self.skipped = 0
 
     def process_item(self, element):
-        osm_id = element['id']
-        tags = element['tags']
-        name = tags.get('name')
-
-        if name is None:
-            logger.warn('Skip nameless node: %d' % osm_id)
-            self.skipped += 1
-            return False
-        elif name == 'Heuriger':
-            logger.warn('Badly named node: %d' % osm_id)
-
-        if tags.get('disused', None) == 'yes':
-            b = Buschenschank.objects.filter(is_removed=False, osm_id=osm_id).first()
-            if b is not None:
-                logger.info('Delete disused: %s', name)
-                b.delete()
-            else:
-                logger.info('Skip disused: %s', name)
-            self.skipped += 1
-            return False
-
         lat = element['lat']
         lon = element['lon']
+
         if BBOX[0] <= lat <= BBOX[2] and BBOX[1] <= lon <= BBOX[3]:
+            osm_id = element['id']
+            tags = element['tags']
+            name = tags.get('name')
+
+            if name is None:
+                logger.warn('Skip nameless node: %d' % osm_id)
+                self.skipped += 1
+                return False
+            elif name == 'Heuriger':
+                logger.warn('Badly named node: %d' % osm_id)
+
+            if tags.get('disused', None) == 'yes':
+                b = Buschenschank.objects.filter(is_removed=False, osm_id=osm_id).first()
+                if b is not None:
+                    logger.info('Delete disused: %s', name)
+                    b.delete()
+                else:
+                    logger.info('Skip disused: %s', name)
+                self.skipped += 1
+                return False
+
             buschenschank = Buschenschank.objects.filter(osm_id=osm_id).first()
             if buschenschank is None:
                 logger.info('New Buschenschank found: {tags[name]}'.format(**element))
