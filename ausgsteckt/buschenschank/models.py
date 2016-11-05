@@ -86,4 +86,4 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
 
     class Meta:
         verbose_name = 'Buschenschank'
-        verbose_name_plural = 'Buschenschänken'
+        verbose_name_plural = 'Buschenschänke'
