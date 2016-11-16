@@ -1,0 +1,26 @@
+.leaflet-container {  /* all maps */
+  width:  100%;
+  height: 50%;
+}
+#ausgstecktmap {
+  height: 100%;
+}
+#buschenschank_maps {
+  transition: width 0.3s ease, margin 0.3s ease;
+}
+.sidebar-close {
+  cursor: pointer;
+}
+.toggle {
+  cursor: pointer;
+}
+#buschenschank_details {
+  display: none;
+  padding-top: 5px;
+  padding-left: 2px;
+}
+.details-block {
+  margin-bottom: 15px;
+  margin-left: 8px;
+  margin-top: -15px;
+}
