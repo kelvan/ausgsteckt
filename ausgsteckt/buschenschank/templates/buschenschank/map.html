@@ -40,7 +40,9 @@
         // Add GeoJSON layer
         L.geoJson(data, {onEachFeature: onEachFeature}).addTo(map);
       });
+      map.locate({setView : true, maxZoom: 11});
     }
+
     function close_details() {
       $('#buschenschank_details_content').html('');
       $('#buschenschank_details').hide();
