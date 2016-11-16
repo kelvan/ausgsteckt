@@ -31,15 +31,19 @@
       {% endif %}
       </dd>
   {% endif %}
+</dl>
+<br>
 
-  {# TODO Show on map button #}
-
-  <br>
-  <span class="toggle glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#tags"><strong>Tags</strong></span><br>
-  <div id="tags" class="collapse">
-    {% for tag, value in buschenschank.tags.items %}
-      <dt>{{ tag }}</dt>
-      <dd>{{ value|urlize }}</dd>
-    {% endfor %}
+{# TODO Show zoom to node button #}
+<dl class="dl-horizontal">
+  <div id="tag-block" class="details-block">
+    <span class="toggle glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#tags"><strong>Tags</strong></span><br>
+    <div id="tags" class="collapse">
+      {% for tag, value in buschenschank.tags.items %}
+        <dt>{{ tag }}</dt>
+        <dd>{{ value|urlize }}</dd>
+      {% endfor %}
+    </div>
   </div>
+  <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_absolute_url }}">{% trans 'View at OpenStreetMap' %}</a>
 </dl>{% endspaceless %}
