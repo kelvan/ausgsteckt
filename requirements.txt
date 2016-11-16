@@ -3,6 +3,7 @@ django-model-utils
 psycopg2
 python-dateutil
 requests
+django-redis
 pytz
 pyproj
 gdal
