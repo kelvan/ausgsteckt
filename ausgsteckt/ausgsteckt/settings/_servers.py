@@ -1,6 +1,6 @@
 import socket
 
-hosts = {}
+hosts = {'snowden': 'production'}
 DEFAULT = 'development'
 
 
