@@ -26,6 +26,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
             self._inItem = True
             self._item = {
                 'id': int(attrs['id']),
+                'type': name,
                 'timestamp': datetime.strptime(
                     attrs['timestamp'], DATEFORMAT
                 ).replace(tzinfo=pytz.UTC),

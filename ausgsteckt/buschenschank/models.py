@@ -2,16 +2,41 @@ from django.contrib.gis.db import models
 from django.contrib.postgres.fields import JSONField
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
+from django.utils.translation import ugettext_lazy as _
+
+OSMTYPES = (
+    ('node', _('Node')),
+    ('way', _('Way')),
+    ('relation', _('Relation'))
+)
 
 
-class Buschenschank(TimeStampedModel, SoftDeletableModel):
+class PublicManager(models.Manager):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(published=True)
+
+
+class PublishableModel(models.Model):
+    published = models.BooleanField(default=True)
+
+    public = PublicManager()
+
+    class Meta:
+        abstract = True
+
+
+class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel):
     name = models.CharField(max_length=50)
     coordinates = models.PointField()
     osm_id = models.BigIntegerField(blank=True, null=True)
-    activated = models.BooleanField(default=False)
+    osm_type = models.CharField(
+        blank=True, null=True, max_length=8, choices=OSMTYPES
+    )
     tags = JSONField(blank=True, null=True)
 
-    objects = models.GeoManager()
+    #objects = models.GeoManager()
+    # TODO add manager for undeleted
 
     @property
     def latitude(self):
@@ -79,7 +104,7 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel):
         return self.tags.get('contact:email') or self.tags.get('email')
 
     def get_absolute_url(self):
-        return 'https://openstreetmap.org/node/%d' % self.osm_id
+        return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def __str__(self):
         return self.name

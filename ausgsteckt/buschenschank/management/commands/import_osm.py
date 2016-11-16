@@ -47,18 +47,21 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
 
         if BBOX[0] <= lat <= BBOX[2] and BBOX[1] <= lon <= BBOX[3]:
             osm_id = element['id']
+            osm_type = element['type']
             tags = element['tags']
             name = tags.get('name')
 
             if name is None:
-                logger.warn('Skip nameless node: %d' % osm_id)
+                logger.warn('Skip nameless %s: %d', osm_type, osm_id)
                 self.skipped += 1
                 return False
-            elif name == 'Heuriger':
-                logger.warn('Badly named node: %d' % osm_id)
+            elif name in ['Heuriger', 'Buschenschank']:
+                logger.warn('Badly named %s: %d', osm_type, osm_id)
 
             if tags.get('disused', None) == 'yes':
-                b = Buschenschank.objects.filter(is_removed=False, osm_id=osm_id).first()
+                b = Buschenschank.objects.filter(
+                    is_removed=False, osm_id=osm_id, osm_type=osm_type
+                ).first()
                 if b is not None:
                     logger.info('Delete disused: %s', name)
                     b.delete()
@@ -67,10 +70,14 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
                 self.skipped += 1
                 return False
 
-            buschenschank = Buschenschank.objects.filter(osm_id=osm_id).first()
+            buschenschank = Buschenschank.objects.filter(
+                osm_id=osm_id, osm_type=osm_type
+            ).first()
             if buschenschank is None:
-                logger.info('New Buschenschank found: {tags[name]}'.format(**element))
-                buschenschank = Buschenschank(osm_id=osm_id)
+                logger.info(
+                    'New Buschenschank found: {tags[name]} by {user}'.format(**element)
+                )
+                buschenschank = Buschenschank(osm_id=osm_id, osm_type=osm_type)
                 self.new += 1
             elif buschenschank.modified < element['timestamp']:
                 logger.info(
