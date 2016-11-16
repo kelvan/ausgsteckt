@@ -32,6 +32,12 @@ LOGGING = {
             'filename': '%s/ausgsteckt.log' % LOG_DIR,
             'formatter': 'verbose'
         },
+        'import_osm_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '%s/import_osm.log' % LOG_DIR,
+            'formatter': 'verbose'
+        },
     },
     'loggers': {
         '': {
@@ -39,10 +45,14 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'buschenschank.management.commands.import_osm': {
+            'handlers': ['import_osm_file'],
+            'propagate': False,
+        },
         'django.request': {
             'handlers': ['file'],
             'level': 'ERROR',
-            'propagate': True,
+            'propagate': False,
         },
     }
 }
