@@ -110,6 +110,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'de-at'
 
+ugettext = lambda s: s
+LANGUAGES = (
+    ('de', ugettext('German')),
+    ('en', ugettext('English')),
+)
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+
 TIME_ZONE = 'Europe/Vienna'
 
 USE_I18N = True

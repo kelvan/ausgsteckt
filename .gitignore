@@ -2,3 +2,8 @@ env
 *.pyc
 __pycache__
 *.log
+*.mo
+*#
+*.lck
+*.bak
+*.bck
