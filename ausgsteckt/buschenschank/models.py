@@ -1,8 +1,10 @@
 from django.contrib.gis.db import models
 from django.contrib.postgres.fields import JSONField
 
-from model_utils.models import TimeStampedModel, SoftDeletableModel
 from django.utils.translation import ugettext_lazy as _
+
+from model_utils.models import TimeStampedModel, SoftDeletableModel
+from easy_thumbnails.fields import ThumbnailerImageField
 
 OSMTYPES = (
     ('node', _('Node')),
@@ -112,3 +114,27 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel):
     class Meta:
         verbose_name = 'Buschenschank'
         verbose_name_plural = 'Buschenschänke'
+
+
+class Region(TimeStampedModel, SoftDeletableModel, PublishableModel):
+    name = models.CharField(max_length=50)
+    description = models.TextField(
+        _('Description'), help_text=_('Description shown on region page'),
+        blank=True, null=True
+    )
+    region_image = ThumbnailerImageField(
+        _('Region image'),
+        help_text=_('Image displayed on region page'),
+        upload_to='images/regions', blank=True
+    )
+    areas = models.MultiPolygonField()
+    website = models.URLField(blank=True, null=True)
+    calendar_website = models.URLField(blank=True, null=True)
+    keywords = models.CharField(blank=True, null=True, max_length=255)
+    notes = models.TextField(
+        _('Notes'), help_text=_('Internal notes'),
+        blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.name

@@ -1,14 +1,14 @@
 from django.contrib.gis import admin
 from django.utils.html import format_html
 
-from .models import Buschenschank
+from .models import Buschenschank, Region
 
 
 @admin.register(Buschenschank)
 class BuschenschankAdmin(admin.OSMGeoAdmin):
     list_display = (
-        'name', 'active', 'cuisine', 'latitude', 'longitude', 'address',
-        'website_link'
+        'name', 'active', 'published', 'cuisine', 'latitude', 'longitude',
+        'address', 'website_link'
     )
     list_filter = ('is_removed',)
     search_fields = ('name', 'tags')
@@ -23,3 +23,9 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
 
     def cuisine(self, instance):
         return instance.tags.get('cuisine')
+
+
+@admin.register(Region)
+class RegionAdmin(admin.OSMGeoAdmin):
+    list_display = ('name', 'website')
+    search_fields = ('name', 'description', 'notes')

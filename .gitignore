@@ -3,7 +3,7 @@ env
 __pycache__
 *.log
 *.mo
-*#
+.~*#
 *.lck
 *.bak
 *.bck
