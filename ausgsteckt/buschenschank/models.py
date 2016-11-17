@@ -105,8 +105,11 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel):
     def email(self):
         return self.tags.get('contact:email') or self.tags.get('email')
 
-    def get_absolute_url(self):
+    def get_osm_url(self):
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
+
+    def get_absolute_url(self):
+        return self.get_osm_url()
 
     def __str__(self):
         return self.name
