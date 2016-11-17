@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'leaflet',
     'easy_thumbnails',
     'ausgsteckt',
-    'buschenschank'
+    'buschenschank',
+    'data_quality'
 ]
 
 MIDDLEWARE_CLASSES = [

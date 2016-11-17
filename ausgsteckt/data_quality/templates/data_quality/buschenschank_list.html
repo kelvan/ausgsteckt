@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  {% if object_list %}
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Address' %}</th>
+          <th>{% trans 'Website' %}</th>
+          <th>{% trans 'View at OpenStreetMap' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for buschenschank in object_list %}
+          <tr>
+            <td>{{ buschenschank.name }}</td>
+            <td>
+              {% if buschenschank.address %}
+                {{ buschenschank.address }}
+              {% else %}
+                <strong>MISSING</strong>
+              {% endif %}
+            </td>
+            <td>
+              {% if buschenschank.website %}
+                <a target="_blank" href="{{ buschenschank.website }}">{{ buschenschank.website }}</a>
+              {% else %}
+                <strong>MISSING</strong>
+              {% endif %}
+            </td>
+            <td><a target="_blank" href="{{ buschenschank.get_osm_url }}">OpenStreetMap <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}
