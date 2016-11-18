@@ -1,6 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.postgres.fields import JSONField
-
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
@@ -11,6 +11,10 @@ OSMTYPES = (
     ('way', _('Way')),
     ('relation', _('Relation'))
 )
+
+class AdminURLMixin:
+    def get_admin_url(self):
+        return reverse('admin:{0}_{1}_change'.format(self._meta.app_label, self._meta.model_name), args=(self.pk,))
 
 
 class PublicManager(models.Manager):
@@ -28,7 +32,7 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel):
+class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
     name = models.CharField(max_length=50)
     coordinates = models.PointField()
     osm_id = models.BigIntegerField(blank=True, null=True)
