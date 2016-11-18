@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <h2>OSM Fixme</h2>
+  <ul>
+    <li><a href="{% url 'data_quality:fixme_buschenschank' %}">Buschenschank</a></li>
+  </ul>
+{% endblock %}

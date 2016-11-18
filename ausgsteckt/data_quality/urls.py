@@ -1,8 +1,18 @@
 from django.conf.urls import url
+from django.views.generic.base import TemplateView
 
+from .apps import DataQualityConfig
 from .views import IncompleteBuschenschankList
 
+app_name = DataQualityConfig.name
 
 urlpatterns = [
-    url(r'fixme/incomplete_buschenschank/$', IncompleteBuschenschankList.as_view()),
+    url(
+        r'^$', TemplateView.as_view(template_name='data_quality/overview.html'),
+        name='overview'
+    ),
+    url(
+        r'fixme/buschenschank/$', IncompleteBuschenschankList.as_view(),
+        name='fixme_buschenschank'
+    ),
 ]

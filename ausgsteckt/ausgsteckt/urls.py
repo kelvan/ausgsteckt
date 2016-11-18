@@ -16,5 +16,5 @@ urlpatterns = [
         r'^data.geojson$', HideRemovedGeoJSONLayerView.as_view(model=Buschenschank, geometry_field='coordinates'),
         name='buschenschank.geojson'
     ),
-    url(r'^data_quality/', include('data_quality.urls'))
+    url(r'^osm/', include('data_quality.urls'))
 ]
