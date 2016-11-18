@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n l10n data_quality %}
 
 {% block content %}
   {% if object_list %}
@@ -10,7 +10,9 @@
           <th>{% trans 'Name' %}</th>
           <th>{% trans 'Address' %}</th>
           <th>{% trans 'Website' %}</th>
-          <th>{% trans 'View at OpenStreetMap' %}</th>
+          <th>{% trans 'Fixme' %}</th>
+          <th>{% trans 'Coverage' %}</th>
+          <th>{% trans 'View details' %}</th>
         </tr>
       </thead>
       <tbody>
@@ -31,7 +33,24 @@
                 <strong>MISSING</strong>
               {% endif %}
             </td>
-            <td><a target="_blank" href="{{ buschenschank.get_osm_url }}">OpenStreetMap <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></td>
+            <td>{{ buschenschank.tags.fixme }}</td>
+            <td>
+              {% localize off %}
+                {% trans 'Address' %}:
+                {% address_coverage buschenschank.tags percentage=True as coverage_addr %}
+                {% include 'includes/progressbar.html' with progress=coverage_addr %}
+
+                {% trans 'Contact' %}:
+                {% contact_coverage buschenschank.tags percentage=True as coverage_contact %}
+                {% include 'includes/progressbar.html' with progress=coverage_contact %}
+              {% endlocalize %}
+            </td>
+            <td>
+              <ul class="list-unstyled">
+                <li><a target="_blank" href="{{ buschenschank.get_osm_url }}">OpenStreetMap</span></a></li>
+                <li><a target="_blank" href="{{ buschenschank.get_admin_url }}">Admin</span></a></li>
+              </ul>
+            </td>
           </tr>
         {% endfor %}
       </tbody>

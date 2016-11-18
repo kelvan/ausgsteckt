@@ -1,0 +1,5 @@
+<div class="progress" style="width: 20em">
+  <div class="progress-bar progress-bar-striped {% if progress < 40 %}progress-bar-danger{% elif progress < 70 %}progress-bar-warning{% else %}progress-bar-success{% endif %}" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%;min-width: 2em;">
+    {{ progress }}%
+  </div>
+</div>
