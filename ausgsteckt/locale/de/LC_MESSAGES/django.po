@@ -3,34 +3,73 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-16 23:45+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2016-11-18 01:38+0100\n"
+"PO-Revision-Date: 2016-11-18 01:43+0100\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.11\n"
 
-#: ausgsteckt/settings/_base.py:115
+#: ausgsteckt/settings/_base.py:117
 msgid "German"
 msgstr "Deutsch"
 
-#: ausgsteckt/settings/_base.py:116
+#: ausgsteckt/settings/_base.py:118
 msgid "English"
 msgstr "Englisch"
 
+#: buschenschank/models.py:10
+msgid "Node"
+msgstr "Knoten"
+
+#: buschenschank/models.py:11
+msgid "Way"
+msgstr "Linie"
+
+#: buschenschank/models.py:12
+msgid "Relation"
+msgstr "Relation"
+
+#: buschenschank/models.py:130
+msgid "Description"
+msgstr "Beschreibung"
+
+#: buschenschank/models.py:130
+msgid "Description shown on region page"
+msgstr "Auf Regionsseite angezeigte Beschreibung "
+
+#: buschenschank/models.py:134
+msgid "Region image"
+msgstr "Regionsanzeigebild"
+
+#: buschenschank/models.py:135
+msgid "Image displayed on region page"
+msgstr "Auf Regionsseite angezeigtes Bild"
+
+#: buschenschank/models.py:143
+msgid "Notes"
+msgstr "Notizen"
+
+#: buschenschank/models.py:143
+msgid "Internal notes"
+msgstr "Interne Notizen"
+
 #: buschenschank/templates/buschenschank/buschenschank_detail.html:4
+#: data_quality/templates/data_quality/buschenschank_list.html:10
 msgid "Name"
 msgstr "Name"
 
 #: buschenschank/templates/buschenschank/buschenschank_detail.html:7
+#: data_quality/templates/data_quality/buschenschank_list.html:11
+#: data_quality/templates/data_quality/buschenschank_list.html:39
 msgid "Address"
 msgstr "Adresse"
 
@@ -43,6 +82,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: buschenschank/templates/buschenschank/buschenschank_detail.html:19
+#: data_quality/templates/data_quality/buschenschank_list.html:12
 msgid "Website"
 msgstr "Webseite"
 
@@ -57,3 +97,19 @@ msgstr "Öffnungszeiten Information (extern)"
 #: buschenschank/templates/buschenschank/buschenschank_detail.html:48
 msgid "View at OpenStreetMap"
 msgstr "Auf OpenStreetMap anzeigen"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:13
+msgid "Fixme"
+msgstr "Fixme"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:14
+msgid "Coverage"
+msgstr "Abdeckung"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:15
+msgid "View details"
+msgstr "Details anzeigen"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:43
+msgid "Contact"
+msgstr "Kontakt"
