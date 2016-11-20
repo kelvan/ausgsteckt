@@ -1,20 +1,19 @@
 from django.conf.urls import url, include
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import reverse_lazy
 from django.contrib import admin
-from django.views.generic import TemplateView
-
-from buschenschank.models import Buschenschank
-from buschenschank.views import BuschenschankDetails, HideRemovedGeoJSONLayerView
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    
-    url(r'^$', TemplateView.as_view(template_name='buschenschank/map.html'), name='index'),
-    url(r'^map/$', TemplateView.as_view(template_name='buschenschank/map.html'), name='buschenschank_map'),
-    url(r'^buschenschank/details/(?P<pk>\d+)$', BuschenschankDetails.as_view(), name='buschenschank_details'),
     url(
-        r'^data.geojson$', HideRemovedGeoJSONLayerView.as_view(model=Buschenschank, geometry_field='coordinates'),
-        name='buschenschank.geojson'
+        r'^$', RedirectView.as_view(
+            url=reverse_lazy('buschenschank:buschenschank_map')
+        ),
+        name='index'
     ),
+    url(r'^buschenschank/', include('buschenschank.urls')),
     url(r'^osm/', include('data_quality.urls'))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

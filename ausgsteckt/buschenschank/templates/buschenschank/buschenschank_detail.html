@@ -2,7 +2,12 @@
 
 <dl class="dl-horizontal">
   <dt>{% trans 'Name' %}</dt>
-  <dd>{{ buschenschank.name }}</dd>
+  {% with region=buschenschank.get_region %}
+    <dd>
+      {{ buschenschank.name }}
+      {% if region %}(<a href="{% url 'buschenschank:region_details' region.pk %}">{{ region.name }}</a>){% endif %}
+    </dd>
+  {% endwith %}
   {% if buschenschank.address %}
     <dt>{% trans 'Address' %}</dt>
     <dd>{{ buschenschank.address }}</dd>

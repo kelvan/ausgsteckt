@@ -27,5 +27,13 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
 
 @admin.register(Region)
 class RegionAdmin(admin.OSMGeoAdmin):
-    list_display = ('name', 'website')
+    list_display = (
+        'name', 'is_removed', 'published', 'website_link', 'created',
+        'modified'
+    )
+    list_filter = ('is_removed', 'published', 'created', 'modified')
     search_fields = ('name', 'description', 'notes')
+
+    def website_link(self, instance):
+        if instance.website:
+            return format_html('<a href="{url}">{url}</a>', url=instance.website)

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load i18n staticfiles %}
+
+{% block content %}
+  <h1>{{ region.name }}</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 col-md-1">
+        <img src="{{ region.region_image.url }}"></img>
+      </div>
+      <div class="col-xs-11 col-md-11">
+        <dl class="dl-horizontal">
+          {% if region.website %}
+            <dt>{% trans 'Website' %}</dt>
+            <dd><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
+          {% endif %}
+
+          {% if region.calendar_website %}
+            <dt>{% trans 'Calendar' %}</dt>
+            <dd>
+              <a href="{{ region.calendar_website }}" target="_blank">{% trans 'Calendar (external)' %}</a>
+            </dd>
+          {% endif %}
+        </dl>
+        {% with buschenschank_list=region.get_buschenschank %}
+          {% if buschenschank_list.exists %}
+            <h2>{% trans 'Buschenschänke' %}</h2>
+            <ul>
+              {% for buschenschank in buschenschank_list %}
+                <li>
+                  <a href="{% url 'buschenschank:buschenschank_details' buschenschank.pk %}">
+                    {{ buschenschank }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

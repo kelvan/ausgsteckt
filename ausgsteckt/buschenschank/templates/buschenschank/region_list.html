@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <ul>
+    {% for region in region_list %}
+      {% with total=region.get_buschenschank.count %}
+        <li>{{ region }} ({{ total }})</li>
+      {% endwith %}
+    {% endfor %}
+  </ul>
+{% endblock %}

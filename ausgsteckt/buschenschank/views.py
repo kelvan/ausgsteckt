@@ -1,9 +1,11 @@
 import logging
 
+from django.views.generic.list import ListView
+
 from djgeojson.views import GeoJSONLayerView
 
 from ausgsteckt.views import HybridDetailView
-from .models import Buschenschank
+from .models import Buschenschank, Region
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -29,3 +31,7 @@ class HideRemovedGeoJSONLayerView(GeoJSONLayerView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(is_removed=False)
+
+
+class RegionListView(ListView):
+    model = Region

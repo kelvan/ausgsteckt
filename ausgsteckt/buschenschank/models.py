@@ -12,6 +12,7 @@ OSMTYPES = (
     ('relation', _('Relation'))
 )
 
+
 class AdminURLMixin:
     def get_admin_url(self):
         return reverse('admin:{0}_{1}_change'.format(self._meta.app_label, self._meta.model_name), args=(self.pk,))
@@ -115,6 +116,9 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     def email(self):
         return self.tags.get('contact:email') or self.tags.get('email')
 
+    def get_region(self):
+        return Region.objects.filter(areas__contains=self.coordinates).first()
+
     def get_osm_url(self):
         # XXX should be https but iD editor breaks on https due mixed content
         return 'http://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
@@ -128,6 +132,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     class Meta:
         verbose_name = 'Buschenschank'
         verbose_name_plural = 'Buschenschänke'
+        ordering = ('name',)
 
 
 class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel):
@@ -152,3 +157,6 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
 
     def __str__(self):
         return self.name
+
+    def get_buschenschank(self):
+        return Buschenschank.objects.filter(coordinates__contained=self.areas)

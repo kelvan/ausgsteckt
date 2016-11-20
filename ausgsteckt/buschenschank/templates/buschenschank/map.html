@@ -13,10 +13,9 @@
 {% endblock %}
 
 {% block content %}
-  {#<h1>Buschenschankkarte</h1>#}
   <div class="container-fluid">
     <div class="row">
-      <div id="buschenschank_maps" class="col-md-12" data-geojson-url="{% url 'buschenschank.geojson' %}" data-details-url="{% url 'buschenschank_details' '000' %}">
+      <div id="buschenschank_maps" class="col-md-12" data-geojson-url="{% url 'buschenschank:buschenschank.geojson' %}" data-details-url="{% url 'buschenschank:buschenschank_details' '000' %}">
         {% leaflet_map 'ausgstecktmap' callback="main_map_init" %}
       </div>
       <div id="buschenschank_details" class="col-md-0">
