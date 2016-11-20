@@ -8,11 +8,11 @@ from .models import Buschenschank, Region
 class BuschenschankAdmin(admin.OSMGeoAdmin):
     list_display = (
         'name', 'active', 'published', 'cuisine', 'latitude', 'longitude',
-        'address', 'website_link'
+        'address', 'website_link', 'created', 'modified'
     )
-    list_filter = ('is_removed',)
+    list_filter = ('is_removed', 'created')
     search_fields = ('name', 'tags')
-    
+
     def active(self, instance):
         return not instance.is_removed
     active.boolean = True
