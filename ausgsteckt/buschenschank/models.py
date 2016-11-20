@@ -23,6 +23,16 @@ class PublicManager(models.Manager):
         return queryset.filter(published=True)
 
 
+class OSMItemModel(models.Model):
+    osm_id = models.BigIntegerField(blank=True, null=True)
+    osm_type = models.CharField(
+        blank=True, null=True, max_length=8, choices=OSMTYPES
+    )
+
+    class Meta:
+        abstract = True
+
+
 class PublishableModel(models.Model):
     published = models.BooleanField(default=True)
 
@@ -32,13 +42,9 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
+class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
     name = models.CharField(max_length=50)
     coordinates = models.PointField()
-    osm_id = models.BigIntegerField(blank=True, null=True)
-    osm_type = models.CharField(
-        blank=True, null=True, max_length=8, choices=OSMTYPES
-    )
     tags = JSONField(blank=True, null=True)
 
     #objects = models.GeoManager()
@@ -124,7 +130,7 @@ class Buschenschank(TimeStampedModel, SoftDeletableModel, PublishableModel, Admi
         verbose_name_plural = 'Buschenschänke'
 
 
-class Region(TimeStampedModel, SoftDeletableModel, PublishableModel):
+class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel):
     name = models.CharField(max_length=50)
     description = models.TextField(
         _('Description'), help_text=_('Description shown on region page'),
