@@ -6,6 +6,7 @@ from .models import Buschenschank, Region
 
 @admin.register(Buschenschank)
 class BuschenschankAdmin(admin.OSMGeoAdmin):
+    openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'active', 'published', 'cuisine', 'latitude', 'longitude',
         'address', 'website_link', 'created', 'modified'
@@ -27,6 +28,7 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
 
 @admin.register(Region)
 class RegionAdmin(admin.OSMGeoAdmin):
+    openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'is_removed', 'published', 'website_link', 'created',
         'modified'
