@@ -20,18 +20,17 @@ ENDPOINT = 'https://overpass-api.de/api/interpreter'
 
 BBOX = (45, 5, 54.2, 18.25)
 BUSCHENSCHANK_QUERY = """
+    area["name"="Österreich"]->.boundaryarea;
     (
-        node["cuisine"~"buschenschank"]{bbox};
-        way["cuisine"~"buschenschank"]{bbox};
-        relation["cuisine"~"buschenschank"]{bbox};
-        node["cuisine"~"heuriger"]{bbox};
-        way["cuisine"~"heuriger"]{bbox};
-        relation["cuisine"~"heuriger"]{bbox};
+        node(area.boundaryarea)["cuisine"~"buschenschank"];
+        way(area.boundaryarea)["cuisine"~"buschenschank"];
+        relation(area.boundaryarea)["cuisine"~"buschenschank"];
+        node(area.boundaryarea)["cuisine"~"heuriger"];
+        way(area.boundaryarea)["cuisine"~"heuriger"];
+        relation(area.boundaryarea)["cuisine"~"heuriger"];
     );
     out center meta;
-""".format(bbox='').replace('\n', '')
-#(bbox='(45.0,5.0,54.2,18.25)')
-# bbox cause time out for whatever reason
+""".replace('\n', '')
 
 
 class BuschenschankSaxParser(NodeCenterSaxParser):
@@ -40,57 +39,56 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         self.new = 0
         self.updated = 0
         self.skipped = 0
+        self.amount = 0
 
     def process_item(self, element):
         lat = element['lat']
         lon = element['lon']
+        osm_id = element['id']
+        osm_type = element['type']
+        tags = element['tags']
+        name = tags.get('name')
+        self.amount += 1
+        if name is None:
+            logger.warn('Skip nameless %s: %d', osm_type, osm_id)
+            self.skipped += 1
+            return False
+        elif name in ['Heuriger', 'Buschenschank']:
+            logger.warn('Badly named %s: %d', osm_type, osm_id)
 
-        if BBOX[0] <= lat <= BBOX[2] and BBOX[1] <= lon <= BBOX[3]:
-            osm_id = element['id']
-            osm_type = element['type']
-            tags = element['tags']
-            name = tags.get('name')
-
-            if name is None:
-                logger.warn('Skip nameless %s: %d', osm_type, osm_id)
-                self.skipped += 1
-                return False
-            elif name in ['Heuriger', 'Buschenschank']:
-                logger.warn('Badly named %s: %d', osm_type, osm_id)
-
-            if tags.get('disused', None) == 'yes':
-                b = Buschenschank.objects.filter(
-                    is_removed=False, osm_id=osm_id, osm_type=osm_type
-                ).first()
-                if b is not None:
-                    logger.info('Delete disused: %s', name)
-                    b.delete()
-                else:
-                    logger.info('Skip disused: %s', name)
-                self.skipped += 1
-                return False
-
-            buschenschank = Buschenschank.objects.filter(
-                osm_id=osm_id, osm_type=osm_type
+        if tags.get('disused', None) == 'yes':
+            b = Buschenschank.objects.filter(
+                is_removed=False, osm_id=osm_id, osm_type=osm_type
             ).first()
-            if buschenschank is None:
-                logger.info(
-                    'New Buschenschank found: {tags[name]} by {user}'.format(**element)
-                )
-                buschenschank = Buschenschank(osm_id=osm_id, osm_type=osm_type)
-                self.new += 1
-            elif buschenschank.modified < element['timestamp']:
-                logger.info(
-                    'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)
-                )
-                self.updated += 1
+            if b is not None:
+                logger.info('Delete disused: %s', name)
+                b.delete()
             else:
-                return False
+                logger.info('Skip disused: %s', name)
+            self.skipped += 1
+            return False
 
-            buschenschank.name = name
-            buschenschank.coordinates = Point(float(lon), float(lat))
-            buschenschank.tags = tags
-            buschenschank.save()
+        buschenschank = Buschenschank.objects.filter(
+            osm_id=osm_id, osm_type=osm_type
+        ).first()
+        if buschenschank is None:
+            logger.info(
+                'New Buschenschank found: {tags[name]} by {user}'.format(**element)
+            )
+            buschenschank = Buschenschank(osm_id=osm_id, osm_type=osm_type)
+            self.new += 1
+        elif buschenschank.modified < element['timestamp']:
+            logger.info(
+                'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)
+            )
+            self.updated += 1
+        else:
+            return False
+
+        buschenschank.name = name
+        buschenschank.coordinates = Point(float(lon), float(lat))
+        buschenschank.tags = tags
+        buschenschank.save()
 
 
 class Command(BaseCommand):
@@ -105,9 +103,9 @@ class Command(BaseCommand):
             parser = BuschenschankSaxParser()
             parseString(response.text, parser)
             logger.info(
-                'Import finished: {new} added, {updated} updated, {skipped} skipped'.format(
+                'Import finished: {new} added, {updated} updated, {skipped} skipped (of {amount})'.format(
                     new=parser.new, updated=parser.updated,
-                    skipped=parser.skipped
+                    skipped=parser.skipped, amount=parser.amount
                 )
             )
         else:
