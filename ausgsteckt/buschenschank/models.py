@@ -120,8 +120,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return Region.objects.filter(areas__contains=self.coordinates).first()
 
     def get_osm_url(self):
-        # XXX should be https but iD editor breaks on https due mixed content
-        return 'http://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
+        return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def get_absolute_url(self):
         return self.get_osm_url()
