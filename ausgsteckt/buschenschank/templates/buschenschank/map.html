@@ -22,14 +22,8 @@
 {% block content %}
   <div class="container-fluid">
     <div class="row">
-      <div id="buschenschank_maps" class="col-md-12" data-geojson-url="{% url 'buschenschank:buschenschank.geojson' %}" data-details-url="{% url 'buschenschank:buschenschank_details' '000' %}">
+      <div id="buschenschank_maps" data-geojson-url="{% url 'buschenschank:buschenschank.geojson' %}" data-details-url="{% url 'buschenschank:buschenschank_details' '000' %}">
         <div id="ausgstecktmap"></div>
-      </div>
-      <div id="buschenschank_details" class="col-md-0">
-        <div class="well">
-          <span class="glyphicon glyphicon-chevron-left sidebar-close" onclick="close_details()" aria-hidden="true">Close</span>
-          <div id="buschenschank_details_content"></div>
-        </div>
       </div>
     </div>
   </div>
