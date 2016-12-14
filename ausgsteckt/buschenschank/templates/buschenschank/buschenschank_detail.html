@@ -1,29 +1,32 @@
 {% load i18n osm_tags %}{% spaceless %}
 
 <dl class="buschenschank-description">
-  <dt>{% trans 'Name' %}</dt>
   {% with region=buschenschank.get_region %}
-    <dd>
+    <h4>
       {{ buschenschank.name }}
       {% if region %}(<a href="{% url 'buschenschank:region_details' region.pk %}">{{ region.name }}</a>){% endif %}
-    </dd>
+    </h4>
   {% endwith %}
-  {% if buschenschank.address %}
-    <dt>{% trans 'Address' %}</dt>
-    <dd>{{ buschenschank.address }}</dd>
-  {% endif %}
-  {% if buschenschank.email %}
-    <dt>{% trans 'Email' %}</dt>
-    <dd>{{ buschenschank.email|urlize }}</dd>
-  {% endif %}
-  {% if buschenschank.phone %}
-    <dt>{% trans 'Phone' %}</dt>
-    <dd><a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a></dd>
-  {% endif %}
-  {% if buschenschank.website %}
-    <dt>{% trans 'Website' %}</dt>
-    <dd><a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a></dd>
-  {% endif %}
+  <ul class="list-unstyled">
+    {% if buschenschank.address %}
+      <li><strong>{{ buschenschank.address }}</strong></li>
+    {% endif %}
+    {% if buschenschank.email %}
+      <li>{% trans 'Email' %}: {{ buschenschank.email|urlize }}</li>
+    {% endif %}
+    {% if buschenschank.phone %}
+      <li>
+        {% trans 'Phone' %}:
+        <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
+      </li>
+    {% endif %}
+    {% if buschenschank.website %}
+      <li>
+        {% trans 'Website' %}:
+        <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
+      </li>
+    {% endif %}
+  </ul>
   {% osmtag buschenschank 'opening_hours' as opening_hours %}
   {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
 
