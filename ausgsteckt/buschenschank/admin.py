@@ -1,7 +1,8 @@
 from django.contrib.gis import admin
 from django.utils.html import format_html
+from django.utils.translation import ugettext_lazy as _
 
-from .models import Buschenschank, Region
+from .models import Buschenschank, Region, Commune
 
 
 @admin.register(Buschenschank)
@@ -31,7 +32,7 @@ class RegionAdmin(admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'is_removed', 'published', 'website_link', 'created',
-        'modified'
+        'modified', 'buschenschank_count'
     )
     list_filter = ('is_removed', 'published', 'created', 'modified')
     search_fields = ('name', 'description', 'notes')
@@ -39,3 +40,42 @@ class RegionAdmin(admin.OSMGeoAdmin):
     def website_link(self, instance):
         if instance.website:
             return format_html('<a href="{url}">{url}</a>', url=instance.website)
+
+    def buschenschank_count(self, instance):
+        return instance.get_buschenschank().count()
+
+
+@admin.register(Commune)
+class CommuneAdmin(admin.OSMGeoAdmin):
+    openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
+    list_display = (
+        'name', 'district', 'county', 'is_removed', 'created', 'modified',
+        'buschenschank_count'
+    )
+    list_filter = ('is_removed', 'county', 'created', 'modified')
+    search_fields = ('name', 'district')
+    actions = ['create_update_region']
+
+    def buschenschank_count(self, instance):
+        return instance.get_buschenschank().count()
+
+    def create_update_region(self, request, queryset):
+        created = 0
+        updated = 0
+        for commune in queryset:
+            defaults = {'areas': commune.mpoly}
+            obj, new = Region.objects.update_or_create(name=commune.name, defaults=defaults)
+            if new:
+                created += 1
+            else:
+                updated += 1
+        self.message_user(
+            request, _(
+                '{created_count}/{updated_count} regions created/updated'
+            ).format(
+                created_count=created, updated_count=updated
+            )
+        )
+    create_update_region.short_description = _(
+        'Generate/update region with commune info'
+    )

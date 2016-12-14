@@ -159,3 +159,26 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
 
     def get_buschenschank(self):
         return Buschenschank.objects.filter(coordinates__contained=self.areas)
+
+    class Meta:
+        verbose_name = _('Region')
+        verbose_name_plural = _('Regions')
+        ordering = ('name',)
+
+
+class Commune(TimeStampedModel, SoftDeletableModel):
+    name = models.CharField(max_length=100)
+    district = models.CharField(max_length=100)
+    county = models.CharField(max_length=20)
+    mpoly = models.MultiPolygonField()
+
+    def __str__(self):
+        return self.name
+
+    def get_buschenschank(self):
+        return Buschenschank.objects.filter(coordinates__contained=self.mpoly)
+
+    class Meta:
+        verbose_name = _('Commune')
+        verbose_name_plural = _('Communes')
+        unique_together = ('name', 'district', 'county')

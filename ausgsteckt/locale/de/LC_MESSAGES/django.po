@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-14 20:34+0100\n"
-"PO-Revision-Date: 2016-12-14 20:34+0100\n"
+"POT-Creation-Date: 2016-12-14 22:08+0100\n"
+"PO-Revision-Date: 2016-12-14 22:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -25,6 +25,15 @@ msgstr "Deutsch"
 #: ausgsteckt/settings/_base.py:117
 msgid "English"
 msgstr "Englisch"
+
+#: buschenschank/admin.py:74
+#, python-brace-format
+msgid "{created_count}/{updated_count} regions created/updated"
+msgstr "{created_count}/{updated_count} Regionen erstellt/aktualisiert"
+
+#: buschenschank/admin.py:80
+msgid "Generate/update region with commune info"
+msgstr "Erstelle/aktualisiere Regionen mit Gemeindeinfos"
 
 #: buschenschank/models.py:10
 msgid "Node"
@@ -61,6 +70,23 @@ msgstr "Notizen"
 #: buschenschank/models.py:153
 msgid "Internal notes"
 msgstr "Interne Notizen"
+
+#: buschenschank/models.py:164
+msgid "Region"
+msgstr "Region"
+
+#: buschenschank/models.py:165
+#: buschenschank/templates/buschenschank/region_list.html:6
+msgid "Regions"
+msgstr "Regionen"
+
+#: buschenschank/models.py:182
+msgid "Commune"
+msgstr "Gemeinde"
+
+#: buschenschank/models.py:183
+msgid "Communes"
+msgstr "Gemeinden"
 
 #: buschenschank/templates/buschenschank/buschenschank_detail.html:15
 msgid "Email"
@@ -107,10 +133,6 @@ msgstr "Zurück zur Karte"
 #: buschenschank/templates/buschenschank/region_detail.html:49
 msgid "Back to region list"
 msgstr "Zurück zur Regionsliste"
-
-#: buschenschank/templates/buschenschank/region_list.html:6
-msgid "Regions"
-msgstr "Regionen"
 
 #: buschenschank/templates/buschenschank/region_list.html:10
 msgid "Buschenschank count"
