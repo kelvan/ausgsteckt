@@ -23,7 +23,18 @@ function onEachFeature(feature, layer) {
   });
 }
 
-function main_map_init (map, options) {
+function main_map_init (mapid, options) {
+  map = L.map(mapid, {zoom: 8, center: L.latLng(47.6, 14.0)});
+  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+	var osm = new L.TileLayer(
+	  osmUrl, {
+	    minZoom: 5, maxZoom: 18, attribution: osmAttrib
+	  }
+	);
+	map.addLayer(osm);
+  L.Icon.Default.imagePath = '/static/images/';
+
   window.map = map;
   var dataurl = $('#buschenschank_maps').data('geojson-url');
   // Download GeoJSON via Ajax

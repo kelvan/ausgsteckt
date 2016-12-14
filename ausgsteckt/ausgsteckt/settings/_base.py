@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'leaflet',
     'easy_thumbnails',
     'ausgsteckt',
     'buschenschank',
@@ -136,10 +135,3 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
-
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (47.6, 14.0),
-    'DEFAULT_ZOOM': 8,
-    'MIN_ZOOM': 5,
-    'MAX_ZOOM': 18,
-}
