@@ -25,9 +25,9 @@ class PublicManager(models.Manager):
 
 
 class OSMItemModel(models.Model):
-    osm_id = models.BigIntegerField(blank=True, null=True)
+    osm_id = models.BigIntegerField(_('OSM ID'), blank=True, null=True)
     osm_type = models.CharField(
-        blank=True, null=True, max_length=8, choices=OSMTYPES
+        _('OSM Type'), blank=True, null=True, max_length=8, choices=OSMTYPES
     )
 
     class Meta:
@@ -35,7 +35,7 @@ class OSMItemModel(models.Model):
 
 
 class PublishableModel(models.Model):
-    published = models.BooleanField(default=True)
+    published = models.BooleanField(_('Published'), default=True)
 
     public = PublicManager()
 
@@ -44,9 +44,9 @@ class PublishableModel(models.Model):
 
 
 class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
-    name = models.CharField(max_length=50)
-    coordinates = models.PointField()
-    tags = JSONField(blank=True, null=True)
+    name = models.CharField(_('Name'), max_length=50)
+    coordinates = models.PointField(_('Coordinates'))
+    tags = JSONField(_('Tags'), blank=True, null=True)
 
     #objects = models.GeoManager()
     # TODO add manager for undeleted
@@ -135,7 +135,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
 
 class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(_('Name'), max_length=50)
     description = models.TextField(
         _('Description'), help_text=_('Description shown on region page'),
         blank=True, null=True
@@ -145,10 +145,10 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
         help_text=_('Image displayed on region page'),
         upload_to='images/regions', blank=True
     )
-    areas = models.MultiPolygonField()
-    website = models.URLField(blank=True, null=True)
-    calendar_website = models.URLField(blank=True, null=True)
-    keywords = models.CharField(blank=True, null=True, max_length=255)
+    areas = models.MultiPolygonField(_('Areas'))
+    website = models.URLField(_('Website'), blank=True, null=True)
+    calendar_website = models.URLField(_('Calendar website'), blank=True, null=True)
+    keywords = models.CharField(_('Keywords'), blank=True, null=True, max_length=255)
     notes = models.TextField(
         _('Notes'), help_text=_('Internal notes'),
         blank=True, null=True
@@ -170,10 +170,10 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
 
 
 class Commune(TimeStampedModel, SoftDeletableModel):
-    name = models.CharField(max_length=100)
-    district = models.CharField(max_length=100)
-    county = models.CharField(max_length=20)
-    mpoly = models.MultiPolygonField()
+    name = models.CharField(_('Name'), max_length=100)
+    district = models.CharField(_('District'), max_length=100)
+    county = models.CharField(_('County'), max_length=20)
+    mpoly = models.MultiPolygonField(_('Multipolygon'))
 
     def __str__(self):
         return self.name
