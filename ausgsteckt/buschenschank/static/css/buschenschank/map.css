@@ -20,7 +20,14 @@
   padding-left: 2px;
 }
 .details-block {
-  margin-bottom: 15px;
-  margin-left: 8px;
-  margin-top: -15px;
+  margin-bottom: 1em;
+}
+dl.buschenschank-description {
+  margin-bottom: 0.5em !important;
+}
+.buschenschank-description dd {
+  margin-left: 1em !important;
+}
+.details-block span.toggle {
+  margin-bottom: 0.5em !important;
 }

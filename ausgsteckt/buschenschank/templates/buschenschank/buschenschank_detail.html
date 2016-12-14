@@ -1,6 +1,6 @@
 {% load i18n osm_tags %}{% spaceless %}
 
-<dl class="dl-horizontal">
+<dl class="buschenschank-description">
   <dt>{% trans 'Name' %}</dt>
   {% with region=buschenschank.get_region %}
     <dd>
@@ -37,10 +37,9 @@
       </dd>
   {% endif %}
 </dl>
-<br>
 
 {# TODO Show zoom to node button #}
-<dl class="dl-horizontal">
+<dl class="buschenschank-description">
   <div id="tag-block" class="details-block">
     <span class="toggle glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#tags"><strong>Tags</strong></span><br>
     <div id="tags" class="collapse">
