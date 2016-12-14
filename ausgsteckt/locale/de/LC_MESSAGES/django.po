@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 21:10+0100\n"
-"PO-Revision-Date: 2016-11-20 21:11+0100\n"
+"POT-Creation-Date: 2016-12-14 20:34+0100\n"
+"PO-Revision-Date: 2016-12-14 20:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.11\n"
 
-#: ausgsteckt/settings/_base.py:117
+#: ausgsteckt/settings/_base.py:116
 msgid "German"
 msgstr "Deutsch"
 
-#: ausgsteckt/settings/_base.py:118
+#: ausgsteckt/settings/_base.py:117
 msgid "English"
 msgstr "Englisch"
 
@@ -38,78 +38,92 @@ msgstr "Linie"
 msgid "Relation"
 msgstr "Relation"
 
-#: buschenschank/models.py:141
+#: buschenschank/models.py:140
 msgid "Description"
 msgstr "Beschreibung"
 
-#: buschenschank/models.py:141
+#: buschenschank/models.py:140
 msgid "Description shown on region page"
 msgstr "Auf Regionsseite angezeigte Beschreibung "
 
-#: buschenschank/models.py:145
+#: buschenschank/models.py:144
 msgid "Region image"
 msgstr "Regionsanzeigebild"
 
-#: buschenschank/models.py:146
+#: buschenschank/models.py:145
 msgid "Image displayed on region page"
 msgstr "Auf Regionsseite angezeigtes Bild"
 
-#: buschenschank/models.py:154
+#: buschenschank/models.py:153
 msgid "Notes"
 msgstr "Notizen"
 
-#: buschenschank/models.py:154
+#: buschenschank/models.py:153
 msgid "Internal notes"
 msgstr "Interne Notizen"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:4
-#: data_quality/templates/data_quality/buschenschank_list.html:10
-msgid "Name"
-msgstr "Name"
-
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:12
-#: data_quality/templates/data_quality/buschenschank_list.html:11
-#: data_quality/templates/data_quality/buschenschank_list.html:39
-msgid "Address"
-msgstr "Adresse"
-
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:16
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:15
 msgid "Email"
 msgstr "Email"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:20
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:19
 msgid "Phone"
 msgstr "Telefon"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:24
-#: buschenschank/templates/buschenschank/region_detail.html:15
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:25
+#: buschenschank/templates/buschenschank/region_detail.html:19
 #: data_quality/templates/data_quality/buschenschank_list.html:12
 msgid "Website"
 msgstr "Webseite"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:31
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:34
 msgid "Opening hours"
 msgstr "Öffnungszeiten"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:35
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:38
 msgid "Opening hours info (external)"
 msgstr "Öffnungszeiten Information (extern)"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:53
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:55
 msgid "View at OpenStreetMap"
 msgstr "Auf OpenStreetMap anzeigen"
 
-#: buschenschank/templates/buschenschank/region_detail.html:20
+#: buschenschank/templates/buschenschank/region_detail.html:24
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: buschenschank/templates/buschenschank/region_detail.html:22
+#: buschenschank/templates/buschenschank/region_detail.html:26
 msgid "Calendar (external)"
 msgstr "Kalendar (extern)"
 
-#: buschenschank/templates/buschenschank/region_detail.html:28
+#: buschenschank/templates/buschenschank/region_detail.html:32
 msgid "Buschenschänke"
-msgstr ""
+msgstr "Buschenschänke"
+
+#: buschenschank/templates/buschenschank/region_detail.html:48
+msgid "Back to map"
+msgstr "Zurück zur Karte"
+
+#: buschenschank/templates/buschenschank/region_detail.html:49
+msgid "Back to region list"
+msgstr "Zurück zur Regionsliste"
+
+#: buschenschank/templates/buschenschank/region_list.html:6
+msgid "Regions"
+msgstr "Regionen"
+
+#: buschenschank/templates/buschenschank/region_list.html:10
+msgid "Buschenschank count"
+msgstr "Buschenschankanzahl"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:10
+msgid "Name"
+msgstr "Name"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:11
+#: data_quality/templates/data_quality/buschenschank_list.html:39
+msgid "Address"
+msgstr "Adresse"
 
 #: data_quality/templates/data_quality/buschenschank_list.html:13
 msgid "Fixme"
