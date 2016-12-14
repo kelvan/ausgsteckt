@@ -14,7 +14,9 @@ function onEachFeature(feature, layer) {
 }
 
 function main_map_init (mapid, options) {
-  map = L.map(mapid, {zoom: 8, center: L.latLng(47.6, 14.0)});
+  map = L.map(mapid, {
+    zoom: 8, center: L.latLng(47.6, 14.0), closePopupOnClick: false
+  });
   var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
 	var osm = new L.TileLayer(
