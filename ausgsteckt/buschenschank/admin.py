@@ -12,6 +12,7 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
         'name', 'active', 'published', 'cuisine', 'latitude', 'longitude',
         'address', 'website_link', 'created', 'modified'
     )
+    readonly_fields = ('osm_id', 'osm_type', 'is_removed')
     list_filter = ('is_removed', 'created')
     search_fields = ('name', 'tags')
 
@@ -34,6 +35,7 @@ class RegionAdmin(admin.OSMGeoAdmin):
         'name', 'is_removed', 'published', 'website_link', 'created',
         'modified', 'buschenschank_count'
     )
+    readonly_fields = ('osm_id', 'osm_type', 'is_removed')
     list_filter = ('is_removed', 'published', 'created', 'modified')
     search_fields = ('name', 'description', 'notes')
 
@@ -51,6 +53,9 @@ class CommuneAdmin(admin.OSMGeoAdmin):
     list_display = (
         'name', 'district', 'county', 'is_removed', 'created', 'modified',
         'buschenschank_count'
+    )
+    readonly_fields = (
+        'name', 'district', 'county', 'is_removed', 'created', 'modified'
     )
     list_filter = ('is_removed', 'county', 'created', 'modified')
     search_fields = ('name', 'district')
