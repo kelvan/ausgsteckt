@@ -6,14 +6,19 @@
   <h1>{{ region.name }}</h1>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-1 col-md-1">
+      <div class="col-xs-2 col-md-2">
         {% if region.region_image %}
           <img src="{{ region.region_image.details.url }}"></img>
         {% else %}
           <img src="{% static 'images/region_placeholder.png' %}"></img>
         {% endif %}
       </div>
-      <div class="col-xs-11 col-md-11">
+      <div class="col-xs-10 col-md-10">
+        {% if region.description %}
+          <div class="well">
+            {{ region.description|linebreaks }}
+          </div>
+        {% endif %}
         <dl class="dl-horizontal">
           {% if region.website %}
             <dt>{% trans 'Website' %}</dt>
