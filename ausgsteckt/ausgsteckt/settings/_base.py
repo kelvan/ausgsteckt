@@ -135,3 +135,9 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'details': {'size': (150, 0), 'crop': False},
+    },
+}

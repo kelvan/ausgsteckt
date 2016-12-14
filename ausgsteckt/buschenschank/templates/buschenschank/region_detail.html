@@ -7,7 +7,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-1 col-md-1">
-        <img src="{{ region.region_image.url }}"></img>
+        {% if region.region_image %}
+          <img src="{{ region.region_image.details.url }}"></img>
+        {% else %}
+          <img src="{% static 'images/region_placeholder.png' %}"></img>
+        {% endif %}
       </div>
       <div class="col-xs-11 col-md-11">
         <dl class="dl-horizontal">

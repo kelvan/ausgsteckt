@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
+  <h1>{% trans 'Regions' %}</h1>
   <ul>
     {% for region in region_list %}
       {% with total=region.get_buschenschank.count %}
-        <li>{{ region }} ({{ total }})</li>
+        <li><a href="{% url 'buschenschank:region_details' region.pk %}">{{ region }}</a> <span title="{% trans 'Buschenschank count' %}">({{ total }})</span></li>
       {% endwith %}
     {% endfor %}
   </ul>
