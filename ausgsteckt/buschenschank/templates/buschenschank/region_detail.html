@@ -43,5 +43,11 @@
         {% endwith %}
       </div>
     </div>
+    <div class="row">
+      <div class="col-xs-4 col-md-4">
+        <a class="btn btn-default" href="{% url 'buschenschank:buschenschank_map' %}">❮ {% trans 'Back to map' %}</a>
+        <a class="btn btn-default" href="{% url 'buschenschank:region_list' %}">❮ {% trans 'Back to region list' %}</a>
+      </div>
+    </div>
   </div>
 {% endblock %}
