@@ -157,6 +157,9 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('buschenschank:region_details', kwargs={'pk': self.pk})
+
     def get_buschenschank(self):
         return Buschenschank.objects.filter(coordinates__contained=self.areas)
 
