@@ -39,8 +39,11 @@ function main_map_init (mapid, options) {
   var dataurl = $('#buschenschank_maps').data('geojson-url');
   // Download GeoJSON via Ajax
   $.getJSON(dataurl, function (data) {
+    var markers = L.markerClusterGroup();
     // Add GeoJSON layer
-    L.geoJson(data, {onEachFeature: onEachFeature}).addTo(map);
+    var geoJsonLayer = L.geoJson(data, {onEachFeature: onEachFeature});
+    markers.addLayer(geoJsonLayer);
+  	map.addLayer(markers);
   });
   map.locate({setView : true, maxZoom: 11});
 }
