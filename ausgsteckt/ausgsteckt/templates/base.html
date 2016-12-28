@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles template_check %}
 
 <html>
   <head>
@@ -14,5 +14,11 @@
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     {% block extrajs %}{% endblock %}
+    {% block tracking %}
+      {% template_exists 'tracking.html' as tracking_exists %}
+      {% if tracking_exists %}
+        {% include 'tracking.html' %}
+      {% endif %}
+    {% endblock %}
   </body>
 </html>
