@@ -124,7 +124,9 @@ class Command(BaseCommand):
             parseString(response.text, parser)
             self.check_removed(parser.processed_ids)
             logger.info(
-                'Import finished: {new} added, {updated} updated, {skipped} skipped (of {amount})'.format(
+                'Import finished: '
+                '{new} added, {updated} updated, '
+                '{skipped} skipped (of {amount})'.format(
                     new=parser.new, updated=parser.updated,
                     skipped=parser.skipped, amount=parser.amount
                 )
