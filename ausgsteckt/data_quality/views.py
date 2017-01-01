@@ -10,4 +10,14 @@ class IncompleteBuschenschankList(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset
+        addr_exclude = Q(
+            tags__has_keys=[
+                'addr:housenumber', 'addr:city', 'addr:country', 'addr:postcode'
+            ],
+            tags__has_any_keys=['addr:street', 'addr:place']
+        )
+        contact_exclude = Q(
+            tags__has_keys=['contact:phone', 'contact:email'],
+            tags__has_any_keys=['website', 'contact:website']
+        )
+        return queryset.exclude(addr_exclude and contact_exclude)
