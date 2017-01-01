@@ -34,7 +34,7 @@
         </dl>
         {% with buschenschank_list=region.get_buschenschank %}
           {% if buschenschank_list.exists %}
-            <h2>{% trans 'Buschenschänke' %}</h2>
+            <h2>{% trans 'Buschenschänke' %} ({{ region.get_buschenschank.count }})</h2>
             <ul>
               {% for buschenschank in buschenschank_list %}
                 <li>
