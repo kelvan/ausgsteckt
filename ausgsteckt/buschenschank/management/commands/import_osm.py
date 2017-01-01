@@ -40,6 +40,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         self.updated = 0
         self.skipped = 0
         self.amount = 0
+        self.processed_ids = []
 
     def process_item(self, element):
         lat = element['lat']
@@ -49,6 +50,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         tags = element['tags']
         name = tags.get('name')
         self.amount += 1
+
         if name is None:
             logger.warn('Skip nameless %s: %d', osm_type, osm_id)
             self.skipped += 1
@@ -83,16 +85,34 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
             )
             self.updated += 1
         else:
+            self.processed_ids.append(buschenschank.id)
             return False
 
         buschenschank.name = name
         buschenschank.coordinates = Point(float(lon), float(lat))
         buschenschank.tags = tags
         buschenschank.save()
+        self.processed_ids.append(buschenschank.id)
 
 
 class Command(BaseCommand):
     help = 'Import Buschenschank/Heuriger from OSM'
+
+    def check_removed(self, processed_ids):
+        obsoletes = Buschenschank.objects.exclude(id__in=processed_ids)
+        for obsolete in obsoletes:
+            logger.warn(
+                'Removed Buschenschank found: [%s/%d] %s',
+                obsolete.osm_type, obsolete.osm_id, obsolete.name
+            )
+        if obsoletes.count() < 5:
+            obsoletes.update(is_removed=True)
+        else:
+            logger.warning(
+                'Unusual amount of deleted OSM elements: %d objects deleted, '
+                'skipping mark as removed step',
+                obsoletes.count()
+            )
 
     def handle(self, *args, **options):
         response = requests.post(
@@ -102,11 +122,13 @@ class Command(BaseCommand):
         if response.ok:
             parser = BuschenschankSaxParser()
             parseString(response.text, parser)
+            self.check_removed(parser.processed_ids)
             logger.info(
                 'Import finished: {new} added, {updated} updated, {skipped} skipped (of {amount})'.format(
                     new=parser.new, updated=parser.updated,
                     skipped=parser.skipped, amount=parser.amount
                 )
             )
+
         else:
             logger.error('Not possible to get XML: %d' % response.status_code)
