@@ -15,7 +15,9 @@ OSMTYPES = (
 
 class AdminURLMixin:
     def get_admin_url(self):
-        return reverse('admin:{0}_{1}_change'.format(self._meta.app_label, self._meta.model_name), args=(self.pk,))
+        return reverse('admin:{0}_{1}_change'.format(
+            self._meta.app_label, self._meta.model_name), args=(self.pk,)
+        )
 
 
 class PublicManager(models.Manager):
@@ -43,12 +45,12 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
+class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
+                    PublishableModel, AdminURLMixin):
     name = models.CharField(_('Name'), max_length=50)
     coordinates = models.PointField(_('Coordinates'))
     tags = JSONField(_('Tags'), blank=True, null=True)
 
-    #objects = models.GeoManager()
     # TODO add manager for undeleted
 
     @property
@@ -134,7 +136,8 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         ordering = ('name',)
 
 
-class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel):
+class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
+             PublishableModel):
     name = models.CharField(_('Name'), max_length=50)
     description = models.TextField(
         _('Description'), help_text=_('Description shown on region page'),
@@ -147,8 +150,12 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
     )
     areas = models.MultiPolygonField(_('Areas'))
     website = models.URLField(_('Website'), blank=True, null=True)
-    calendar_website = models.URLField(_('Calendar website'), blank=True, null=True)
-    keywords = models.CharField(_('Keywords'), blank=True, null=True, max_length=255)
+    calendar_website = models.URLField(
+        _('Calendar website'), blank=True, null=True
+    )
+    keywords = models.CharField(
+        _('Keywords'), blank=True, null=True, max_length=255
+    )
     notes = models.TextField(
         _('Notes'), help_text=_('Internal notes'),
         blank=True, null=True
