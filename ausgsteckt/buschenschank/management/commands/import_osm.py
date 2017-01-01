@@ -52,11 +52,11 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         self.amount += 1
 
         if name is None:
-            logger.warn('Skip nameless %s: %d', osm_type, osm_id)
+            logger.warning('Skip nameless %s: %d', osm_type, osm_id)
             self.skipped += 1
             return False
         elif name in ['Heuriger', 'Buschenschank']:
-            logger.warn('Badly named %s: %d', osm_type, osm_id)
+            logger.warning('Badly named %s: %d', osm_type, osm_id)
 
         if tags.get('disused', None) == 'yes':
             b = Buschenschank.objects.filter(
@@ -101,7 +101,7 @@ class Command(BaseCommand):
     def check_removed(self, processed_ids):
         obsoletes = Buschenschank.objects.exclude(id__in=processed_ids)
         for obsolete in obsoletes:
-            logger.warn(
+            logger.warning(
                 'Removed Buschenschank found: [%s/%d] %s',
                 obsolete.osm_type, obsolete.osm_id, obsolete.name
             )
