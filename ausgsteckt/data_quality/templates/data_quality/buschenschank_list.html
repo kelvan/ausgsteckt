@@ -4,6 +4,13 @@
 
 {% block content %}
   {% if object_list %}
+    <p class="text-center bg-info"">
+      <strong>
+        {% blocktrans with displayed=object_list.count total=overall_buschenschank_count %}
+          {{ displayed }} of <abbr title="All entries in database including fully covered">{{ total }}</abbr> displayed.
+        {% endblocktrans %}
+      </strong>
+    </p>
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -52,6 +59,8 @@
               </ul>
             </td>
           </tr>
+        {% empty %}
+          {% trans 'Nothing found' %}
         {% endfor %}
       </tbody>
     </table>

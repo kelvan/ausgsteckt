@@ -21,3 +21,8 @@ class IncompleteBuschenschankList(ListView):
             tags__has_any_keys=['website', 'contact:website']
         )
         return queryset.exclude(addr_exclude and contact_exclude)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['overall_buschenschank_count'] = Buschenschank.objects.count()
+        return context
