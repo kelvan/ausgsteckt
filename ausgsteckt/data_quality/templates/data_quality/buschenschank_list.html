@@ -55,7 +55,7 @@
             <td>
               <ul class="list-unstyled">
                 <li><a target="_blank" href="{{ buschenschank.get_osm_url }}">OpenStreetMap</span></a></li>
-                <li><a target="_blank" href="{{ buschenschank.get_admin_url }}">Admin</span></a></li>
+                {% if user.is_staff %}<li><a target="_blank" href="{{ buschenschank.get_admin_url }}">Admin</span></a></li>{% endif %}
               </ul>
             </td>
           </tr>
