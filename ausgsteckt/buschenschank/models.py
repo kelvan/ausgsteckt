@@ -51,7 +51,8 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     coordinates = models.PointField(_('Coordinates'))
     tags = JSONField(_('Tags'), blank=True, null=True)
 
-    # TODO add manager for undeleted
+    # include removed objects
+    all = models.Manager()
 
     @property
     def latitude(self):

@@ -9,11 +9,11 @@ from .models import Buschenschank, Region, Commune
 class BuschenschankAdmin(admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
-        'name', 'active', 'published', 'cuisine', 'latitude', 'longitude',
-        'address', 'website_link', 'created', 'modified'
+        'name', 'cuisine', 'latitude', 'longitude',
+        'address', 'website_link', 'active', 'created', 'modified'
     )
     readonly_fields = ('osm_id', 'osm_type', 'is_removed')
-    list_filter = ('is_removed', 'created')
+    list_filter = ('is_removed', 'created', 'modified')
     search_fields = ('name', 'tags')
 
     def active(self, instance):
@@ -26,6 +26,13 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
 
     def cuisine(self, instance):
         return instance.tags.get('cuisine')
+
+    def get_queryset(self, request):
+        qs = self.model.all.get_queryset()
+
+        ordering = self.ordering or ()
+        qs = qs.order_by(*ordering)
+        return qs
 
 
 @admin.register(Region)
