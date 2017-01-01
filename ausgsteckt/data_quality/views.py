@@ -1,5 +1,6 @@
 from django.views.generic import ListView
 from django.db.models import Q
+from django.db.models.expressions import RawSQL
 
 from buschenschank.models import Buschenschank
 
@@ -20,7 +21,9 @@ class IncompleteBuschenschankList(ListView):
             tags__has_keys=['contact:phone', 'contact:email'],
             tags__has_any_keys=['website', 'contact:website']
         )
-        return queryset.exclude(addr_exclude and contact_exclude)
+        queryset = queryset.exclude(addr_exclude and contact_exclude)
+        # XXX no json order support in django yet
+        return queryset.order_by(RawSQL('tags->>%s', ('addr:city',)))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
