@@ -8,5 +8,6 @@ __pycache__
 *.bak
 *.bck
 public
+_build
 /ausgsteckt/ausgsteckt/templates/tracking.html
 secret.key
