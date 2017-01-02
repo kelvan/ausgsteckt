@@ -1,0 +1,25 @@
+OPENING_HOURS := [TWENTYFOUR_SEVEN,OFF,DT]
+
+DT := (WEEKDAY_RANGE),SPACE,(NT)
+NT := (T),"-",(T)
+T := (HH),":",(MM)
+
+OFF := (MONTH_DAY),SPACE,"off"
+MONTH_DAY := [(MO), ((MO),SPACE,(DD))]
+WEEKDAY_RANGE := [(WEEKDAY), ((WEEKDAY),"-",(WEEKDAY))]
+
+HH := HT,DIGIT
+MM := MT,DIGIT
+HT := [0-2]
+MT := [0-5]
+
+DD := (D,DIGIT)
+D := [0-3]
+
+TWENTYFOUR_SEVEN := "24/7"
+
+PDIGIT := [1-9]
+DIGIT := [0,PDIGIT]
+MO := ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+WEEKDAY := ["Mo","Tu","We","Th","Fr","Sa","Su"]
+SPACE := " "
