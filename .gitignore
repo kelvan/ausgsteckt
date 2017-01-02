@@ -9,3 +9,4 @@ __pycache__
 *.bck
 public
 /ausgsteckt/ausgsteckt/templates/tracking.html
+secret.key

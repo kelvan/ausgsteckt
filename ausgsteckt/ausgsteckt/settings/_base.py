@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -141,3 +144,37 @@ THUMBNAIL_ALIASES = {
         'details': {'size': (150, 0), 'crop': False},
     },
 }
+
+## Secret key generation functions
+secret_key_fn = os.path.join(os.path.dirname(__file__), 'secret.key')
+
+
+def create_secret_key():
+    import random
+    import string
+
+    return ''.join(
+        [random.SystemRandom().choice(string.printable) for i in range(50)]
+    )
+
+
+def create_secret_key_file(secret_key):
+    with open(secret_key_fn, 'w') as f:
+        f.write(secret_key)
+    return secret_key
+
+
+def load_secret_key_file():
+    with open(secret_key_fn, 'r') as f:
+        # Read one byte more to check content length
+        skey = f.read(51)
+        if len(skey) != 50:
+            raise ValueError('Content of secret_key file is wrong')
+        return skey
+
+if os.path.exists(secret_key_fn):
+    logger.info('Load secret key from file')
+    SECRET_KEY = load_secret_key_file()
+else:
+    logger.warning('Unable to import SECRET_KEY generating a new one')
+    SECRET_KEY = create_secret_key_file(create_secret_key())
