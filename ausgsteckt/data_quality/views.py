@@ -23,7 +23,9 @@ class IncompleteBuschenschankList(ListView):
         )
         queryset = queryset.exclude(addr_exclude and contact_exclude)
         # XXX no json order support in django yet
-        return queryset.order_by(RawSQL('tags->>%s', ('addr:city',)))
+        return queryset.order_by(
+            RawSQL('tags->>%s', ('addr:city',)), RawSQL('tags->>%s', ('name',))
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
