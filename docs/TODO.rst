@@ -13,3 +13,9 @@ Opening Hours
 * opening_hours parser
 * Public Holidays (webcal://www.wien.gv.at/ikt/egov/ics/feiertage.ics)
 * ...
+
+Data Quality
+------------
+
+* ranking of contributors
+* ...
