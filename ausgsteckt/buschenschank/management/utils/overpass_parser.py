@@ -58,4 +58,4 @@ class NodeCenterSaxParser(handler.ContentHandler):
         item: dict
         item.keys: id, lat, lon
         """
-        raise NotImplementedError('save_item needs to be implemented')
+        raise NotImplementedError('process_item needs to be implemented')
