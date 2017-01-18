@@ -5,6 +5,7 @@ import requests
 
 from django.core.management.base import BaseCommand
 from django.contrib.gis.geos import Point
+from django.conf import settings
 
 from ..utils.overpass_parser import NodeCenterSaxParser
 from ...models import Buschenschank
@@ -15,22 +16,6 @@ ch = logging.StreamHandler()
 formatter = logging.Formatter('[%(levelname)s] %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
-
-ENDPOINT = 'https://overpass-api.de/api/interpreter'
-
-BBOX = (45, 5, 54.2, 18.25)
-BUSCHENSCHANK_QUERY = """
-    area["name"="Österreich"]->.boundaryarea;
-    (
-        node(area.boundaryarea)["cuisine"~"buschenschank"];
-        way(area.boundaryarea)["cuisine"~"buschenschank"];
-        relation(area.boundaryarea)["cuisine"~"buschenschank"];
-        node(area.boundaryarea)["cuisine"~"heuriger"];
-        way(area.boundaryarea)["cuisine"~"heuriger"];
-        relation(area.boundaryarea)["cuisine"~"heuriger"];
-    );
-    out center meta;
-""".replace('\n', '')
 
 
 class BuschenschankSaxParser(NodeCenterSaxParser):
@@ -116,7 +101,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         response = requests.post(
-            ENDPOINT, data={'data': BUSCHENSCHANK_QUERY},
+            settings.OVERPASS_ENDPOINT, data={'data': settings.BUSCHENSCHANK_QUERY},
             headers={'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
         )
         if response.ok:

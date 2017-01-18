@@ -145,6 +145,20 @@ THUMBNAIL_ALIASES = {
     },
 }
 
+OVERPASS_ENDPOINT = 'https://overpass-api.de/api/interpreter'
+BUSCHENSCHANK_QUERY = """
+    area["name"="Österreich"]->.boundaryarea;
+    (
+        node(area.boundaryarea)["cuisine"~"buschenschank"];
+        way(area.boundaryarea)["cuisine"~"buschenschank"];
+        relation(area.boundaryarea)["cuisine"~"buschenschank"];
+        node(area.boundaryarea)["cuisine"~"heuriger"];
+        way(area.boundaryarea)["cuisine"~"heuriger"];
+        relation(area.boundaryarea)["cuisine"~"heuriger"];
+    );
+    out center meta;
+""".replace('\n', '')
+
 ## Secret key generation functions
 secret_key_fn = os.path.join(os.path.dirname(__file__), 'secret.key')
 
