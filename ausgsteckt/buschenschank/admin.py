@@ -10,10 +10,11 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'cuisine', 'latitude', 'longitude',
-        'address', 'website_link', 'active', 'created', 'modified'
+        'address', 'website_link', 'active',
+        'modified_by', 'created', 'modified'
     )
     readonly_fields = ('osm_id', 'osm_type', 'is_removed')
-    list_filter = ('is_removed', 'created', 'modified')
+    list_filter = ('is_removed', 'created', 'modified', 'modified_by')
     search_fields = ('name', 'tags')
 
     def active(self, instance):

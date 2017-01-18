@@ -73,8 +73,11 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
             self.processed_ids.append(buschenschank.id)
             return False
 
-        buschenschank.name = name
+        name_len = Buschenschank._meta.get_field('name').max_length
+        buschenschank.name = name[:name_len]
         buschenschank.coordinates = Point(float(lon), float(lat))
+        modified_by_len = Buschenschank._meta.get_field('modified_by').max_length
+        buschenschank.modified_by = element['user'][:modified_by_len]
         buschenschank.tags = tags
         buschenschank.save()
         self.processed_ids.append(buschenschank.id)

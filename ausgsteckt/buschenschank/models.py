@@ -49,6 +49,9 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
                     PublishableModel, AdminURLMixin):
     name = models.CharField(_('Name'), max_length=50)
     coordinates = models.PointField(_('Coordinates'))
+    modified_by = models.CharField(
+        _('Last edit OSM user'), max_length=50, blank=True, null=True
+    )
     tags = JSONField(_('Tags'), blank=True, null=True)
 
     # include removed objects
