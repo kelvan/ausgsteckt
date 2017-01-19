@@ -78,6 +78,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         buschenschank.coordinates = Point(float(lon), float(lat))
         modified_by_len = Buschenschank._meta.get_field('modified_by').max_length
         buschenschank.modified_by = element['user'][:modified_by_len]
+        buschenschank.modified = element['timestamp']
         buschenschank.tags = tags
         buschenschank.save()
         self.processed_ids.append(buschenschank.id)
