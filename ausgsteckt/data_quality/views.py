@@ -27,7 +27,9 @@ class IncompleteBuschenschankList(ListView):
             queryset = queryset.filter(tags__contains={'addr:city': city})
         # XXX no json order support in django yet
         return queryset.order_by(
-            RawSQL('tags->>%s', ('addr:city',)), RawSQL('tags->>%s', ('name',))
+            RawSQL('tags->>%s', ('addr:city',)),
+            RawSQL('tags->>%s', ('addr:postcode',)),
+            RawSQL('tags->>%s', ('name',))
         )
 
     def get_context_data(self, **kwargs):
