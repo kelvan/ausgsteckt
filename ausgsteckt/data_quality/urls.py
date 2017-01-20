@@ -12,7 +12,7 @@ urlpatterns = [
         name='overview'
     ),
     url(
-        r'fixme/buschenschank/$', IncompleteBuschenschankList.as_view(),
+        r'fixme/buschenschank/(?P<cityname>.+)?/?$', IncompleteBuschenschankList.as_view(),
         name='fixme_buschenschank'
     ),
 ]
