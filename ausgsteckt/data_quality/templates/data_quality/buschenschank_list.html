@@ -10,6 +10,9 @@
           {{ displayed }} of <abbr title="All entries in database including fully covered">{{ total }}</abbr> displayed.
         {% endblocktrans %}
       </strong>
+      {% if city %}
+        <a class="btn btn-warning btn-xs" href="{% url 'data_quality:fixme_buschenschank' %}">{% trans 'Remove city filter' %}</a>
+      {% endif %}
     </p>
     <table class="table table-bordered table-hover">
       <thead>
