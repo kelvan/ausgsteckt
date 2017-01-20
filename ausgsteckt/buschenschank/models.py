@@ -141,7 +141,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
 
 class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
-             PublishableModel):
+             PublishableModel, AdminURLMixin):
     name = models.CharField(_('Name'), max_length=50)
     description = models.TextField(
         _('Description'), help_text=_('Description shown on region page'),
