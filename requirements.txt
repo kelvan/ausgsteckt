@@ -4,6 +4,7 @@ psycopg2
 python-dateutil
 requests
 django-redis
+django-flat-responsive
 easy-thumbnails
 pytz
 pyproj
