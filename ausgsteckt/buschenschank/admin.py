@@ -46,6 +46,7 @@ class RegionAdmin(admin.OSMGeoAdmin):
     readonly_fields = ('osm_id', 'osm_type', 'is_removed')
     list_filter = ('is_removed', 'published', 'created', 'modified')
     search_fields = ('name', 'description', 'notes')
+    save_on_top = True
 
     def website_link(self, instance):
         if instance.website:
