@@ -4,6 +4,7 @@ psycopg2
 python-dateutil
 requests
 python-memcached
+raven
 django-flat-responsive
 easy-thumbnails
 pytz

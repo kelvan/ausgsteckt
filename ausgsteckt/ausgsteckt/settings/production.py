@@ -63,3 +63,17 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+try:
+    from .sentry_settings import DSN
+    import raven
+
+    INSTALLED_APPS.append(
+        'raven.contrib.django.raven_compat'
+    )
+    RAVEN_CONFIG = {
+        'dsn': DSN,
+        'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
+    }
+except ImportError:
+    pass
