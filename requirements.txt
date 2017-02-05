@@ -3,7 +3,7 @@ django-model-utils
 psycopg2
 python-dateutil
 requests
-django-redis
+python-memcached
 django-flat-responsive
 easy-thumbnails
 pytz

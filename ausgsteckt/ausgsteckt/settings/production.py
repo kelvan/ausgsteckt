@@ -2,7 +2,7 @@ from ._base import *
 
 DEBUG = False
 
-DEFAULT_FROM_EMAIL = 'ausgsteckt@ist-total.org'
+DEFAULT_FROM_EMAIL = 'info@ausgsteckt.ist-total.org'
 EMAIL_NOTIFICATION = ['ausgsteckt-admin@ist-total.org']
 
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'public', 'static/')
@@ -59,10 +59,7 @@ LOGGING = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/2',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
