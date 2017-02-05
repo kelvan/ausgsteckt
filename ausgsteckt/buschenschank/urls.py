@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 
@@ -25,8 +26,10 @@ urlpatterns = [
     ),
     url(
         r'^data.geojson$',
-        HideRemovedGeoJSONLayerView.as_view(
-            model=Buschenschank, geometry_field='coordinates'
+        cache_page(60 * 15)(
+            HideRemovedGeoJSONLayerView.as_view(
+                model=Buschenschank, geometry_field='coordinates'
+            )
         ),
         name='buschenschank.geojson'
     ),
