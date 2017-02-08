@@ -3,6 +3,9 @@ django-model-utils
 psycopg2
 python-dateutil
 requests
+aiohttp
+cchardet
+aiodns
 python-memcached
 raven
 django-flat-responsive
