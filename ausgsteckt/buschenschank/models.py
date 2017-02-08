@@ -112,7 +112,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     @property
     def website(self):
-        return self.tags.get('website') or self.tags.get('contact:website')
+        website = self.tags.get('website') or self.tags.get('contact:website')
+        if website and not website.startswith('http'):
+            website = 'http://' + website
+        return website
 
     @property
     def phone(self):
