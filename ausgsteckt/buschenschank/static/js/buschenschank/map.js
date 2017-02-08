@@ -26,6 +26,7 @@ function main_map_init (mapid, options) {
 	);
 	map.addLayer(osm);
   L.Icon.Default.imagePath = '/static/images/';
+  L.control.scale().addTo(map);
 
   window.map = map;
   var dataurl = $('#buschenschank_maps').data('geojson-url');
