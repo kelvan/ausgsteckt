@@ -11,11 +11,10 @@ ADDR_TAGS = {
     )
 }
 CONTACT_TAGS = {
-    'wanted': (
-        'contact:phone', 'contact:email',
-    ),
     'anyof': (
         ('website', 'contact:website'),
+        ('contact:phone', 'phone'),
+        ('contact:email', 'email')
     )
 }
 

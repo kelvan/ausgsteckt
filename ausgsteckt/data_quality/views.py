@@ -17,9 +17,14 @@ class IncompleteBuschenschankList(ListView):
             ],
             tags__has_any_keys=['addr:street', 'addr:place']
         )
-        contact_exclude = Q(
-            tags__has_keys=['contact:phone', 'contact:email'],
-            tags__has_any_keys=['website', 'contact:website']
+        contact_exclude = (
+            Q(
+                tags__has_any_keys=['website', 'contact:website']
+            ) and Q(
+                tags__has_any_keys=['contact:phone', 'phone']
+            ) and Q(
+                tags__has_any_keys=['contact:email', 'email'],
+            )
         )
         queryset = queryset.exclude(addr_exclude and contact_exclude)
         city = self.kwargs.get('cityname')
