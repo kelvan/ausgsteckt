@@ -29,7 +29,7 @@ async def check_url(session, buschenschank, tag_key):
     url = buschenschank.tags.get(tag_key)
     if url:
         error = {
-            'buschenschank_name': buschenschank.name,
+            'id': buschenschank.id, 'buschenschank_name': buschenschank.name,
             'url': url, 'tag_key': tag_key, 'error': '',
             'status_code': '', 'osm_url': buschenschank.get_osm_url()
         }
@@ -39,7 +39,7 @@ async def check_url(session, buschenschank, tag_key):
                 tag_key, url
             )
             new_error = dict(**error)
-            new_error['error']: 'InvalidURL'
+            new_error['error'] = 'InvalidURL'
             errors.append(new_error)
             url = 'http://' + url
             error['url'] = url
@@ -73,8 +73,8 @@ class Command(BaseCommand):
     def _save_report(self, errors, report_path):
         with open(report_path, 'w') as csvfile:
             fieldnames = [
-                'buschenschank_name', 'tag_key', 'url', 'status_code', 'error',
-                'osm_url'
+                'id', 'buschenschank_name', 'tag_key', 'url', 'status_code',
+                'error', 'osm_url'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
