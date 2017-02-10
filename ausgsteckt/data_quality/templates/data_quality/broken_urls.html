@@ -3,30 +3,41 @@
 {% load i18n %}
 
 {% block content %}
-
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>{% trans 'Name' %}</th>
-        <th>{% trans 'Tag Key' %}</th>
-        <th>{% trans 'URL' %}</th>
-        <th>{% trans 'Status Code' %}</th>
-        <th>{% trans 'Error' %}</th>
-        <th>{% trans 'View details' %}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for error in error_list %}
+  {% if error_list|length == 0 %}
+    <p class="text-center bg-success"">
+      <strong>
+        {% trans 'No broken websites found' %}
+      </strong>
+    </p>
+  {% else %}
+    <p class="text-center bg-danger"">
+      <strong>
+        {% trans 'Error Count' %}: {{ error_list|length }}
+      </strong>
+    </p>
+    <table class="table table-bordered table-hover">
+      <thead>
         <tr>
-          <td>{{ error.buschenschank_name }}</td>
-          <td>{{ error.tag_key }}</td>
-          <td>{{ error.url }}</td>
-          <td>{{ error.status_code }}</td>
-          <td>{{ error.error }}</td>
-          <td><a target="_blank" href="{{ error.osm_url }}">OpenStreetMap</a></td>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Tag Key' %}</th>
+          <th>{% trans 'URL' %}</th>
+          <th>{% trans 'Status Code' %}</th>
+          <th>{% trans 'Error' %}</th>
+          <th>{% trans 'View details' %}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
+      </thead>
+      <tbody>
+        {% for error in error_list %}
+          <tr>
+            <td>{{ error.buschenschank_name }}</td>
+            <td>{{ error.tag_key }}</td>
+            <td>{{ error.url }}</td>
+            <td>{{ error.status_code }}</td>
+            <td>{{ error.error }}</td>
+            <td><a target="_blank" href="{{ error.osm_url }}">OpenStreetMap</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
 {% endblock %}
