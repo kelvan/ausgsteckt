@@ -31,7 +31,7 @@
           <tr>
             <td>{{ error.buschenschank_name }}</td>
             <td>{{ error.tag_key }}</td>
-            <td>{{ error.url }}</td>
+            <td>{{ error.url|urlize }}</td>
             <td>{{ error.status_code }}</td>
             <td>{{ error.error }}</td>
             <td><a target="_blank" href="{{ error.osm_url }}">OpenStreetMap</a></td>
