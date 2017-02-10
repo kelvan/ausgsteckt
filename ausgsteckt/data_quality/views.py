@@ -63,6 +63,5 @@ class BrokenURLView(TemplateView):
 
         with open(report_path) as csvfile:
             context['error_list'] = list(csv.DictReader(csvfile))
-        print(context['error_list'])
 
         return context
