@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>{% trans 'Name' %}</th>
+        <th>{% trans 'Tag Key' %}</th>
+        <th>{% trans 'URL' %}</th>
+        <th>{% trans 'Status Code' %}</th>
+        <th>{% trans 'Error' %}</th>
+        <th>{% trans 'View details' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for error in error_list %}
+        <tr>
+          <td>{{ error.buschenschank_name }}</td>
+          <td>{{ error.tag_key }}</td>
+          <td>{{ error.url }}</td>
+          <td>{{ error.status_code }}</td>
+          <td>{{ error.error }}</td>
+          <td><a target="_blank" href="{{ error.osm_url }}">OpenStreetMap</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

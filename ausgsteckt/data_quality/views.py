@@ -1,4 +1,9 @@
-from django.views.generic import ListView
+import os
+import csv
+
+from django.conf import settings
+from django.http import Http404
+from django.views.generic import ListView, TemplateView
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
 
@@ -41,4 +46,23 @@ class IncompleteBuschenschankList(ListView):
         context = super().get_context_data(**kwargs)
         context['overall_buschenschank_count'] = Buschenschank.objects.count()
         context['city'] = self.kwargs.get('cityname')
+        return context
+
+
+class BrokenURLView(TemplateView):
+    template_name = 'data_quality/broken_urls.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        report_path = os.path.join(
+            settings.MEDIA_ROOT, 'broken_websites_report.csv'
+        )
+
+        if not os.path.exists(report_path):
+            raise Http404()
+
+        with open(report_path) as csvfile:
+            context['error_list'] = list(csv.DictReader(csvfile))
+        print(context['error_list'])
+
         return context

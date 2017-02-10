@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 
 from .apps import DataQualityConfig
-from .views import IncompleteBuschenschankList
+from .views import IncompleteBuschenschankList, BrokenURLView
 
 app_name = DataQualityConfig.name
 
@@ -16,4 +16,7 @@ urlpatterns = [
         IncompleteBuschenschankList.as_view(),
         name='fixme_buschenschank'
     ),
+    url(
+        r'fixme/websites/?$', BrokenURLView.as_view(), name='fixme_websites'
+    )
 ]
