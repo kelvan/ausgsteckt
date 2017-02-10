@@ -19,7 +19,7 @@ logger.addHandler(ch)
 
 
 async def fetch(session, url):
-    with async_timeout.timeout(10):
+    with async_timeout.timeout(30):
         async with session.get(url) as response:
             return response
 
