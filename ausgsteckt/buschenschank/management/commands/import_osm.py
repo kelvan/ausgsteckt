@@ -87,14 +87,23 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
 class Command(BaseCommand):
     help = 'Import Buschenschank/Heuriger from OSM'
 
-    def check_removed(self, processed_ids):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--force-delete',
+            action='store_true',
+            dest='force_delete',
+            default=False,
+            help='Delete objects even if unusual high amount',
+        )
+
+    def check_removed(self, processed_ids, force_delete=False):
         obsoletes = Buschenschank.objects.exclude(id__in=processed_ids)
         for obsolete in obsoletes:
             logger.warning(
                 'Removed Buschenschank found: [%s/%d] %s',
                 obsolete.osm_type, obsolete.osm_id, obsolete.name
             )
-        if obsoletes.count() < 5:
+        if obsoletes.count() < 5 or force_delete is True:
             obsoletes.update(is_removed=True)
         else:
             logger.warning(
@@ -111,7 +120,9 @@ class Command(BaseCommand):
         if response.ok:
             parser = BuschenschankSaxParser()
             parseString(response.text, parser)
-            self.check_removed(parser.processed_ids)
+            self.check_removed(
+                parser.processed_ids, force_delete=options['force_delete']
+            )
             logger.info(
                 'Import finished: '
                 '{new} added, {updated} updated, '
