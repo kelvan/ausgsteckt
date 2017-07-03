@@ -12,3 +12,7 @@ public
 _build
 /ausgsteckt/ausgsteckt/templates/tracking.html
 secret.key
+*.dbf
+*.prj
+*.shp
+*.shx
