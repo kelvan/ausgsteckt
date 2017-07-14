@@ -1,6 +1,9 @@
 import socket
 
-hosts = {'snowden': 'production', 'snowden.ist-total.org': 'production'}
+hosts = {
+    'doyle': 'production', 'doyle.ist-total.org': 'production',
+    'snowden': 'production', 'snowden.ist-total.org': 'production'
+}
 DEFAULT = 'development'
 
 
