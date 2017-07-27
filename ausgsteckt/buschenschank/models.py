@@ -139,7 +139,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     class Meta:
         verbose_name = 'Buschenschank'
-        verbose_name_plural = 'Buschenschänke'
+        verbose_name_plural = 'Buschenschanken'
         ordering = ('name',)
 
 
