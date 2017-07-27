@@ -1,5 +1,6 @@
 import logging
 
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from djgeojson.views import GeoJSONLayerView
@@ -34,4 +35,8 @@ class HideRemovedGeoJSONLayerView(GeoJSONLayerView):
 
 
 class RegionListView(ListView):
+    model = Region
+
+
+class RegionDetailView(DetailView):
     model = Region
