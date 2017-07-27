@@ -16,3 +16,5 @@ secret.key
 *.prj
 *.shp
 *.shx
+*.psql
+*.sql
