@@ -175,7 +175,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
         return reverse('buschenschank:region_details', kwargs={'pk': self.pk})
 
     def get_buschenschank(self):
-        return Buschenschank.objects.filter(coordinates__contained=self.areas)
+        return Buschenschank.objects.filter(coordinates__intersects=self.areas)
 
     class Meta:
         verbose_name = _('Region')
