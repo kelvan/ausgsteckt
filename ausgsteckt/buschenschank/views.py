@@ -40,7 +40,7 @@ class PublicBuschenschankGeoJsonView(ListView):
 
         data = serialize('geojson', self.object_list,
                   geometry_field='coordinates',
-                  fields=('id', 'name',)
+                  fields=('pk', 'name',)
         )
         return HttpResponse(data, content_type='application/json')
 

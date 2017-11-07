@@ -5,7 +5,7 @@ function onEachFeature(feature, layer) {
   layer.getPopup();
   layer.on('click', function (e) {
     var popup = e.target.getPopup();
-    $.ajax($('#buschenschank_maps').data('details-url').replace('000', feature.id), {success: function(data) {
+    $.ajax($('#buschenschank_maps').data('details-url').replace('000', feature.properties.pk), {success: function(data) {
         popup.setContent(data);
         popup.update();
       }
