@@ -3,6 +3,7 @@ var map;
 function onEachFeature(feature, layer) {
   layer.bindPopup('Loading ...');
   layer.getPopup();
+  layer.bindTooltip(feature.properties.name, {closeButton: false});
   layer.on('click', function (e) {
     var popup = e.target.getPopup();
     $.ajax($('#buschenschank_maps').data('details-url').replace('000', feature.properties.pk), {success: function(data) {
