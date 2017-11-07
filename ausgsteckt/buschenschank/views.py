@@ -5,8 +5,6 @@ from django.views.generic.list import ListView
 from django.http import HttpResponse
 from django.core.serializers import serialize
 
-from djgeojson.views import GeoJSONLayerView
-
 from ausgsteckt.views import HybridDetailView
 from .models import Buschenschank, Region
 
