@@ -1,20 +1,25 @@
-{% load static template_check %}
+{% load static template_check compress %}
 
 <html>
   <head>
     <title>{% block title %}Ausgsteckt{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
-    <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-    <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    {% compress css %}
+      <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+      <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+      {% block extracss %}{% endblock %}
+    {% endcompress %}
+
     <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,OpenStreetMap,OpenData">
     {% block extrameta %}{% endblock %}
-    {% block extracss %}{% endblock %}
   </head>
   <body {% block bodyattr %}{% endblock %}>
     {% block content %}{% endblock %}
-    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-    {% block extrajs %}{% endblock %}
+    {% compress js %}
+      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+      {% block extrajs %}{% endblock %}
+    {% endcompress %}
     {% block tracking %}
       {% template_exists 'tracking.html' as tracking_exists %}
       {% if tracking_exists %}

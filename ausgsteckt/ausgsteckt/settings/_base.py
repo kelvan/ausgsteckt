@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'easy_thumbnails',
+    'compressor',
     'ausgsteckt',
     'buschenschank',
     'data_quality'
@@ -60,6 +61,12 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'ausgsteckt.urls'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
 
 TEMPLATES = [
     {
@@ -145,6 +152,18 @@ THUMBNAIL_ALIASES = {
         'details': {'size': (150, 0), 'crop': False},
     },
 }
+
+
+COMPRESS_PRECOMPILERS = (
+   ('text/less', 'lesscpy {infile} {outfile}'),
+)
+
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.rCSSMinFilter'
+)
+
+#COMPRESS_ENABLED = True
 
 OVERPASS_ENDPOINT = 'https://overpass-api.de/api/interpreter'
 BUSCHENSCHANK_QUERY = """
