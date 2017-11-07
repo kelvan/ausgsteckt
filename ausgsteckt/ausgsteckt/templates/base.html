@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>{% block title %}Ausgsteckt{% endblock %}</title>
+    <title>{% block title %}Ausgsteckt{% if page_title %} - {{ page_title }}{% endif %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
     {% compress css %}
       <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
