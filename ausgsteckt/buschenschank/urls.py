@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from .apps import BuschenschankConfig
 from .models import Buschenschank, Region
 from .views import (
-    BuschenschankDetails, HideRemovedGeoJSONLayerView, RegionListView,
+    BuschenschankDetails, PublicBuschenschankGeoJsonView, RegionListView,
     RegionDetailView
 )
 
@@ -27,9 +27,7 @@ urlpatterns = [
     url(
         r'^data.geojson$',
         cache_page(60 * 15)(
-            HideRemovedGeoJSONLayerView.as_view(
-                model=Buschenschank, geometry_field='coordinates'
-            )
+            PublicBuschenschankGeoJsonView.as_view()
         ),
         name='buschenschank.geojson'
     ),

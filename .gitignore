@@ -18,3 +18,4 @@ secret.key
 *.shx
 *.psql
 *.sql
+.idea/

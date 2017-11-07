@@ -2,6 +2,8 @@ import logging
 
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.http import HttpResponse
+from django.core.serializers import serialize
 
 from djgeojson.views import GeoJSONLayerView
 
@@ -28,10 +30,21 @@ class BuschenschankDetails(HybridDetailView):
         }
 
 
-class HideRemovedGeoJSONLayerView(GeoJSONLayerView):
+class PublicBuschenschankGeoJsonView(ListView):
+    model = Buschenschank
+
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(is_removed=False)
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+
+        data = serialize('geojson', self.object_list,
+                  geometry_field='coordinates',
+                  fields=('name',)
+        )
+        return HttpResponse(data, content_type='application/json')
 
 
 class RegionListView(ListView):
