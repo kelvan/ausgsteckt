@@ -1,6 +1,6 @@
-Django~=1.11.6
+Django~=2.0rc1
 django-model-utils~=3.0.0
-psycopg2
+psycopg2~=2.7.3
 python-dateutil~=2.6.1
 requests~=2.13.0
 aiohttp~=2.0.7
