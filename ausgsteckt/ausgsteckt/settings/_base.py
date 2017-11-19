@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DATA_DIR = os.path.join(BASE_DIR, 'public')
+DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), 'public')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -128,18 +128,11 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
-
 TIME_ZONE = 'Europe/Vienna'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
@@ -163,6 +156,7 @@ COMPRESS_CSS_FILTERS = (
 )
 
 #COMPRESS_ENABLED = True
+# OSM settings
 
 OVERPASS_ENDPOINT = 'https://overpass-api.de/api/interpreter'
 BUSCHENSCHANK_QUERY = """
@@ -204,6 +198,7 @@ def load_secret_key_file():
         if len(skey) != 50:
             raise ValueError('Content of secret_key file is wrong')
         return skey
+
 
 if os.path.exists(secret_key_fn):
     logger.info('Load secret key from file')

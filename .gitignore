@@ -1,4 +1,4 @@
-env
+env/
 *.pyc
 __pycache__
 *.log
@@ -8,8 +8,9 @@ __pycache__
 *.lck
 *.bak
 *.bck
-public
-_build
+public/
+bower_components/
+_build/
 /ausgsteckt/ausgsteckt/templates/tracking.html
 secret.key
 *.dbf
