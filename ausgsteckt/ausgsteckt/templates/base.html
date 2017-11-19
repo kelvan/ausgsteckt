@@ -12,9 +12,9 @@
     {% block extrameta %}{% endblock %}
   </head>
   <body {% block bodyattr %}{% endblock %}>
-    <div id="content">
+    <main role="main">
       {% block content %}{% endblock %}
-    </div>
+    </main>
 
     {% javascript 'libs' %}
     {% block extrajs %}{% endblock %}

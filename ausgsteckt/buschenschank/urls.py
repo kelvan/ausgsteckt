@@ -3,7 +3,6 @@ from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 
 from .apps import BuschenschankConfig
-from .models import Buschenschank, Region
 from .views import (
     BuschenschankDetails, PublicBuschenschankGeoJsonView, RegionListView,
     RegionDetailView
@@ -28,15 +27,12 @@ urlpatterns = [
         r'^data.geojson$',
         cache_page(60 * 15)(
             PublicBuschenschankGeoJsonView.as_view()
-        ),
-        name='buschenschank.geojson'
+        ), name='buschenschank.geojson'
     ),
     url(
-        r'region/(?P<pk>\d+)', RegionDetailView.as_view(),
-        name='region_details'
+        r'region/(?P<pk>\d+)', RegionDetailView.as_view(), name='region_details'
     ),
     url(
-        r'regions/', RegionListView.as_view(),
-        name='region_list'
+        r'regions/', RegionListView.as_view(), name='region_list'
     )
 ]
