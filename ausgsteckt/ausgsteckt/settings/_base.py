@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'buschenschank.context_processors.region_list',
             ],
         },
     },
@@ -150,7 +151,8 @@ PIPELINE = {
         'libs': {
             'source_filenames': (
                 'node_modules/jquery/dist/jquery.js',
-                'node_modules/bootstrap/js/bootstrap.js',
+                'node_modules/popper.js/dist/umd/popper.js',
+                'node_modules/bootstrap/dist/js/bootstrap.js',
             ),
             'output_filename': 'js/libs.js',
         },
@@ -182,6 +184,7 @@ PIPELINE = {
 THUMBNAIL_ALIASES = {
     '': {
         'details': {'size': (150, 0), 'crop': False},
+        'dropdown': {'size': (15, 15), 'crop': False},
     },
 }
 
