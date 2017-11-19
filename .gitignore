@@ -9,7 +9,7 @@ __pycache__
 *.bak
 *.bck
 public/
-bower_components/
+node_modules/
 _build/
 /ausgsteckt/ausgsteckt/templates/tracking.html
 secret.key
@@ -20,3 +20,4 @@ secret.key
 *.psql
 *.sql
 .idea/
+yarn.lock

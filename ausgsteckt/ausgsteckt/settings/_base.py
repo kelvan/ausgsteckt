@@ -148,14 +148,14 @@ PIPELINE = {
         'map': {
             'source_filenames': (
                 'js/buschenschank/map.js',
-                'bower_components/leaflet/dist/leaflet.js'
-            )
+                'node_modules/leaflet/dist/leaflet.js'
+            ),
             'output_filename': 'js/map.js'
         },
         'libs': {
             'source_filenames': (
-                'bower_components/jquery/dist/jquery.js',
-                'bower_components/bootstrap/js/bootstrap.js',
+                'node_modules/jquery/dist/jquery.js',
+                'node_modules/bootstrap/js/bootstrap.js',
             ),
             'output_filename': 'js/libs.js',
         },
@@ -171,13 +171,13 @@ PIPELINE = {
         'map': {
             'source_filenames': (
                 'css/buschenschank/map.css',
-                'bower_components/leaflet/dist/leaflet.css'
-            )
+                'node_modules/leaflet/dist/leaflet.css'
+            ),
             'output_filename': 'css/map.css',
         },
         'libs': {
             'source_filenames': (
-                'bower_components/bootstrap/dist/css/bootstrap.css',
+                'node_modules/bootstrap/dist/css/bootstrap.css',
             ),
             'output_filename': 'css/libs.css',
         }
