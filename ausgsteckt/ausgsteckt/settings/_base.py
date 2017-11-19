@@ -150,6 +150,7 @@ PIPELINE = {
                 'js/buschenschank/map.js',
                 'bower_components/leaflet/dist/leaflet.js'
             )
+            'output_filename': 'js/map.js'
         },
         'libs': {
             'source_filenames': (
@@ -172,6 +173,7 @@ PIPELINE = {
                 'css/buschenschank/map.css',
                 'bower_components/leaflet/dist/leaflet.css'
             )
+            'output_filename': 'css/map.css',
         },
         'libs': {
             'source_filenames': (
