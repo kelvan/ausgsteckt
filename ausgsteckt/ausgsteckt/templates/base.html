@@ -1,25 +1,25 @@
-{% load static template_check compress %}
+{% load static template_check pipeline %}
 
 <html>
   <head>
     <title>{% block title %}Ausgsteckt{% if page_title %} - {{ page_title }}{% endif %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
-    {% compress css %}
-      <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-      <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
-      {% block extracss %}{% endblock %}
-    {% endcompress %}
+    {% stylesheet 'libs' %}
+    {% stylesheet 'main' %}
+    {% block extracss %}{% endblock %}
 
     <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,OpenStreetMap,OpenData">
     {% block extrameta %}{% endblock %}
   </head>
   <body {% block bodyattr %}{% endblock %}>
-    {% block content %}{% endblock %}
-    {% compress js %}
-      <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-      <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-      {% block extrajs %}{% endblock %}
-    {% endcompress %}
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% javascript 'libs' %}
+    {% javascript 'map' %}
+    {% block extrajs %}{% endblock %}
+
     {% block tracking %}
       {% template_exists 'tracking.html' as tracking_exists %}
       {% if tracking_exists %}

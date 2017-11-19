@@ -7,6 +7,11 @@ EMAIL_FILE_PATH = '/tmp/ausgsteckt-messages'
 
 CACHE_BACKEND = 'dummy://'
 
+PIPELINE.update({
+    'PIPELINE_ENABLED': False,
+    'PIPELINE_COLLECTOR_ENABLED': True,
+})
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

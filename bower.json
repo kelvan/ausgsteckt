@@ -1,0 +1,27 @@
+{
+  "name": "ausgsteckt",
+  "authors": [
+    "Florian Schweikert <kelvan@ist-total.org>"
+  ],
+  "description": "",
+  "main": "bower.json",
+  "license": "AGPL",
+  "homepage": "https://ausgsteckt.ist-total.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "ausgsteckt/ausgsteckt/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "leaflet": "^1.0.3"
+  },
+  "resolutions": {
+    "bootstrap": "^3.3.7"
+  }
+}

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'easy_thumbnails',
-    'compressor',
+    #'compressor',
+    'pipeline',
     'ausgsteckt',
     'buschenschank',
     'data_quality'
@@ -60,12 +61,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ausgsteckt.urls'
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
 
 TEMPLATES = [
     {
@@ -139,23 +134,60 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.CachedFileFinder',
+)
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'JAVASCRIPT': {
+        'map': {
+            'source_filenames': (
+                'js/buschenschank/map.js',
+                'bower_components/leaflet/dist/leaflet.js'
+            )
+        },
+        'libs': {
+            'source_filenames': (
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/bootstrap/js/bootstrap.js',
+            ),
+            'output_filename': 'js/libs.js',
+        },
+    },
+    'CSS_COMPRESSOR': 'pipeline.compressors.NoopCompressor',
+    'STYLESHEETS': {
+        'main': {
+            'source_filenames': (
+                'css/main.css',
+            ),
+            'output_filename': 'css/main.css'
+        },
+        'map': {
+            'source_filenames': (
+                'css/buschenschank/map.css',
+                'bower_components/leaflet/dist/leaflet.css'
+            )
+        },
+        'libs': {
+            'source_filenames': (
+                'bower_components/bootstrap/dist/css/bootstrap.css',
+            ),
+            'output_filename': 'css/libs.css',
+        }
+    }
+}
+
 THUMBNAIL_ALIASES = {
     '': {
         'details': {'size': (150, 0), 'crop': False},
     },
 }
 
-
-COMPRESS_PRECOMPILERS = (
-   ('text/less', 'lesscpy {infile} {outfile}'),
-)
-
-COMPRESS_CSS_FILTERS = (
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.rCSSMinFilter'
-)
-
-#COMPRESS_ENABLED = True
 # OSM settings
 
 OVERPASS_ENDPOINT = 'https://overpass-api.de/api/interpreter'
