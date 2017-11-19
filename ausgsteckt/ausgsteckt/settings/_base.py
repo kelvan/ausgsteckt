@@ -175,6 +175,7 @@ PIPELINE = {
         'libs': {
             'source_filenames': (
                 'node_modules/bootstrap/dist/css/bootstrap.css',
+                'node_modules/font-awesome/css/font-awesome.css',
             ),
             'output_filename': 'css/libs.css',
         }

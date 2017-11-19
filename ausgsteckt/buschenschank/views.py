@@ -1,5 +1,6 @@
 import logging
 
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.http import HttpResponse
@@ -16,8 +17,9 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class BuschenschankDetails(HybridDetailView):
+class BuschenschankAPIDetailsView(HybridDetailView):
     model = Buschenschank
+    template_name = 'buschenschank/api/buschenschank_detail.html'
 
     def get_data(self, context):
         buschenschank = context['buschenschank']
@@ -26,6 +28,10 @@ class BuschenschankDetails(HybridDetailView):
             'osm_id': buschenschank.osm_id,
             'tags': buschenschank.tags
         }
+
+
+class BuschenschankDetailsView(TemplateView):
+    template_name = 'buschenschank/buschenschank_detail.html'
 
 
 class PublicBuschenschankGeoJsonView(ListView):
@@ -49,3 +55,14 @@ class RegionListView(ListView):
 
 class RegionDetailView(DetailView):
     model = Region
+
+
+class SearchView(TemplateView):
+    template_name = 'buschenschank/search_result.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        q = self.request.GET.get('q')
+        if q:
+            context['results'] = Buschenschank.objects.filter(name__icontains=self.request.GET.get('q'))
+        return context

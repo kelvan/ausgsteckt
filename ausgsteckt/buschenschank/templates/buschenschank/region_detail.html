@@ -40,7 +40,7 @@
             <ul>
               {% for buschenschank in buschenschank_list %}
                 <li>
-                  <a href="{% url 'buschenschank:buschenschank_details' buschenschank.pk %}">
+                  <a href="{{ buschenschank.get_absolute_url }}">
                     {{ buschenschank }}
                   </a>
                 </li>

@@ -4,8 +4,7 @@ from django.views.generic import TemplateView
 
 from .apps import BuschenschankConfig
 from .views import (
-    BuschenschankDetails, PublicBuschenschankGeoJsonView, RegionListView,
-    RegionDetailView
+    BuschenschankDetailsView, BuschenschankAPIDetailsView, PublicBuschenschankGeoJsonView, RegionListView, RegionDetailView, SearchView
 )
 
 app_name = BuschenschankConfig.name
@@ -20,7 +19,11 @@ urlpatterns = [
         name='buschenschank_map'
     ),
     url(
-        r'^buschenschank/(?P<pk>\d+)$', BuschenschankDetails.as_view(),
+        r'^api/buschenschank/(?P<pk>\d+)/$', BuschenschankAPIDetailsView.as_view(),
+        name='buschenschank_details_api'
+    ),
+    url(
+        r'^buschenschank/(?P<pk>\d+)$', BuschenschankDetailsView.as_view(),
         name='buschenschank_details'
     ),
     url(
@@ -34,5 +37,8 @@ urlpatterns = [
     ),
     url(
         r'regions/', RegionListView.as_view(), name='region_list'
+    ),
+    url(
+        r'search/', SearchView.as_view(), name='search'
     )
 ]

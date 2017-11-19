@@ -31,7 +31,7 @@
       {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'buschenschank:search' %}">
-      <input class="form-control mr-sm-2" type="text" placeholder="{% trans 'Search for buschenschank' %}" aria-label="Search">
+      <input class="form-control mr-sm-2" name="q" type="text" placeholder="{% trans 'Search for buschenschank' %}" aria-label="Search"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %}>
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
     </form>
   </div>

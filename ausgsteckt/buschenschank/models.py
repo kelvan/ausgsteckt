@@ -132,7 +132,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def get_absolute_url(self):
-        return self.get_osm_url()
+        return reverse('buschenschank:buschenschank_details', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name
