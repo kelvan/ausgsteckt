@@ -6,6 +6,7 @@ __pycache__
 *.mo
 .~*#
 *.lck
+*.lock
 *.bak
 *.bck
 public/
@@ -20,4 +21,3 @@ secret.key
 *.psql
 *.sql
 .idea/
-yarn.lock

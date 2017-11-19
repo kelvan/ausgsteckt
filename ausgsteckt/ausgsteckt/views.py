@@ -27,6 +27,7 @@ class JSONResponseMixin:
 
 
 class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):
+
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument
         if 'application/json' in self.request.META.get('HTTP_ACCEPT'):

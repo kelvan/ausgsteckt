@@ -11,6 +11,7 @@ logger.addHandler(ch)
 
 
 class Node:
+
     def __init__(self, id, lat, lon, *args, **kwargs):
         self.id = id
         self.lat = lat
@@ -29,6 +30,7 @@ class Node:
 
 
 class Way:
+
     def __init__(self, id, nodes, *args, **kwargs):
         self.id = id
         self.nodes = nodes
@@ -57,7 +59,9 @@ class Way:
     def __str__(self):
         return '[%d] %s -> %s' % (self.id, self.nodes[0], self.nodes[-1])
 
+
 class Relation:
+
     def __init__(self, id, members, *args, **kwargs):
         self.id = id
         self.members = members
@@ -95,7 +99,7 @@ class Relation:
                 if way.nodes[0] == last_node:
                     rev = False
                 elif way.nodes[-1] == last_node:
-                    rev= True
+                    rev = True
                 else:
                     logger.info(
                         'Skip possible next way, neither first nor last'
@@ -129,6 +133,7 @@ class Relation:
 
 
 class PolygonBuilder:
+
     def __init__(self, data):
         self._data = data
         self._relations = []
@@ -153,6 +158,7 @@ class PolygonBuilder:
 class GeoJSONPolygonBuilder(PolygonBuilder):
     """ Create Polygon from geojson data
     """
+
     def prepare_data(self):
         for elem in self._data:
             if elem['type'] == 'node':
