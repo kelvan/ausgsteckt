@@ -12,7 +12,7 @@ lesscpy~=0.12.0
 raven~=6.2.1
 django-flat-responsive~=2.0.0
 Pillow~=4.1.1
-easy-thumbnails~=2.4.1
+easy-thumbnails~=2.5.0
 pytz
 pyproj~=1.9.5
 gdal~=2.1.3
