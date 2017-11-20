@@ -17,7 +17,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class BuschenschankAPIDetailsView(HybridDetailView):
+class BuschenschankAPIDetailView(HybridDetailView):
     model = Buschenschank
     template_name = 'buschenschank/api/buschenschank_detail.html'
 
@@ -30,7 +30,8 @@ class BuschenschankAPIDetailsView(HybridDetailView):
         }
 
 
-class BuschenschankDetailsView(TemplateView):
+class BuschenschankDetailView(DetailView):
+    model = Buschenschank
     template_name = 'buschenschank/buschenschank_detail.html'
 
 
