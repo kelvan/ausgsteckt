@@ -1,3 +1,7 @@
 .img_region {
   margin-bottom: 2em;
 }
+
+main#content > div.container {
+  padding-top: 1em;
+}

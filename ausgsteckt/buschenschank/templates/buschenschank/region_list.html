@@ -3,12 +3,14 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans 'Regions' %}</h1>
-  <ul>
-    {% for region in region_list %}
-      {% with total=region.get_buschenschank.count %}
-        <li><a href="{% url 'buschenschank:region_details' region.pk %}">{{ region }}</a> <span title="{% trans 'Buschenschank count' %}">({{ total }})</span></li>
-      {% endwith %}
-    {% endfor %}
-  </ul>
+  <div class="container">
+    <h1>{% trans 'Regions' %}</h1>
+    <ul>
+      {% for region in region_list %}
+        {% with total=region.get_buschenschank.count %}
+          <li><a href="{% url 'buschenschank:region_details' region.pk %}">{{ region }}</a> <span title="{% trans 'Buschenschank count' %}">({{ total }})</span></li>
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

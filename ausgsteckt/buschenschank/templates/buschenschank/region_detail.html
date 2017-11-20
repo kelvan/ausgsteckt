@@ -3,57 +3,59 @@
 {% load i18n staticfiles %}
 
 {% block content %}
-  <h1>{{ region.name }}{% if user.is_staff %} [<a href="{{ region.get_admin_url }}">Admin</a>]{% endif %}</h1>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-2 col-md-2 img_region">
-        {% if region.region_image %}
-          <img src="{{ region.region_image.details.url }}"></img>
-        {% else %}
-          <img src="{% static 'images/region_placeholder.png' %}"></img>
-        {% endif %}
-      </div>
-      <div class="col-xs-10 col-md-10">
-        {% if region.description %}
-          <div class="well">
-            {{ region.description|linebreaks }}
-          </div>
-        {% endif %}
-        {% if region.website or region.calendar_website %}
-          <dl class="dl-horizontal">
-            {% if region.website %}
-              <dt>{% trans 'Website' %}</dt>
-              <dd><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
-            {% endif %}
-
-            {% if region.calendar_website %}
-              <dt>{% trans 'Calendar' %}</dt>
-              <dd>
-                <a href="{{ region.calendar_website }}" target="_blank">{% trans 'Calendar (external)' %}</a>
-              </dd>
-            {% endif %}
-          </dl>
-        {% endif %}
-        {% with buschenschank_list=region.get_buschenschank %}
-          {% if buschenschank_list.exists %}
-            <h2>{% trans 'Buschenschänke' %} ({{ region.get_buschenschank.count }})</h2>
-            <ul>
-              {% for buschenschank in buschenschank_list %}
-                <li>
-                  <a href="{{ buschenschank.get_absolute_url }}">
-                    {{ buschenschank }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
+  <div class="container">
+    <h2>{{ region.name }}{% if user.is_staff %} [<a href="{{ region.get_admin_url }}">Admin</a>]{% endif %}</h2>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-2 col-md-2 img_region">
+          {% if region.region_image %}
+            <img src="{{ region.region_image.details.url }}"></img>
+          {% else %}
+            <img src="{% static 'images/region_placeholder.png' %}"></img>
           {% endif %}
-        {% endwith %}
+        </div>
+        <div class="col-xs-10 col-md-10">
+          {% if region.description %}
+            <div class="well">
+              {{ region.description|linebreaks }}
+            </div>
+          {% endif %}
+          {% if region.website or region.calendar_website %}
+            <dl class="dl-horizontal">
+              {% if region.website %}
+                <dt>{% trans 'Website' %}</dt>
+                <dd><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
+              {% endif %}
+
+              {% if region.calendar_website %}
+                <dt>{% trans 'Calendar' %}</dt>
+                <dd>
+                  <a href="{{ region.calendar_website }}" target="_blank">{% trans 'Calendar (external)' %}</a>
+                </dd>
+              {% endif %}
+            </dl>
+          {% endif %}
+          {% with buschenschank_list=region.get_buschenschank %}
+            {% if buschenschank_list.exists %}
+              <h2>{% trans 'Buschenschänken' %} ({{ region.get_buschenschank.count }})</h2>
+              <ul>
+                {% for buschenschank in buschenschank_list %}
+                  <li>
+                    <a href="{{ buschenschank.get_absolute_url }}">
+                      {{ buschenschank }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4 col-md-4">
-        <a class="btn btn-default" href="{% url 'buschenschank:buschenschank_map' %}">❮ {% trans 'Back to map' %}</a>
-        <a class="btn btn-default" href="{% url 'buschenschank:region_list' %}">❮ {% trans 'Back to region list' %}</a>
+      <div class="row">
+        <div class="col-xs-4 col-md-4">
+          {#<a class="btn btn-default" href="{% url 'buschenschank:buschenschank_map' %}">❮ {% trans 'Back to map' %}</a>#}
+          <a class="btn btn-default" href="{% url 'buschenschank:region_list' %}">❮ {% trans 'Back to region list' %}</a>
+        </div>
       </div>
     </div>
   </div>
