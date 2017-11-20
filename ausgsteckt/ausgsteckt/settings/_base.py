@@ -129,6 +129,10 @@ PIPELINE = {
             'source_filenames': (
                 'node_modules/leaflet/dist/leaflet.js',
                 'node_modules/leaflet-providers/leaflet-providers.js',
+                'node_modules/leaflet-plugins/control/Permalink.js',
+                'node_modules/leaflet-plugins/control/Permalink.Marker.js',
+                'node_modules/leaflet-plugins/control/Permalink.Layer.js',
+                'node_modules/leaflet-plugins/control/Permalink.Overlay.js',
                 'js/buschenschank/map.js',
             ),
             'output_filename': 'js/map.js'

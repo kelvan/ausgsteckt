@@ -38,8 +38,9 @@ function main_map_init (mapid, options) {
         "MtbMap": mtbmap,
         "OpenTopoMap": opentopomap
     };
-    L.control.layers(baseMaps).addTo(map);
+    var layers = L.control.layers(baseMaps).addTo(map);
     L.Icon.Default.imagePath = "/static/images/";
+    map.addControl(new L.Control.Permalink({text: 'Permalink', layers: layers}));
     L.control.scale().addTo(map);
 
     window.map = map;
