@@ -16,7 +16,9 @@
       </li>
       {% if regions %}
         <li class="nav-item dropdown{% if '/region' in request.path %} active{% endif %}">
-          <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Regions' %}</a>
+          <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% trans 'Regions' %}
+          </a>
           <div class="dropdown-menu" aria-labelledby="dropdown_regions">
             {% for region in regions|slice:':15' %}
               {% if region.get_buschenschank.exists %}
