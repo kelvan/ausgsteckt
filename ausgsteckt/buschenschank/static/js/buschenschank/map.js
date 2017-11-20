@@ -19,13 +19,13 @@ function main_map_init (mapid, options) {
         zoom: 8, center: L.latLng(47.6, 14.0), closePopupOnClick: false
     });
     var osmUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-	var osmAttrib="Map data © <a href=\"https://openstreetmap.org\">OpenStreetMap</a> contributors";
-	var osm = new L.TileLayer(
-	    osmUrl, {
-	        minZoom: 5, maxZoom: 18, attribution: osmAttrib
-	    }
-	);
-	map.addLayer(osm);
+    var osmAttrib="Map data © <a href=\"https://openstreetmap.org\">OpenStreetMap</a> contributors";
+    var osm = new L.TileLayer(
+        osmUrl, {
+            minZoom: 5, maxZoom: 18, attribution: osmAttrib
+        }
+    );
+    map.addLayer(osm);
     L.Icon.Default.imagePath = "/static/images/";
     L.control.scale().addTo(map);
 
@@ -37,7 +37,7 @@ function main_map_init (mapid, options) {
         // Add GeoJSON layer
         var geoJsonLayer = L.geoJson(data, {onEachFeature: onEachFeature});
         markers.addLayer(geoJsonLayer);
-    	map.addLayer(markers);
+        map.addLayer(markers);
     });
     map.locate({setView : true, maxZoom: 11});
 }
