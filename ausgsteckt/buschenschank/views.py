@@ -5,6 +5,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.http import HttpResponse
 from django.core.serializers import serialize
+from django.db.models import Q
+
 
 from ausgsteckt.views import HybridDetailView
 from .models import Buschenschank, Region
@@ -65,5 +67,7 @@ class SearchView(TemplateView):
         context = super().get_context_data(**kwargs)
         q = self.request.GET.get('q')
         if q:
-            context['results'] = Buschenschank.objects.filter(name__icontains=self.request.GET.get('q'))
+            name_contains = Q(name__icontains=self.request.GET.get('q'))
+            alt_name_contains = Q(tags__alt_name__icontains=self.request.GET.get('q'))
+            context['results'] = Buschenschank.objects.filter(name_contains | alt_name_contains)
         return context

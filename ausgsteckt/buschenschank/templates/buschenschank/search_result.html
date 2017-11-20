@@ -7,7 +7,7 @@
     <h4>{% trans 'Search results' %}</h4>
     <ul>
       {% for result in results %}
-        <li><a href="{{ result.get_absolute_url }}" target="_blank">{{ result }}</a></li>
+        <li><a href="{{ result.get_absolute_url }}">{{ result }}</a></li>
       {% empty %}
         <li>{% trans 'Nothing found' %}</li>
       {% endfor %}
