@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="container">
-    <h2>{{ region.name }}{% if user.is_staff %} [<a href="{{ region.get_admin_url }}">Admin</a>]{% endif %}</h2>
+    <h2>{{ region.name }}&nbsp;{% if user.is_staff %}<a href="{{ region.get_admin_url }}"><small><i class="fa fa-pencil" aria-hidden="true"></i></small></a>{% endif %}</h2>
     <div class="row">
       <div class="col-xs-2 col-md-2 img_region">
         {% if region.region_image %}
@@ -37,22 +37,47 @@
         {% with buschenschank_list=region.get_buschenschank %}
           {% if buschenschank_list.exists %}
             <h2>{% trans 'Buschenschänken' %} ({{ region.get_buschenschank.count }})</h2>
-            <ul>
+            <ul class="list-group">
               {% for buschenschank in buschenschank_list %}
-                <li>
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
                   <a href="{{ buschenschank.get_absolute_url }}">
                     {{ buschenschank }}
                   </a>
+                  <div class="d-flex flex-row">
+                    {% if buschenschank.phone %}
+                      <div class="p-1">
+                        <a href="tel:{{ buschenschank.phone|cut:' ' }}" title="{% trans 'Phone' %}">
+                          <i class="fa fa-phone" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    {% endif %}
+                    {% if buschenschank.email %}
+                      <div class="p-1">
+                        <a href="mailto:{{ buschenschank.email }}" title="{% trans 'Email' %}">
+                          <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    {% endif %}
+                    {% if buschenschank.website %}
+                      <div class="p-1">
+                        <a href="{{ buschenschank.website }}" target="_blank" title="{% trans 'Website' %}">
+                          <i class="fa fa-globe" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
                 </li>
               {% endfor %}
             </ul>
           {% endif %}
         {% endwith %}
-      </div>
-      <div class="row">
-        <div class="col-xs-4 col-md-4">
-          <a class="btn btn-default" href="{% url 'buschenschank:region_list' %}">❮ {% trans 'Back to region list' %}</a>
+
+        <div class="bg-light clearfix">
+          <a class="btn btn-secondary float-left" href="{% url 'buschenschank:region_list' %}">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;{% trans 'Back to region list' %}
+          </a>
         </div>
+
       </div>
     </div>
   </div>
