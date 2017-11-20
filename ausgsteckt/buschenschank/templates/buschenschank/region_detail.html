@@ -37,38 +37,7 @@
         {% with buschenschank_list=region.get_buschenschank %}
           {% if buschenschank_list.exists %}
             <h2>{% trans 'Buschenschänken' %} ({{ region.get_buschenschank.count }})</h2>
-            <ul class="list-group">
-              {% for buschenschank in buschenschank_list %}
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-                  <a href="{{ buschenschank.get_absolute_url }}">
-                    {{ buschenschank }}
-                  </a>
-                  <div class="d-flex flex-row">
-                    {% if buschenschank.phone %}
-                      <div class="p-1">
-                        <a href="tel:{{ buschenschank.phone|cut:' ' }}" title="{% trans 'Phone' %}">
-                          <i class="fa fa-phone" aria-hidden="true"></i>
-                        </a>
-                      </div>
-                    {% endif %}
-                    {% if buschenschank.email %}
-                      <div class="p-1">
-                        <a href="mailto:{{ buschenschank.email }}" title="{% trans 'Email' %}">
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
-                        </a>
-                      </div>
-                    {% endif %}
-                    {% if buschenschank.website %}
-                      <div class="p-1">
-                        <a href="{{ buschenschank.website }}" target="_blank" title="{% trans 'Website' %}">
-                          <i class="fa fa-globe" aria-hidden="true"></i>
-                        </a>
-                      </div>
-                    {% endif %}
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
+            {% include 'buschenschank/includes/buschenschank_list.html' %}
           {% endif %}
         {% endwith %}
 

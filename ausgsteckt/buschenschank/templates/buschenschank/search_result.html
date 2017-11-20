@@ -4,15 +4,17 @@
 
 {% block content %}
   <div class="container">
-    <h4>{{ results.count|default:0 }} {% trans 'Search results' %}</h4>
-    <div class="row">
-      <ul>
-        {% for result in results %}
-          <li><a href="{{ result.get_absolute_url }}">{{ result }}</a></li>
-        {% empty %}
-          <li>{% trans 'Nothing found' %}</li>
-        {% endfor %}
-      </ul>
-    </div>
+    {% if results.exists %}
+      <h4>{{ results.count|default:0 }} {% trans 'Search results' %}</h4>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          {% include 'buschenschank/includes/buschenschank_list.html' with buschenschank_list=results %}
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-warning" role="alert">
+        {% trans 'Nothing found' %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}
