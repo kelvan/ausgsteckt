@@ -12,7 +12,7 @@ function onEachFeature(feature, layer) {
       }
     })
   });
-}
+};
 
 function main_map_init (mapid, options) {
   map = L.map(mapid, {
@@ -40,4 +40,4 @@ function main_map_init (mapid, options) {
   	map.addLayer(markers);
   });
   map.locate({setView : true, maxZoom: 11});
-}
+};
