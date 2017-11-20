@@ -12,6 +12,9 @@ ALLOWED_HOSTS = [
     'ausgsteckt.ist-total.org'
 ]
 
+# pipeline keeps fucking up map js files
+PIPELINE['PIPELINE_ENABLED'] = False
+
 LOG_DIR = os.path.join(os.path.dirname(BASE_DIR), 'log')
 if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)
