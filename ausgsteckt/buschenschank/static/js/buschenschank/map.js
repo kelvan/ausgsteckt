@@ -26,7 +26,7 @@ function main_map_init (mapid, options) {
         }
     );
     map.addLayer(osm);
-    var basemap = L.tileLayer.provider("BasemapAT");
+    var basemap = L.tileLayer.provider("BasemapAT", {attribution: "Datenquelle: <a href=\"https://www.basemap.at\">basemap.at</a>"});
     var hikebike = L.tileLayer.provider("HikeBike");
     var mtbmap = L.tileLayer.provider("MtbMap");
     var opentopomap = L.tileLayer.provider("OpenTopoMap");
