@@ -1,7 +1,7 @@
 {% load static i18n %}
 
 <nav class="navbar navbar-expand-md navbar-dark static-top bg-dark">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="{% url 'index' %}">
     <img src="{% static 'images/raisin.svg' %}" width="30" height="30" alt="raisin">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,11 +10,12 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'buschenschank:buschenschank_map' %}">{% trans 'Map' %} <span class="sr-only">(current)</span></a>
+      {% url 'buschenschank:buschenschank_map' as buschenschank_map_url %}
+      <li class="nav-item{% if request.path == buschenschank_map_url %} active{% endif %}">
+        <a class="nav-link" href="{{ buschenschank_map_url }}"><strong>{% trans 'Map' %}</strong></a>
       </li>
       {% if regions %}
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown{% if '/region' in request.path %} active{% endif %}">
           <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Regions' %}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown_regions">
             {% for region in regions|slice:':15' %}
@@ -29,6 +30,13 @@
           </div>
         </li>
       {% endif %}
+      <li class="nav-item dropdown{% if '/osm/' in request.path %} active{% endif %}">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown_contribute" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Contribute' %}</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown_contribute">
+          <a class="dropdown-item" href="{% url 'data_quality:fixme_buschenschank' %}">{% trans 'Data quality' %}</a>
+          <a class="dropdown-item" href="{% url 'data_quality:fixme_websites' %}">{% trans 'Broken websites' %}</a>
+        </div>
+      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'buschenschank:search' %}">
       <input class="form-control mr-sm-2" name="q" type="text" placeholder="{% trans 'Search for buschenschank' %}" aria-label="Search"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %}>
