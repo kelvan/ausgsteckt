@@ -26,6 +26,19 @@ function main_map_init (mapid, options) {
         }
     );
     map.addLayer(osm);
+    var basemap = L.tileLayer.provider("BasemapAT");
+    var hikebike = L.tileLayer.provider("HikeBike");
+    var mtbmap = L.tileLayer.provider("MtbMap");
+    var opentopomap = L.tileLayer.provider("OpenTopoMap");
+
+    var baseMaps = {
+        "OpenStreetMap": osm,
+        "Basemap AT": basemap,
+        "HikeBike": hikebike,
+        "MtbMap": mtbmap,
+        "OpenTopoMap": opentopomap
+    };
+    L.control.layers(baseMaps).addTo(map);
     L.Icon.Default.imagePath = "/static/images/";
     L.control.scale().addTo(map);
 
