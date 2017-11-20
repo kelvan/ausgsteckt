@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block extrajs %}
+  {% javascript 'leaflet' %}
   {% javascript 'map' %}
   <script type="text/javascript" src="{% static 'js/leaflet.markercluster.js' %}"></script>
 {% endblock %}
