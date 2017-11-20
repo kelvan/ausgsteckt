@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-01 17:08+0100\n"
-"PO-Revision-Date: 2017-01-01 17:10+0100\n"
+"POT-Creation-Date: 2017-11-20 01:30+0100\n"
+"PO-Revision-Date: 2017-11-20 01:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,22 +16,55 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.4\n"
 
-#: ausgsteckt/settings/_base.py:116
+#: ausgsteckt/settings/_base.py:117
 msgid "German"
 msgstr "Deutsch"
 
-#: ausgsteckt/settings/_base.py:117
+#: ausgsteckt/settings/_base.py:118
 msgid "English"
 msgstr "Englisch"
 
-#: buschenschank/admin.py:86
+#: ausgsteckt/templates/includes/navbar.html:14
+msgid "Map"
+msgstr "Karte"
+
+#: ausgsteckt/templates/includes/navbar.html:18 buschenschank/models.py:182
+#: buschenschank/templates/buschenschank/region_list.html:7
+msgid "Regions"
+msgstr "Regionen"
+
+#: ausgsteckt/templates/includes/navbar.html:28
+msgid "View all regions"
+msgstr "Zeige alle Regionen"
+
+#: ausgsteckt/templates/includes/navbar.html:33
+msgid "Contribute"
+msgstr "Beitragen"
+
+#: ausgsteckt/templates/includes/navbar.html:35
+msgid "Data quality"
+msgstr "Datenqualität"
+
+#: ausgsteckt/templates/includes/navbar.html:36
+msgid "Broken websites"
+msgstr "Defekte Webseiten"
+
+#: ausgsteckt/templates/includes/navbar.html:41
+msgid "Search for buschenschank"
+msgstr "Buschenschank suchen"
+
+#: ausgsteckt/templates/includes/navbar.html:42
+msgid "Search"
+msgstr "Suchen"
+
+#: buschenschank/admin.py:88
 #, python-brace-format
 msgid "{created_count}/{updated_count} regions created/updated"
 msgstr "{created_count}/{updated_count} Regionen erstellt/aktualisiert"
 
-#: buschenschank/admin.py:92
+#: buschenschank/admin.py:94
 msgid "Generate/update region with commune info"
 msgstr "Erstelle/aktualisiere Regionen mit Gemeindeinfos"
 
@@ -59,9 +92,10 @@ msgstr "OSM Typ"
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: buschenschank/models.py:50 buschenschank/models.py:142
-#: buschenschank/models.py:181
-#: data_quality/templates/data_quality/buschenschank_list.html:17
+#: buschenschank/models.py:50 buschenschank/models.py:148
+#: buschenschank/models.py:187
+#: data_quality/templates/data_quality/broken_urls.html:21
+#: data_quality/templates/data_quality/buschenschank_list.html:20
 msgid "Name"
 msgstr "Name"
 
@@ -69,125 +103,167 @@ msgstr "Name"
 msgid "Coordinates"
 msgstr "Koordinaten"
 
-#: buschenschank/models.py:52
+#: buschenschank/models.py:53
+msgid "Last edit OSM user"
+msgstr "Letzte OSM Benutzeränderung"
+
+#: buschenschank/models.py:55
 msgid "Tags"
 msgstr "Tags"
 
-#: buschenschank/models.py:144
+#: buschenschank/models.py:150
 msgid "Description"
 msgstr "Beschreibung"
 
-#: buschenschank/models.py:144
+#: buschenschank/models.py:150
 msgid "Description shown on region page"
 msgstr "Auf Regionsseite angezeigte Beschreibung "
 
-#: buschenschank/models.py:148
+#: buschenschank/models.py:154
 msgid "Region image"
 msgstr "Regionsanzeigebild"
 
-#: buschenschank/models.py:149
+#: buschenschank/models.py:155
 msgid "Image displayed on region page"
 msgstr "Auf Regionsseite angezeigtes Bild"
 
-#: buschenschank/models.py:152
+#: buschenschank/models.py:158
 msgid "Areas"
 msgstr "Areale"
 
-#: buschenschank/models.py:153
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:25
-#: buschenschank/templates/buschenschank/region_detail.html:24
-#: data_quality/templates/data_quality/buschenschank_list.html:19
+#: buschenschank/models.py:159
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:26
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:30
+#: buschenschank/templates/buschenschank/region_detail.html:26
+#: data_quality/templates/data_quality/buschenschank_list.html:22
 msgid "Website"
 msgstr "Webseite"
 
-#: buschenschank/models.py:155
+#: buschenschank/models.py:161
 msgid "Calendar website"
 msgstr "Kalendarwebseite"
 
-#: buschenschank/models.py:158
+#: buschenschank/models.py:164
 msgid "Keywords"
 msgstr "Keywords"
 
-#: buschenschank/models.py:161
+#: buschenschank/models.py:167
 msgid "Notes"
 msgstr "Notizen"
 
-#: buschenschank/models.py:161
+#: buschenschank/models.py:167
 msgid "Internal notes"
 msgstr "Interne Notizen"
 
-#: buschenschank/models.py:175
+#: buschenschank/models.py:181
 msgid "Region"
 msgstr "Region"
 
-#: buschenschank/models.py:176
-#: buschenschank/templates/buschenschank/region_list.html:6
-msgid "Regions"
-msgstr "Regionen"
-
-#: buschenschank/models.py:182
+#: buschenschank/models.py:188
 msgid "District"
 msgstr "Bezirk"
 
-#: buschenschank/models.py:183
+#: buschenschank/models.py:189
 msgid "County"
 msgstr "Bundesland"
 
-#: buschenschank/models.py:184
+#: buschenschank/models.py:190
 msgid "Multipolygon"
 msgstr "Multipolygon"
 
-#: buschenschank/models.py:193
+#: buschenschank/models.py:199
 msgid "Commune"
 msgstr "Gemeinde"
 
-#: buschenschank/models.py:194
+#: buschenschank/models.py:200
 msgid "Communes"
 msgstr "Gemeinden"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:15
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:16
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:20
 msgid "Email"
 msgstr "Email"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:19
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:20
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:24
 msgid "Phone"
 msgstr "Telefon"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:34
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:35
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:39
 msgid "Opening hours"
 msgstr "Öffnungszeiten"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:38
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:39
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:43
 msgid "Opening hours info (external)"
 msgstr "Öffnungszeiten Information (extern)"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:55
+#: buschenschank/templates/buschenschank/api/buschenschank_detail.html:46
+msgid "Details"
+msgstr "Details"
+
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:60
 msgid "View at OpenStreetMap"
 msgstr "Auf OpenStreetMap anzeigen"
 
-#: buschenschank/templates/buschenschank/region_detail.html:29
+#: buschenschank/templates/buschenschank/region_detail.html:31
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: buschenschank/templates/buschenschank/region_detail.html:31
+#: buschenschank/templates/buschenschank/region_detail.html:33
 msgid "Calendar (external)"
 msgstr "Kalendar (extern)"
 
-#: buschenschank/templates/buschenschank/region_detail.html:37
-msgid "Buschenschänke"
-msgstr "Buschenschänke"
+#: buschenschank/templates/buschenschank/region_detail.html:40
+msgid "Buschenschänken"
+msgstr "Buschenschänken"
 
-#: buschenschank/templates/buschenschank/region_detail.html:53
-msgid "Back to map"
-msgstr "Zurück zur Karte"
-
-#: buschenschank/templates/buschenschank/region_detail.html:54
+#: buschenschank/templates/buschenschank/region_detail.html:57
 msgid "Back to region list"
 msgstr "Zurück zur Regionsliste"
 
-#: buschenschank/templates/buschenschank/region_list.html:10
+#: buschenschank/templates/buschenschank/region_list.html:11
 msgid "Buschenschank count"
 msgstr "Buschenschankanzahl"
+
+#: buschenschank/templates/buschenschank/search_result.html:7
+msgid "Search results"
+msgstr "Suchergebnisse"
+
+#: buschenschank/templates/buschenschank/search_result.html:12
+#: data_quality/templates/data_quality/buschenschank_list.html:66
+msgid "Nothing found"
+msgstr "Keine Einträge gefunden"
+
+#: data_quality/templates/data_quality/broken_urls.html:9
+msgid "No broken websites found"
+msgstr "Keine defekten Webseiten gefunden"
+
+#: data_quality/templates/data_quality/broken_urls.html:15
+msgid "Error Count"
+msgstr "Fehleranzahl"
+
+#: data_quality/templates/data_quality/broken_urls.html:22
+msgid "Tag Key"
+msgstr ""
+
+#: data_quality/templates/data_quality/broken_urls.html:23
+msgid "URL"
+msgstr ""
+
+#: data_quality/templates/data_quality/broken_urls.html:24
+msgid "Status Code"
+msgstr ""
+
+#: data_quality/templates/data_quality/broken_urls.html:25
+msgid "Error"
+msgstr "Fehler"
+
+#: data_quality/templates/data_quality/broken_urls.html:26
+#: data_quality/templates/data_quality/buschenschank_list.html:25
+msgid "View details"
+msgstr "Details anzeigen"
 
 #: data_quality/templates/data_quality/buschenschank_list.html:9
 #, python-format
@@ -202,27 +278,26 @@ msgstr ""
 "mit vollständigen Daten\">%(total)s</abbr> angezeigt.\n"
 "        "
 
-#: data_quality/templates/data_quality/buschenschank_list.html:18
-#: data_quality/templates/data_quality/buschenschank_list.html:46
+#: data_quality/templates/data_quality/buschenschank_list.html:14
+msgid "Remove city filter"
+msgstr "Ortfilter entfernen"
+
+#: data_quality/templates/data_quality/buschenschank_list.html:21
+#: data_quality/templates/data_quality/buschenschank_list.html:49
 msgid "Address"
 msgstr "Adresse"
 
-#: data_quality/templates/data_quality/buschenschank_list.html:20
+#: data_quality/templates/data_quality/buschenschank_list.html:23
 msgid "Fixme"
 msgstr "Fixme"
 
-#: data_quality/templates/data_quality/buschenschank_list.html:21
+#: data_quality/templates/data_quality/buschenschank_list.html:24
 msgid "Coverage"
 msgstr "Abdeckung"
 
-#: data_quality/templates/data_quality/buschenschank_list.html:22
-msgid "View details"
-msgstr "Details anzeigen"
-
-#: data_quality/templates/data_quality/buschenschank_list.html:50
+#: data_quality/templates/data_quality/buschenschank_list.html:53
 msgid "Contact"
 msgstr "Kontakt"
 
-#: data_quality/templates/data_quality/buschenschank_list.html:63
-msgid "Nothing found"
-msgstr "Keine Einträge gefunden"
+#~ msgid "Back to map"
+#~ msgstr "Zurück zur Karte"
