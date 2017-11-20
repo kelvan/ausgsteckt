@@ -14,3 +14,7 @@ body {
 .navbar {
   min-height: 56px;
 }
+
+div.container {
+  padding-bottom: 2em;
+}

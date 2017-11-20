@@ -52,8 +52,8 @@ class PublicBuschenschankGeoJsonView(ListView):
         return HttpResponse(data, content_type='application/json')
 
 
-class RegionListView(ListView):
-    model = Region
+class RegionListView(TemplateView):
+    template_name = 'buschenschank/region_list.html'
 
 
 class RegionDetailView(DetailView):
