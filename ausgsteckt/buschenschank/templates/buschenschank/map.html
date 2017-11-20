@@ -8,13 +8,10 @@
 
 {% block extracss %}
   {% stylesheet 'map' %}
-  <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.css' %}" />
-  <link media="all" rel="stylesheet" type="text/css" href="{% static 'css/MarkerCluster.Default.css' %}" />
 {% endblock %}
 
 {% block extrajs %}
   {% javascript 'map' %}
-  <script type="text/javascript" src="{% static 'js/leaflet.markercluster.js' %}"></script>
 {% endblock %}
 
 {% block bodyattr %}

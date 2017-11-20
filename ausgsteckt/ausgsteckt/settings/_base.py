@@ -133,6 +133,7 @@ PIPELINE = {
                 'node_modules/leaflet-plugins/control/Permalink.Marker.js',
                 'node_modules/leaflet-plugins/control/Permalink.Layer.js',
                 'node_modules/leaflet-plugins/control/Permalink.Overlay.js',
+                'js/leaflet.markercluster.js',
                 'js/buschenschank/map.js',
             ),
             'output_filename': 'js/map.js'
@@ -158,6 +159,8 @@ PIPELINE = {
             'source_filenames': (
                 'css/buschenschank/map.css',
                 'node_modules/leaflet/dist/leaflet.css',
+                'css/MarkerCluster.css',
+                'css/MarkerCluster.Default.css',
             ),
             'output_filename': 'css/map.css',
         },
