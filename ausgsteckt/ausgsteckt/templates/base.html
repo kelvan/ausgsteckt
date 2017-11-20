@@ -4,10 +4,15 @@
   <head>
     <title>{% block title %}Ausgsteckt{% if page_title %} - {{ page_title }}{% endif %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
     {% stylesheet 'libs' %}
     {% stylesheet 'main' %}
     {% block extracss %}{% endblock %}
 
+    <meta charset="utf-8">
+    {% block viewport %}
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% endblock %}
     <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,OpenStreetMap,OpenData">
     {% block extrameta %}{% endblock %}
   </head>

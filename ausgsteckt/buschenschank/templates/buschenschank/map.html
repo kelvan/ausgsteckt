@@ -2,7 +2,7 @@
 
 {% load staticfiles pipeline %}
 
-{% block extrameta %}
+{% block viewport %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 {% endblock %}
 
@@ -22,11 +22,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container-fluid">
-    <div class="row">
-      <div id="buschenschank_maps" data-geojson-url="{% url 'buschenschank:buschenschank.geojson' %}" data-details-url="{% url 'buschenschank:buschenschank_details_api' '000' %}">
-        <div id="ausgstecktmap"></div>
-      </div>
-    </div>
+  <div id="buschenschank_maps" data-geojson-url="{% url 'buschenschank:buschenschank.geojson' %}" data-details-url="{% url 'buschenschank:buschenschank_details_api' '000' %}">
+    <div id="ausgstecktmap"></div>
   </div>
 {% endblock %}

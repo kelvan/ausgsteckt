@@ -5,3 +5,12 @@
 main#content > div.container {
   padding-top: 1em;
 }
+
+body {
+  /* height of .navbar, customize with @navbar-height variable */
+  padding-top: 56px;
+}
+
+.navbar {
+  min-height: 56px;
+}
