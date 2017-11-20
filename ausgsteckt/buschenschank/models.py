@@ -131,6 +131,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     def get_osm_url(self):
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
+    def get_map_permalink(self):
+        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(
+            baseUrl=reverse('buschenschank:buschenschank_map'), buschenschank=self, zoom=18, layer='OpenStreetMap')
+
     def get_absolute_url(self):
         return reverse('buschenschank:buschenschank_details', kwargs={'pk': self.pk})
 

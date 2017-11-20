@@ -53,5 +53,7 @@ function main_map_init (mapid, options) {
         markers.addLayer(geoJsonLayer);
         map.addLayer(markers);
     });
-    map.locate({setView : true, maxZoom: 11});
+    if(!window.location.hash) {
+        map.locate({setView : true, maxZoom: 11});
+    }
 }
