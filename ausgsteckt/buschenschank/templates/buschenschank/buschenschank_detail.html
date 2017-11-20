@@ -8,6 +8,11 @@
       <h2>
         {{ buschenschank.name }}
         {% if region %}(<a href="{% url 'buschenschank:region_details' region.pk %}">{{ region.name }}</a>){% endif %}
+        {% if user.is_staff %}
+          <a href="{{ buschenschank.get_admin_url }}">
+            <small><i class="fa fa-pencil" aria-hidden="true" title="{% trans 'edit' %}"></i></small>
+          </a>
+        {% endif %}
       </h2>
     {% endwith %}
 

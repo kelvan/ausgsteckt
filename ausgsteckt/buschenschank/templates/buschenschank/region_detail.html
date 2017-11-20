@@ -4,7 +4,14 @@
 
 {% block content %}
   <div class="container">
-    <h2>{{ region.name }}&nbsp;{% if user.is_staff %}<a href="{{ region.get_admin_url }}"><small><i class="fa fa-pencil" aria-hidden="true"></i></small></a>{% endif %}</h2>
+    <h2>
+      {{ region.name }}
+      {% if user.is_staff %}
+        <a href="{{ region.get_admin_url }}">
+          <small><i class="fa fa-pencil" aria-hidden="true" title="{% trans 'edit' %}"></i></small>
+        </a>
+      {% endif %}
+    </h2>
     <div class="row">
       <div class="col-xs-2 col-md-2 img_region">
         {% if region.region_image %}
