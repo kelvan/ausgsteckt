@@ -178,6 +178,7 @@ THUMBNAIL_ALIASES = {
     '': {
         'details': {'size': (150, 0), 'crop': False},
         'dropdown': {'size': (15, 15), 'crop': False},
+        'list': {'size': (25, 25), 'crop': False},
     },
 }
 
