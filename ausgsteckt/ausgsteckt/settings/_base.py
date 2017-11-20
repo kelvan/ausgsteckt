@@ -158,8 +158,8 @@ PIPELINE = {
         },
         'libs': {
             'source_filenames': (
-                'node_modules/bootstrap/dist/css/bootstrap.css',
-                'node_modules/font-awesome/css/font-awesome.css',
+                'node_modules/bootstrap/dist/css/bootstrap.min.css',
+                'node_modules/font-awesome/css/font-awesome.min.css',
             ),
             'output_filename': 'css/libs.css',
         }
