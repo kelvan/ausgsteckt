@@ -2,5 +2,5 @@ from .models import Region
 
 
 def region_list(request):
-    # TODO sort by buschenschank count
-    return {'regions': Region.objects.all()}
+    regions = sorted(Region.objects.all(), key=lambda r: r.get_buschenschank().count(), reverse=True)
+    return {'regions': regions}

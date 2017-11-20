@@ -19,12 +19,14 @@
           <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Regions' %}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown_regions">
             {% for region in regions|slice:':15' %}
-              <a class="dropdown-item" href="{{ region.get_absolute_url }}">
-                {% if region.region_image %}
-                  <img src="{{ region.region_image.dropdown.url }}">
-                {% endif %}
-                {{ region.name }}
-              </a>
+              {% if region.get_buschenschank.exists %}
+                <a class="dropdown-item" href="{{ region.get_absolute_url }}">
+                  {% if region.region_image %}
+                    <img src="{{ region.region_image.dropdown.url }}">
+                  {% endif %}
+                  {{ region.name }} ({{ region.get_buschenschank.count }})
+                </a>
+              {% endif %}
             {% endfor %}
             <a class="dropdown-item" href="{% url 'buschenschank:region_list' %}">{% trans 'View all regions' %}</a>
           </div>
