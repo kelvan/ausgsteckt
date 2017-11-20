@@ -128,14 +128,9 @@ PIPELINE = {
         'map': {
             'source_filenames': (
                 'js/buschenschank/map.js',
+                'node_modules/leaflet/dist/leaflet.js',
             ),
             'output_filename': 'js/map.js'
-        },
-        'leaflet': {
-            'source_filenames': (
-                'node_modules/leaflet/dist/leaflet-src.js',
-            ),
-            'output_filename': 'js/leaflet.js'
         },
         'libs': {
             'source_filenames': (
