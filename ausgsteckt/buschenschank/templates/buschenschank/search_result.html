@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class="container">
-    <h4>{{ results.count }} {% trans 'Search results' %}</h4>
+    <h4>{{ results.count|default:0 }} {% trans 'Search results' %}</h4>
     <div class="row">
       <ul>
         {% for result in results %}
