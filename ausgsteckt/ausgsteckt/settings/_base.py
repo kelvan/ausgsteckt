@@ -123,7 +123,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 PIPELINE = {
     'PIPELINE_ENABLED': True,
-    'JS_COMPRESSOR': 'pipeline.compressors.jsmin.JSMinCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.NoopCompressor',
     'JAVASCRIPT': {
         'map': {
             'source_filenames': (
