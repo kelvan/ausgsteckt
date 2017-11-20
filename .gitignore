@@ -21,3 +21,4 @@ secret.key
 *.psql
 *.sql
 .idea/
+sentry_settings.py
