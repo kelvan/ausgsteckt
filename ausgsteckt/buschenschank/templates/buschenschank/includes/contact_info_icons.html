@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="p-1">
+  <a href="{% if buschenschank.phone %}tel:{{ buschenschank.phone|cut:' ' }}{% else %}#{% endif %}">
+    <i class="fa fa-phone{% if not buschenschank.phone %} text-muted{% endif %}" aria-hidden="true" title="{% trans 'Phone' %}"></i>
+  </a>
+</div>
+
+<div class="p-1">
+  <a href="{% if buschenschank.email %}mailto:{{ buschenschank.email }}{% else %}#{% endif %}">
+    <i class="fa fa-envelope{% if not buschenschank.email %} text-muted{% endif %}" aria-hidden="true" title="{% trans 'Email' %}"></i>
+  </a>
+</div>
+
+<div class="p-1">
+  <a href="{{ buschenschank.website|default:'' }}" target="_blank">
+    <i class="fa fa-globe{% if not buschenschank.website %} text-muted{% endif %}" aria-hidden="true" title="{% trans 'Website' %}"></i>
+  </a>
+</div>

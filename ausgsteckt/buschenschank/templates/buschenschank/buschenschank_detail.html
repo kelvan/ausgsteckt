@@ -1,70 +1,18 @@
 {% extends 'base.html' %}
 
-{% load i18n osm_tags %}
+{% load i18n %}
 
 {% block content %}
   <div class="container">
-    {% with region=buschenschank.get_region %}
-      <h2>
-        {{ buschenschank.name }}
-        {% if region %}(<a href="{% url 'buschenschank:region_details' region.pk %}">{{ region.name }}</a>){% endif %}
-        {% if user.is_staff %}
-          <a href="{{ buschenschank.get_admin_url }}">
-            <small><i class="fa fa-pencil" aria-hidden="true" title="{% trans 'edit' %}"></i></small>
-          </a>
-        {% endif %}
-      </h2>
-    {% endwith %}
+    <div id="accordion" role="tablist">
+      {% include 'buschenschank/includes/buschenschank_description_card.html' %}
 
-    <dl class="buschenschank-description">
-      <ul class="list-unstyled">
-        {% if buschenschank.address %}
-          <li><strong>{{ buschenschank.address }}</strong></li>
-        {% endif %}
-        {% if buschenschank.email %}
-          <li>{% trans 'Email' %}: {{ buschenschank.email|urlize }}</li>
-        {% endif %}
-        {% if buschenschank.phone %}
-          <li>
-            {% trans 'Phone' %}:
-            <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
-          </li>
-        {% endif %}
-        {% if buschenschank.website %}
-          <li>
-            {% trans 'Website' %}:
-            <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
-          </li>
-        {% endif %}
-      </ul>
-      {% osmtag buschenschank 'opening_hours' as opening_hours %}
-      {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
+      {# TODO View mini map of area #}
 
-      {% if opening_hours or opening_hours_url %}
-        <dl>
-          <dt>{% trans 'Opening hours' %}</dt>
-          <dd>
-            {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
-            {% if opening_hours_url %}
-              <a href="{{ opening_hours_url }}" target="_blank">{% trans 'Opening hours info (external)' %}</a>
-            {% endif %}
-          </dd>
-        </dl>
-      {% endif %}
-    </dl>
+      {% include 'buschenschank/includes/osm_tags_card.html' %}
 
-    {# TODO Show zoom to node button #}
-
-    <div id="tag-block" class="details-block">
-      <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;<strong>Tags</strong></span><br>
-      <dl id="buschenschank-tags" class="dl-horizontal">
-        {% for tag, value in buschenschank.tags.items %}
-          <dt>{{ tag }}</dt>
-          <dd>{{ value|urlize }}</dd>
-        {% endfor %}
-      </dl>
+      <a class="btn btn-info" href="{{ buschenschank.get_map_permalink }}">{% trans 'View on the map' %}</a>
+      <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
     </div>
-    <a class="btn btn-info" href="{{ buschenschank.get_map_permalink }}">{% trans 'View on the map' %}</a>
-    <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
   </div>
 {% endblock %}
