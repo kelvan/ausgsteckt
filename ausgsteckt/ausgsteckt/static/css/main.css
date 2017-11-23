@@ -19,6 +19,10 @@ div.container {
   padding-bottom: 2em;
 }
 
+a {
+  color: indigo;
+}
+
 .badge-raisin {
     color: #fff;
     background-color: indigo;
