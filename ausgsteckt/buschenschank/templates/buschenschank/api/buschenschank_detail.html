@@ -32,13 +32,15 @@
 {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
 
 {% if opening_hours or opening_hours_url %}
-  <dt>{% trans 'Opening hours' %}</dt>
-  <dd>
-    {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
-    {% if opening_hours_url %}
-      <a href="{{ opening_hours_url }}" target="_blank">{% trans 'Opening hours info (external)' %}</a>
-    {% endif %}
+  <dl>
+    <dt>{% trans 'Opening hours' %}</dt>
+    <dd>
+      {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
+      {% if opening_hours_url %}
+        <a href="{{ opening_hours_url }}" target="_blank">{% trans 'Opening hours info (external)' %}</a>
+      {% endif %}
     </dd>
+  </dl>
 {% endif %}
 
 {# TODO Show zoom to node button #}
