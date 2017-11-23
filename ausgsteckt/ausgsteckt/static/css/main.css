@@ -18,3 +18,13 @@ body {
 div.container {
   padding-bottom: 2em;
 }
+
+.badge-raisin {
+    color: #fff;
+    background-color: indigo;
+}
+
+.badge-raisin-light {
+    color: indigo;
+    background-color: #f8f9fa;
+}
