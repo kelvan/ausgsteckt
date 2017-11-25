@@ -20,7 +20,7 @@
             {% trans 'Regions' %}
           </a>
           <div class="dropdown-menu" aria-labelledby="dropdown_regions">
-            {% for region in regions|slice:':15' %}
+            {% for region in regions|slice:':10' %}
               {% if region.get_buschenschank.exists %}
                 <a class="dropdown-item" href="{{ region.get_absolute_url }}">
                   {% if region.region_image %}
