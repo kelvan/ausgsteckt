@@ -1,4 +1,4 @@
-{% load static template_check pipeline %}
+{% load static template_check pipeline i18n %}
 
 <html>
   <head>
@@ -13,7 +13,8 @@
     {% block viewport %}
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% endblock %}
-    <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,OpenStreetMap,OpenData">
+    <meta name="description" content="{% trans 'Information about Heurige in austria' %}">
+    <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,austria,OpenStreetMap,OpenData">
     {% block extrameta %}{% endblock %}
   </head>
   <body {% block bodyattr %}{% endblock %}>

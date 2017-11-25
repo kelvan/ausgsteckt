@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-25 14:50+0100\n"
-"PO-Revision-Date: 2017-11-25 14:48+0100\n"
+"POT-Creation-Date: 2017-11-25 15:06+0100\n"
+"PO-Revision-Date: 2017-11-25 15:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -26,13 +26,17 @@ msgstr "Deutsch"
 msgid "English"
 msgstr "Englisch"
 
-#: ausgsteckt/templates/includes/navbar.html:15
+#: ausgsteckt/templates/base.html:16
+msgid "Information about Heurige in austria"
+msgstr "Informationen über Heurige in Österreich"
+
+#: ausgsteckt/templates/includes/navbar.html:15 buschenschank/views.py:25
 msgid "Map"
 msgstr "Karte"
 
 #: ausgsteckt/templates/includes/navbar.html:20 buschenschank/models.py:195
 #: buschenschank/templates/buschenschank/region_list.html:7
-#: buschenschank/views.py:66
+#: buschenschank/views.py:71
 msgid "Regions"
 msgstr "Regionen"
 
@@ -249,7 +253,7 @@ msgstr "Suchergebnisse"
 msgid "Nothing found"
 msgstr "Keine Einträge gefunden"
 
-#: buschenschank/views.py:78
+#: buschenschank/views.py:83
 msgid "Search results for \"{}\""
 msgstr "Suchergebnisse für \"{}\""
 
