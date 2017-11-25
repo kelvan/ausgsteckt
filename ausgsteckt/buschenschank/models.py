@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.postgres.fields import JSONField
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
@@ -56,6 +57,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     # include removed objects
     all = models.Manager()
+
+    @property
+    def slug(self):
+        return slugify(self.name)
 
     @property
     def latitude(self):
@@ -136,7 +141,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
             baseUrl=reverse('buschenschank:buschenschank_map'), buschenschank=self, zoom=18, layer='OpenStreetMap')
 
     def get_absolute_url(self):
-        return reverse('buschenschank:buschenschank_details', kwargs={'pk': self.pk})
+        return reverse('buschenschank:buschenschank_details', kwargs={'pk': self.pk, 'slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -175,8 +180,12 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     def __str__(self):
         return self.name
 
+    @property
+    def slug(self):
+        return slugify(self.name)
+
     def get_absolute_url(self):
-        return reverse('buschenschank:region_details', kwargs={'pk': self.pk})
+        return reverse('buschenschank:region_details', kwargs={'pk': self.pk, 'slug': self.slug})
 
     def get_buschenschank(self):
         return Buschenschank.objects.filter(coordinates__intersects=self.areas)

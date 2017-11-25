@@ -15,5 +15,5 @@ urlpatterns = [
         name='index'
     ),
     url(r'^buschenschank/', include('buschenschank.urls')),
-    url(r'^osm/', include('data_quality.urls'))
+    url(r'^osm/', include('data_quality.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

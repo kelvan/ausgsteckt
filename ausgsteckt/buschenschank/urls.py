@@ -23,7 +23,11 @@ urlpatterns = [
         name='buschenschank_details_api'
     ),
     url(
-        r'^buschenschank/(?P<pk>\d+)$', BuschenschankDetailView.as_view(),
+        r'^buschenschank/(?P<pk>\d+)/$', BuschenschankDetailView.as_view(),
+        name='buschenschank_details'
+    ),
+    url(
+        r'^buschenschank/(?P<pk>\d+)-(?P<slug>[\w_-]+)/$', BuschenschankDetailView.as_view(),
         name='buschenschank_details'
     ),
     url(
@@ -33,7 +37,10 @@ urlpatterns = [
         ), name='buschenschank.geojson'
     ),
     url(
-        r'region/(?P<pk>\d+)', RegionDetailView.as_view(), name='region_details'
+        r'region/(?P<pk>\d+)/', RegionDetailView.as_view(), name='region_details'
+    ),
+    url(
+        r'region/(?P<pk>\d+)-(?P<slug>[\w_-]+)/', RegionDetailView.as_view(), name='region_details'
     ),
     url(
         r'regions/', RegionListView.as_view(), name='region_list'

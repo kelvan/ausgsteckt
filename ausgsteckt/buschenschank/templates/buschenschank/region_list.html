@@ -16,7 +16,7 @@
                 </div>
               {% endif %}
               <div class="p-1">
-                <a href="{% url 'buschenschank:region_details' region.pk %}">{{ region }}</a>
+                <a href="{{ region.get_absolute_url }}">{{ region }}</a>
               </div>
             </div>
             <span class="badge badge-raisin badge-pill" title="{% trans 'Buschenschank count' %}">
