@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 
 from .apps import BuschenschankConfig
 from .views import (
-    BuschenschankDetailView, BuschenschankAPIDetailView, PublicBuschenschankGeoJsonView, RegionListView, RegionDetailView, SearchView
+    MainMapView, BuschenschankDetailView, BuschenschankAPIDetailView, PublicBuschenschankGeoJsonView, RegionListView,
+    RegionDetailView, SearchView
 )
 
 app_name = BuschenschankConfig.name
@@ -15,7 +16,7 @@ urlpatterns = [
         name='overview'
     ),
     url(
-        r'^map/$', TemplateView.as_view(template_name='buschenschank/map.html'),
+        r'^map/$', MainMapView.as_view(),
         name='buschenschank_map'
     ),
     url(

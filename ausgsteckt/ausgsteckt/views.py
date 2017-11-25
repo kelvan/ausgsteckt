@@ -34,3 +34,15 @@ class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, Bas
             return self.render_to_json_response(context)
         else:
             return super().render_to_response(context)
+
+
+class PageTitleMixin:
+    page_title = None
+
+    def get_page_title(self):
+        return self.page_title
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = self.get_page_title()
+        return context

@@ -4,15 +4,18 @@ import csv
 from django.conf import settings
 from django.http import Http404
 from django.views.generic import ListView, TemplateView
+from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
+from ausgsteckt.views import PageTitleMixin
 
 from buschenschank.models import Buschenschank
 
 
-class IncompleteBuschenschankList(ListView):
+class IncompleteBuschenschankList(PageTitleMixin, ListView):
     model = Buschenschank
     template_name = 'data_quality/buschenschank_list.html'
+    page_title = _('Data quality')
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -49,8 +52,9 @@ class IncompleteBuschenschankList(ListView):
         return context
 
 
-class BrokenURLView(TemplateView):
+class BrokenURLView(PageTitleMixin, TemplateView):
     template_name = 'data_quality/broken_urls.html'
+    page_title = _('Broken websites')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
