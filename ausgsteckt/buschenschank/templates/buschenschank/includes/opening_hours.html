@@ -1,2 +1,4 @@
+{% load osm_tags %}
+
 {# TODO parse opening_hours render nice representation #}
-{{ opening_hours }}
+{{ opening_hours|format_value_list:'opening_hours' }}
