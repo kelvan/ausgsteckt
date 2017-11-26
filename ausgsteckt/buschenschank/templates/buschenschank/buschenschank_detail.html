@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n pipeline %}
 
 {% block content %}
   <div class="container">
     <div id="accordion" role="tablist">
       {% include 'buschenschank/includes/buschenschank_description_card.html' %}
-
-      {# TODO View mini map of area #}
 
       {% if buschenschank.get_nearby.exists %}
         {% include 'buschenschank/includes/nearby_card_card.html' with nearby=buschenschank.get_nearby %}
@@ -18,4 +16,16 @@
       <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
     </div>
   </div>
+{% endblock %}
+
+{% block extracss %}
+  {% stylesheet 'map' %}
+{% endblock %}
+
+{% block extrajs %}
+  {% javascript 'map' %}
+{% endblock %}
+
+{% block bodyattr %}
+  onload="small_map_init('ausgstecktmap')"
 {% endblock %}

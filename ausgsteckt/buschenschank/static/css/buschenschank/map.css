@@ -7,6 +7,9 @@
   height: 100%;
   width:  100%;
 }
+.map-small {
+    min-height: 250px;
+}
 .sidebar-close {
   cursor: pointer;
 }

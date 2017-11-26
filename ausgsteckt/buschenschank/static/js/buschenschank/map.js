@@ -57,3 +57,33 @@ function main_map_init (mapid, options) {
         map.locate({setView : true, maxZoom: 11});
     }
 }
+
+function small_map_init (mapid, options) {
+    var zoom = $("#buschenschank_maps").data("zoom");
+    var lat = $("#buschenschank_maps").data("lat");
+    var lon = $("#buschenschank_maps").data("lon");
+    map = L.map(mapid, {
+        zoom: zoom, center: L.latLng(lat, lon), closePopupOnClick: false
+    });
+    var osmUrl="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    var osmAttrib="Map data © <a href=\"https://openstreetmap.org\">OpenStreetMap</a> contributors";
+    var osm = new L.TileLayer(
+        osmUrl, {
+            minZoom: 5, maxZoom: 18, attribution: osmAttrib
+        }
+    );
+    map.addLayer(osm);
+    L.Icon.Default.imagePath = "/static/images/";
+    L.control.scale().addTo(map);
+
+    window.map = map;
+    var dataurl = $("#buschenschank_maps").data("geojson-url");
+    // Download GeoJSON via Ajax
+    $.getJSON(dataurl, function (data) {
+        var markers = L.markerClusterGroup();
+        // Add GeoJSON layer
+        var geoJsonLayer = L.geoJson(data, {onEachFeature: onEachFeature});
+        markers.addLayer(geoJsonLayer);
+        map.addLayer(markers);
+    });
+}
