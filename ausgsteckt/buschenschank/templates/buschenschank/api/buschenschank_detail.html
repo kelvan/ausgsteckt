@@ -2,12 +2,12 @@
 
 {% load i18n osm_tags %}
 
-{% with region=buschenschank.get_region %}
-  <h4>
-    {{ buschenschank.name }}
-    {% if region %}(<a href="{% url 'buschenschank:region_details' region.pk %}">{{ region.name }}</a>){% endif %}
-  </h4>
-{% endwith %}
+<h4>
+  {{ buschenschank.name }}
+  {% if buschenschank.region %}
+    (<a href="{{ buschenschank.region.get_absolute_url }}">{{ buschenschank.region.name }}</a>)
+  {% endif %}
+</h4>
 <ul class="list-unstyled">
   {% if buschenschank.address %}
     <li><strong>{{ buschenschank.address }}</strong></li>
@@ -42,8 +42,6 @@
     </dd>
   </dl>
 {% endif %}
-
-{# TODO Show zoom to node button #}
 
 <a class="btn btn-info text-light" href="{{ buschenschank.get_absolute_url }}" role="button">{% trans 'Details' %}&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 

@@ -9,9 +9,12 @@
 
       {# TODO View mini map of area #}
 
+      {% if buschenschank.get_nearby.exists %}
+        {% include 'buschenschank/includes/nearby_card_card.html' with nearby=buschenschank.get_nearby %}
+      {% endif %}
       {% include 'buschenschank/includes/osm_tags_card.html' %}
 
-      <a class="btn btn-info" href="{{ buschenschank.get_map_permalink }}">{% trans 'View on the map' %}</a>
+      <a class="btn btn-info" href="{{ buschenschank.get_map_permalink }}"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;{% trans 'View on the map' %}</a>
       <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
     </div>
   </div>

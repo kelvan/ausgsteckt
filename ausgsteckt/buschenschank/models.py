@@ -1,8 +1,11 @@
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Distance as D
+from django.contrib.gis.db.models.functions import Distance
 from django.contrib.postgres.fields import JSONField
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import cached_property
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -22,6 +25,7 @@ class AdminURLMixin:
 
 
 class PublicManager(models.Manager):
+
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(published=True)
@@ -130,8 +134,16 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     def email(self):
         return self.tags.get('contact:email') or self.tags.get('email')
 
-    def get_region(self):
+    @cached_property
+    def region(self):
         return Region.objects.filter(areas__contains=self.coordinates).first()
+
+    def get_nearby(self, distance_km=1.5):
+        nearby = Buschenschank.objects.exclude(pk=self.pk).annotate(
+            distance=Distance('coordinates', self.coordinates)
+        ).order_by('distance')
+        nearby = nearby.filter(distance__lte=D(km=distance_km))
+        return nearby
 
     def get_osm_url(self):
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
