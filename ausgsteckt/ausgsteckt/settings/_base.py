@@ -25,9 +25,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'django.contrib.gis',
     'easy_thumbnails',
     'pipeline',
+    'ckeditor',
     'ausgsteckt',
     'buschenschank',
     'data_quality'
@@ -87,6 +90,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+SITE_ID = 1
 
 LANGUAGE_CODE = 'de-at'
 
@@ -174,6 +179,18 @@ THUMBNAIL_ALIASES = {
         'dropdown': {'size': (15, 15), 'crop': False},
         'list': {'size': (25, 25), 'crop': False},
     },
+}
+
+CKEDITOR_CONFIGS = {
+    'flatpage': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Format', 'Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
 }
 
 # OSM settings
