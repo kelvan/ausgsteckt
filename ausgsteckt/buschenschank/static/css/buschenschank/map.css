@@ -4,11 +4,9 @@
 }
 #buschenschank_maps {
   transition: width 0.3s ease, margin 0.3s ease;
-  height: 100%;
-  width:  100%;
 }
 .map-small {
-    min-height: 250px;
+    height: 250px;
 }
 .sidebar-close {
   cursor: pointer;
