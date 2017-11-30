@@ -23,39 +23,22 @@
         <div class="row">
           <div class="col-sm">
             <dl class="buschenschank-description">
-              <ul class="list-unstyled">
-                {% if buschenschank.address %}
-                  <li><strong>{{ buschenschank.address }}</strong></li>
-                {% endif %}
-                {% if buschenschank.email %}
-                  <li>{% trans 'Email' %}: {{ buschenschank.email|urlize }}</li>
-                {% endif %}
-                {% if buschenschank.phone %}
-                  <li>
-                    {% trans 'Phone' %}:
-                    <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
-                  </li>
-                {% endif %}
-                {% if buschenschank.website %}
-                  <li>
-                    {% trans 'Website' %}:
-                    <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
-                  </li>
-                {% endif %}
-              </ul>
+              <!-- Contact info -->
+              {% include 'buschenschank/includes/contact_details_list.html' %}
+
               {% osmtag buschenschank 'opening_hours' as opening_hours %}
               {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
 
               {% if opening_hours or opening_hours_url %}
-                <dl>
-                <dt>{% trans 'Opening hours' %}</dt>
-                  <dd>
-                    {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
-                    {% if opening_hours_url %}
+                <h5>{% trans 'Opening hours' %}</h5>
+                <ul>
+                  {% if opening_hours_url %}
+                    <li>
                       <a href="{{ opening_hours_url }}" target="_blank">{% trans 'Opening hours info (external)' %}</a>
-                    {% endif %}
-                  </dd>
-                </dl>
+                    </li>
+                  {% endif %}
+                  {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
+                </ul>
               {% endif %}
             </dl>
           </div>

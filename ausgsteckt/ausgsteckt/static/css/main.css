@@ -56,3 +56,7 @@ a {
     color: indigo;
     background-color: #f8f9fa;
 }
+
+ul.contact-list > #address {
+    margin-bottom: 1em;
+}

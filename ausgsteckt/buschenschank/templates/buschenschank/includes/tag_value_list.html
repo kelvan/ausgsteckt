@@ -3,11 +3,9 @@
     <span class="badge badge-pill badge-light">{{ value }}</span>
   {% endfor %}
 {% elif make_list %}
-  <ul>
-    {% for value in values %}
-      <li>{{ value }}</li>
-    {% endfor %}
-  </ul>
+  {% for value in values %}
+    <li>{{ value }}</li>
+  {% endfor %}
 {% else %}
   {% for value in values %}
     {% if forloop.counter0 %},&nbsp;{% endif %}{{ value }}
