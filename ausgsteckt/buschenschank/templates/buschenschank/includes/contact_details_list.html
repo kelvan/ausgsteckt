@@ -4,22 +4,31 @@
   {% if buschenschank.address %}
     <li id="address"><strong>{{ buschenschank.address }}</strong></li>
   {% endif %}
+
   {% if buschenschank.email %}
     <li>
       <i class="fa fa-envelope" aria-hidden="true" title="{% trans 'Email' %}"></i>&nbsp;
       {{ buschenschank.email|urlize }}
     </li>
   {% endif %}
+
   {% if buschenschank.phone %}
     <li>
       <i class="fa fa-phone" aria-hidden="true" title="{% trans 'Phone' %}"></i>&nbsp;
       <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
     </li>
   {% endif %}
+
   {% if buschenschank.website %}
     <li>
       <i class="fa fa-globe" aria-hidden="true" title="{% trans 'Website' %}"></i>&nbsp;
       <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
     </li>
+  {% endif %}
+
+  {% osmtag buschenschank 'contact:facebook' as fb %}
+  <i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp;
+  {% if fb %}
+    <a href="{{ fb }}" target="_blank">Facebook</a>
   {% endif %}
 </ul>
