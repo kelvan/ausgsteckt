@@ -4,13 +4,13 @@
 
 {% block content %}
   {% if error_list|length == 0 %}
-    <p class="text-center bg-success"">
+    <p class="text-center bg-success">
       <strong>
         {% trans 'No broken websites found' %}
       </strong>
     </p>
   {% else %}
-    <p class="text-center bg-danger"">
+    <p class="text-center bg-danger">
       <strong>
         {% trans 'Error Count' %}: {{ error_list|length }}
       </strong>
