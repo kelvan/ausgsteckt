@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-26 16:10+0100\n"
-"PO-Revision-Date: 2017-11-26 16:11+0100\n"
+"POT-Creation-Date: 2017-11-30 15:02+0100\n"
+"PO-Revision-Date: 2017-11-30 15:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,13 +18,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: ausgsteckt/settings/_base.py:101
+#: ausgsteckt/settings/_base.py:100
 msgid "German"
 msgstr "Deutsch"
 
-#: ausgsteckt/settings/_base.py:102
+#: ausgsteckt/settings/_base.py:101
 msgid "English"
 msgstr "Englisch"
+
+#: ausgsteckt/templates/404.html:10
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
+
+#: ausgsteckt/templates/500.html:10
+msgid "An unexpected error occurred"
+msgstr "Ein unerwarteter Fehler ist aufgetreten"
 
 #: ausgsteckt/templates/base.html:16
 msgid "Information about Heurige in austria"
@@ -122,7 +130,7 @@ msgstr "Beschreibung"
 
 #: buschenschank/models.py:171
 msgid "Description shown on region page"
-msgstr "Auf Regionsseite angezeigte Beschreibung "
+msgstr "Auf Regionsseite angezeigte Beschreibung"
 
 #: buschenschank/models.py:175
 msgid "Region image"
@@ -138,7 +146,7 @@ msgstr "Areale"
 
 #: buschenschank/models.py:180
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:26
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:38
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:41
 #: buschenschank/templates/buschenschank/includes/contact_info_icons.html:17
 #: buschenschank/templates/buschenschank/region_detail.html:32
 #: data_quality/templates/data_quality/buschenschank_list.html:22
@@ -186,24 +194,24 @@ msgid "Communes"
 msgstr "Gemeinden"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:16
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:28
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:31
 #: buschenschank/templates/buschenschank/includes/contact_info_icons.html:11
 msgid "Email"
 msgstr "Email"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:20
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:32
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:35
 #: buschenschank/templates/buschenschank/includes/contact_info_icons.html:5
 msgid "Phone"
 msgstr "Telefon"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:36
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:48
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:51
 msgid "Opening hours"
 msgstr "Öffnungszeiten"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:40
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:52
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:55
 msgid "Opening hours info (external)"
 msgstr "Öffnungszeiten Information (extern)"
 
@@ -211,11 +219,11 @@ msgstr "Öffnungszeiten Information (extern)"
 msgid "Details"
 msgstr "Details"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:17
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:15
 msgid "View on the map"
 msgstr "Auf der Karte anzeigen"
 
-#: buschenschank/templates/buschenschank/buschenschank_detail.html:18
+#: buschenschank/templates/buschenschank/buschenschank_detail.html:16
 msgid "View at OpenStreetMap"
 msgstr "Auf OpenStreetMap anzeigen"
 
@@ -255,7 +263,7 @@ msgstr "Suchergebnisse"
 #: buschenschank/templates/buschenschank/search_result.html:16
 #: data_quality/templates/data_quality/buschenschank_list.html:66
 msgid "Nothing found"
-msgstr "Keine Eintrcard-bodyge gefunden"
+msgstr "Keine Einträge gefunden"
 
 #: buschenschank/views.py:83
 msgid "Search results for \"{}\""
