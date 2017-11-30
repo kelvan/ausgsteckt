@@ -4,16 +4,25 @@
 
 {% block content %}
   <div class="container">
-    <div id="accordion" role="tablist">
-      {% include 'buschenschank/includes/buschenschank_description_card.html' %}
+    <div class="row">
+      <div class="col">
+        <div id="accordion" role="tablist">
+          {% include 'buschenschank/includes/buschenschank_description_card.html' %}
 
-      {% if buschenschank.get_nearby.exists %}
-        {% include 'buschenschank/includes/nearby_card_card.html' with nearby=buschenschank.get_nearby %}
-      {% endif %}
-      {% include 'buschenschank/includes/osm_tags_card.html' %}
-
-      <a class="btn btn-info" href="{{ buschenschank.get_map_permalink }}"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;{% trans 'View on the map' %}</a>
-      <a class="btn btn-info" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
+          {% if buschenschank.get_nearby.exists %}
+            {% include 'buschenschank/includes/nearby_card_card.html' with nearby=buschenschank.get_nearby %}
+          {% endif %}
+          {% include 'buschenschank/includes/osm_tags_card.html' %}
+        </div>
+      </div>
+    </div>
+    <div class="row btn-group-map">
+      <div class="col">
+        <a class="btn btn-info btn-block" href="{{ buschenschank.get_map_permalink }}"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;{% trans 'View on the map' %}</a>
+      </div>
+      <div class="col">
+        <a class="btn btn-info btn-block" target="_blank" href="{{ buschenschank.get_osm_url }}">{% trans 'View at OpenStreetMap' %}</a>
+      </div>
     </div>
   </div>
 {% endblock %}

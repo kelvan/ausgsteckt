@@ -48,15 +48,19 @@ a {
 }
 
 .badge-raisin {
-    color: #fff;
-    background-color: indigo;
+  color: #fff;
+  background-color: indigo;
 }
 
 .badge-raisin-light {
-    color: indigo;
-    background-color: #f8f9fa;
+  color: indigo;
+  background-color: #f8f9fa;
 }
 
 ul.contact-list > #address {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+div.btn-group-map {
+  padding-top: 2px;
 }
