@@ -12,7 +12,7 @@
   {% else %}
     <p class="text-center bg-danger">
       <strong>
-        {% trans 'Error Count' %}: {{ error_list|length }}
+        {% trans 'Error Count' %}: {{ error_list|length }} [{% trans 'Last updated' %}: {{ last_updated|date:'Y-m-d' }}]
       </strong>
     </p>
     <table class="table table-bordered table-hover">

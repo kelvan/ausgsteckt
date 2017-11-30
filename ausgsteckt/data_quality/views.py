@@ -1,5 +1,6 @@
 import os
 import csv
+from datetime import datetime
 
 from django.conf import settings
 from django.http import Http404
@@ -7,8 +8,8 @@ from django.views.generic import ListView, TemplateView
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
-from ausgsteckt.views import PageTitleMixin
 
+from ausgsteckt.views import PageTitleMixin
 from buschenschank.models import Buschenschank
 
 
@@ -64,6 +65,8 @@ class BrokenURLView(PageTitleMixin, TemplateView):
 
         if not os.path.exists(report_path):
             raise Http404()
+
+        context['last_updated'] = datetime.fromtimestamp(os.stat(report_path).st_mtime)
 
         with open(report_path) as csvfile:
             context['error_list'] = list(csv.DictReader(csvfile))
