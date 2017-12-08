@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-30 15:02+0100\n"
-"PO-Revision-Date: 2017-11-30 15:05+0100\n"
+"PO-Revision-Date: 2017-12-08 23:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -246,7 +246,7 @@ msgstr "Kalendar (extern)"
 
 #: buschenschank/templates/buschenschank/region_detail.html:46
 msgid "Buschenschänken"
-msgstr "Buschenschänkenä"
+msgstr "Buschenschänken"
 
 #: buschenschank/templates/buschenschank/region_detail.html:53
 msgid "Back to region list"
