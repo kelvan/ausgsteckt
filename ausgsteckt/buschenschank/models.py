@@ -1,4 +1,5 @@
 import os
+from urllib.parse import unquote
 
 import wikipedia
 import requests
@@ -230,8 +231,9 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
             if not self.region_image.name:
                 COA_FILENAME_CONTENT = ['coa', 'wappen']
                 for image in wp_page.images:
-                    matches = [m in image.lower() for m in COA_FILENAME_CONTENT]
-                    if any(matches) and self.name.split()[0].lower() in image.lower():
+                    img_unquote = unquote(image).lower()
+                    matches = [m in img_unquote for m in COA_FILENAME_CONTENT]
+                    if any(matches) and self.name.split()[0].lower() in img_unquote:
                         self.load_image_from_web(image)
                         break
 
