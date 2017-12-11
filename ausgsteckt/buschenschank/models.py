@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance as D
 from django.contrib.gis.db.models.functions import Distance
@@ -7,6 +8,8 @@ from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 
+import wikipedia
+
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from easy_thumbnails.fields import ThumbnailerImageField
 
@@ -15,6 +18,8 @@ OSMTYPES = (
     ('way', _('Way')),
     ('relation', _('Relation'))
 )
+
+WIKIPEDIA_CITE = '-- https://{lang}.wikipedia.org/wiki/{page} (CC by-sa)'
 
 
 class AdminURLMixin:
@@ -171,6 +176,10 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
         _('Description'), help_text=_('Description shown on region page'),
         blank=True, null=True
     )
+    wikipedia_page = models.CharField(
+        _('Wikipedia page'), max_length=50, blank=True, null=True,
+        help_text=_('Used to load description if none set')
+    )
     region_image = ThumbnailerImageField(
         _('Region image'),
         help_text=_('Image displayed on region page'),
@@ -195,6 +204,14 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     @property
     def slug(self):
         return slugify(self.name)
+
+    def save(self):
+        if self.wikipedia_page and not self.description:
+            lang = settings.LANGUAGE_CODE[:2]
+            wikipedia.set_lang(lang)
+            self.description = wikipedia.summary(self.wikipedia_page)
+            self.description += '\n' + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
+        super().save()
 
     def get_absolute_url(self):
         return reverse('buschenschank:region_details', kwargs={'pk': self.pk, 'slug': self.slug})

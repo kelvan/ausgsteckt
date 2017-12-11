@@ -50,7 +50,7 @@ class RegionAdmin(admin.OSMGeoAdmin):
 
     def website_link(self, instance):
         if instance.website:
-            return format_html('<a href="{url}">{url}</a>', url=instance.website)
+            return format_html('<a target="_blank" href="{url}">{url}</a>', url=instance.website)
 
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
