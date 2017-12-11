@@ -225,7 +225,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
             wp_page = wikipedia.page(self.wikipedia_page)
 
             if not self.description:
-                self.description = wp_page.summary
+                self.description = wp_page.summary.strip()
                 self.description += '\n' + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
             if not self.region_image.name:
                 COA_FILENAME_CONTENT = ['coa', 'wappen']
