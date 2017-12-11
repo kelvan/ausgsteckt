@@ -1,3 +1,8 @@
+import os
+
+import wikipedia
+import requests
+
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance as D
@@ -7,8 +12,6 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
-
-import wikipedia
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -205,13 +208,34 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     def slug(self):
         return slugify(self.name)
 
-    def save(self):
-        if self.wikipedia_page and not self.description:
+    def load_image_from_web(self, url):
+        r = requests.get(url)
+        rel_path = os.path.join(self.__class__.region_image.field.upload_to, os.path.basename(url))
+        target_file = os.path.join(settings.MEDIA_ROOT, rel_path)
+
+        with open(target_file, 'wb') as f:
+            f.write(r.content)
+        self.region_image.name = rel_path
+        self.save()
+
+    def save(self, **kwargs):
+        if self.wikipedia_page:
             lang = settings.LANGUAGE_CODE[:2]
             wikipedia.set_lang(lang)
-            self.description = wikipedia.summary(self.wikipedia_page)
-            self.description += '\n' + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
-        super().save()
+            wp_page = wikipedia.page(self.wikipedia_page)
+
+            if not self.description:
+                self.description = wp_page.summary
+                self.description += '\n' + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
+            if not self.region_image.name:
+                COA_FILENAME_CONTENT = ['coa', 'wappen']
+                for image in wp_page.images:
+                    matches = [m in image.lower() for m in COA_FILENAME_CONTENT]
+                    if any(matches) and self.name.split()[0].lower() in image.lower():
+                        self.load_image_from_web(image)
+                        break
+
+        super().save(**kwargs)
 
     def get_absolute_url(self):
         return reverse('buschenschank:region_details', kwargs={'pk': self.pk, 'slug': self.slug})
