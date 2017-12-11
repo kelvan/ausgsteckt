@@ -235,7 +235,7 @@ class Commune(TimeStampedModel, SoftDeletableModel):
         return self.name
 
     def get_buschenschank(self):
-        return Buschenschank.objects.filter(coordinates__contained=self.mpoly)
+        return Buschenschank.objects.filter(coordinates__intersects=self.mpoly)
 
     class Meta:
         verbose_name = _('Commune')
