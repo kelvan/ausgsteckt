@@ -9,7 +9,7 @@ aiodns~=1.1.1
 python-memcached==1.58
 django-pipeline~=1.6.13
 lesscpy~=0.12.0
-raven~=6.2.1
+raven~=6.4.0
 Pillow~=4.1.1
 easy-thumbnails~=2.5.0
 pytz
