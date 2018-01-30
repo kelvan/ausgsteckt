@@ -31,7 +31,7 @@
             <td>{{ buschenschank.name }}</td>
             <td>
               {% if buschenschank.address %}
-                {{ buschenschank.address }}
+                {{ buschenschank|fixme_address }}
               {% else %}
                 <strong>MISSING</strong>
               {% endif %}
