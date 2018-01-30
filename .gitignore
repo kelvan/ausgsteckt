@@ -19,6 +19,9 @@ secret.key
 *.shp
 *.shx
 *.psql
+*.xz
+*.gz
+*.bz2
 *.sql
 .idea/
 sentry_settings.py
