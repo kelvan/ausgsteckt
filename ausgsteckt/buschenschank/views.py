@@ -90,10 +90,12 @@ class SearchView(PageTitleMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         q = self.request.GET.get('q')
         if q:
-            name_contains = Q(name__icontains=self.request.GET.get('q'))
-            address_contains = (Q(**{'tags__addr:street__icontains': self.request.GET.get('q')}) |
-                                Q(**{'tags__addr:city__icontains': self.request.GET.get('q')}) |
-                                Q(**{'tags__addr:postcode__icontains': self.request.GET.get('q')}))
-            alt_name_contains = Q(tags__alt_name__icontains=self.request.GET.get('q'))
-            context['results'] = Buschenschank.objects.filter(name_contains | alt_name_contains | address_contains)
+            name_contains = Q(name__icontains=q)
+            operator_contains = Q(tags__operator__icontains=q)
+            address_contains = (Q(**{'tags__addr:street__icontains': q}) |
+                                Q(**{'tags__addr:city__icontains': q}) |
+                                Q(**{'tags__addr:postcode__icontains': q}))
+            alt_name_contains = Q(tags__alt_name__icontains=q)
+            context['results'] = Buschenschank.objects.filter(
+                name_contains | alt_name_contains | address_contains | operator_contains)
         return context
