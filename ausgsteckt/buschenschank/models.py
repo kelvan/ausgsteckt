@@ -111,10 +111,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
     def address(self):
         if self.street or self.housenumber or self.postcode or self.city:
             addr = '%s %s, %s %s' % (
-                self.street or self.place or '<street unknown>',
-                self.housenumber or '<number unknown>',
-                self.postcode or '<postcode unknown>',
-                self.city or '<city unknown>'
+                self.street or self.place or _('<street unknown>'),
+                self.housenumber or _('<number unknown>'),
+                self.postcode or _('<postcode unknown>'),
+                self.city or _('<city unknown>')
             )
             if self.country:
                 addr += ', ' + self.country
