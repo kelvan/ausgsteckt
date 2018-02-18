@@ -1,0 +1,5 @@
+{% load static %}
+
+{% if buschenschank.tags.smoking == 'no' or buschenschank.tags.smoking == 'outside' %}
+  <img class="inline" title="smoking: {{ buschenschank.tags.smoking }}" alt="smokefree" src="{% static 'images/no-smoking.svg' %}">
+{% endif %}

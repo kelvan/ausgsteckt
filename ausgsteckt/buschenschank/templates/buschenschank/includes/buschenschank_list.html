@@ -5,6 +5,7 @@
     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
       <a href="{{ buschenschank.get_absolute_url }}">
         {{ buschenschank }}
+        {% include 'buschenschank/includes/smoking.html' %}
         {% if buschenschank.distance %}&nbsp;({{ buschenschank.distance.m|floatformat:0 }}m){% endif %}
       </a>
       <div class="d-flex flex-row">

@@ -6,6 +6,7 @@
       <a data-toggle="collapse" href="#collapseDescription" aria-expanded="true" aria-controls="collapseDescription">
         {{ buschenschank.name }}
       </a>
+      {% include 'buschenschank/includes/smoking.html' %}
       {% if buschenschank.region %}
         (<a href="{{ buschenschank.region.get_absolute_url }}">{{ buschenschank.region.name }}</a>)
       {% endif %}

@@ -4,6 +4,7 @@
 
 <h4>
   {{ buschenschank.name }}
+  {% include 'buschenschank/includes/smoking.html' %}
   {% if buschenschank.region %}
     (<a href="{{ buschenschank.region.get_absolute_url }}">{{ buschenschank.region.name }}</a>)
   {% endif %}
