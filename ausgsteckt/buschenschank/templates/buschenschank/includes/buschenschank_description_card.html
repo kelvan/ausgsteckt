@@ -16,6 +16,9 @@
         </a>
       {% endif %}
     </h5>
+    {% if buschenschank.tags.operator %}
+      <span class="font-weight-light">{% trans 'operated by' %}&nbsp;"{{ buschenschank.tags.operator }}"</span>
+    {% endif %}
   </div>
 
   <div id="collapseDescription" class="collapse show" role="tabpanel" aria-labelledby="headingDescription" data-parent="#accordion">

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-14 14:56+0100\n"
-"PO-Revision-Date: 2018-02-14 14:57+0100\n"
+"POT-Creation-Date: 2018-02-14 15:05+0100\n"
+"PO-Revision-Date: 2018-02-14 15:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -150,11 +150,12 @@ msgstr "Auf Regionsseite angezeigte Beschreibung"
 
 #: buschenschank/models.py:187
 msgid "Wikipedia page"
-msgstr ""
+msgstr "Wikipediaseite"
 
 #: buschenschank/models.py:188
 msgid "Used to load description if none set"
 msgstr ""
+"Wird verwendet um Beschreibungstext zu laden wenn keiner gesetzt wurde"
 
 #: buschenschank/models.py:191
 msgid "Region image"
@@ -230,12 +231,12 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:36
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:33
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:36
 msgid "Opening hours"
 msgstr "Öffnungszeiten"
 
 #: buschenschank/templates/buschenschank/api/buschenschank_detail.html:40
-#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:37
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:40
 msgid "Opening hours info (external)"
 msgstr "Öffnungszeiten Information (extern)"
 
@@ -255,6 +256,10 @@ msgstr "Auf OpenStreetMap anzeigen"
 #: buschenschank/templates/buschenschank/region_detail.html:11
 msgid "edit"
 msgstr "editieren"
+
+#: buschenschank/templates/buschenschank/includes/buschenschank_description_card.html:19
+msgid "operated by"
+msgstr "betrieben von"
 
 #: buschenschank/templates/buschenschank/includes/nearby_card_card.html:7
 msgid "Nearby"
@@ -303,7 +308,7 @@ msgstr "Fehleranzahl"
 
 #: data_quality/templates/data_quality/broken_urls.html:15
 msgid "Last updated"
-msgstr ""
+msgstr "Zuletzt aktualisiert"
 
 #: data_quality/templates/data_quality/broken_urls.html:22
 msgid "Tag Key"
