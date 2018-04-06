@@ -25,6 +25,10 @@ OSMTYPES = (
 
 WIKIPEDIA_CITE = '-- https://{lang}.wikipedia.org/wiki/{page} (CC by-sa)'
 
+PHONE_KEYS = ['contact:phone', 'phone', 'contact:mobile', 'mobile']
+EMAIL_KEYS = ['contact:email', 'email']
+WEBSITE_KEYS = ['contact:website', 'website']
+
 
 class AdminURLMixin:
     def get_admin_url(self):
@@ -130,18 +134,48 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     @property
     def website(self):
-        website = self.tags.get('website') or self.tags.get('contact:website')
-        if website and not website.startswith('http'):
-            website = 'http://' + website
-        return website
+        if len(self.website_list) >= 1:
+            return self.website_list[0]
+
+    @cached_property
+    def website_list(self):
+        websites = self.tag_values_list(WEBSITE_KEYS)
+        for i, website in enumerate(websites):
+            if not website.startswith('http'):
+                websites[i] = 'http://' + website
+        return websites
+
+    def tag_values_list(self, tag_keys):
+        def is_valid_key(key):
+            for tag_key in tag_keys:
+                if key.startswith(tag_key):
+                    return True
+            return False
+
+        tag_values = []
+        keys = [k for k in self.tags.keys() if is_valid_key(k)]
+        for key in sorted(keys):
+            if self.tags[key] not in tag_values:
+                tag_values.append(self.tags[key])
+        return tag_values
 
     @property
     def phone(self):
-        return self.tags.get('contact:phone') or self.tags.get('phone')
+        if len(self.phone_list) >=1:
+            return self.phone_list[0]
+
+    @cached_property
+    def phone_list(self):
+        return self.tag_values_list(PHONE_KEYS)
 
     @property
     def email(self):
-        return self.tags.get('contact:email') or self.tags.get('email')
+        if len(self.email_list) >=1:
+            return self.email_list[0]
+
+    @cached_property
+    def email_list(self):
+        return self.tag_values_list(EMAIL_KEYS)
 
     @cached_property
     def region(self):

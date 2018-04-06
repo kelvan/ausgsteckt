@@ -5,32 +5,32 @@
     <li id="address"><strong>{{ buschenschank.address }}</strong></li>
   {% endif %}
 
-  {% if buschenschank.email %}
+  {% for email in buschenschank.email_list %}
     <li>
-      <i class="fa fa-envelope" aria-hidden="true" title="{% trans 'Email' %}"></i>&nbsp;
-      {{ buschenschank.email|urlize }}
+      <i class="fa fa-envelope" aria-hidden="true" title="{% trans 'Email' %}{% if buschenschank.email_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
+      {{ email|urlize }}
     </li>
-  {% endif %}
+  {% endfor %}
 
-  {% if buschenschank.phone %}
+  {% for phone in buschenschank.phone_list %}
     <li>
-      <i class="fa fa-phone" aria-hidden="true" title="{% trans 'Phone' %}"></i>&nbsp;
-      <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
+      <i class="fa fa-phone" aria-hidden="true" title="{% trans 'Phone' %}{% if buschenschank.phone_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
+      <a href="tel:{{ phone|cut:' ' }}">{{ phone }}</a>
     </li>
-  {% endif %}
+  {% endfor %}
 
-  {% if buschenschank.website %}
+  {% for website in buschenschank.website_list %}
     <li>
-      <i class="fa fa-globe" aria-hidden="true" title="{% trans 'Website' %}"></i>&nbsp;
-      <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
+      <i class="fa fa-globe" aria-hidden="true" title="{% trans 'Website' %}{% if buschenschank.website_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
+      <a href="{{ website }}" target="_blank">{{ website }}</a>
     </li>
-  {% endif %}
+  {% endfor %}
 
   {% osmtag buschenschank 'contact:facebook' as fb %}
   {% if fb %}
-  <li>
-    <i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp;
-    <a href="{{ fb }}" target="_blank">Facebook</a>
-  </li>
+    <li>
+      <i class="fa fa-facebook-official" aria-hidden="true" title="Facebook"></i>&nbsp;
+      <a href="{{ fb }}" target="_blank">Facebook</a>
+    </li>
   {% endif %}
 </ul>
