@@ -6,7 +6,6 @@ __pycache__
 *.mo
 .~*#
 *.lck
-*.lock
 *.bak
 *.bck
 public/
