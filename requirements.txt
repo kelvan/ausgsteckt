@@ -1,4 +1,4 @@
-Django~=2.1rc1
+Django~=2.1.0
 django-model-utils~=3.0.0
 psycopg2-binary~=2.7.3
 python-dateutil~=2.6.1
