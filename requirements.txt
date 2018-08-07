@@ -13,8 +13,8 @@ raven~=6.4.0
 Pillow~=5.1.0
 easy-thumbnails~=2.5.0
 pytz
-pyproj~=1.9.5
-# using system version, won't compile with gdal 2.3.0-1 on archlinux
+# using system version, won't compile on archlinux
+#pyproj~=1.9.5
 #gdal~=2.3.0
 jsmin~=2.2.2
 django-ckeditor~=5.3.1
