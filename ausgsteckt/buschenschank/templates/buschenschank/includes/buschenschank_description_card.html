@@ -30,6 +30,13 @@
               <!-- Contact info -->
               {% include 'buschenschank/includes/contact_details_list.html' %}
 
+              {% if buschenschank.future_open_dates.exists %}
+                <h5>{% trans 'Open dates' %}</h5>
+                <ul>
+                  {% include 'buschenschank/includes/open_dates.html' %}
+                </ul>
+              {% endif %}
+
               {% osmtag buschenschank 'opening_hours' as opening_hours %}
               {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
 

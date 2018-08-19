@@ -1,0 +1,7 @@
+{% load l10n %}
+
+{% localize %}
+  {% for future_open_date in buschenschank.future_open_dates %}
+    <li>{{ future_open_date.date_start }} - {{ future_open_date.date_end }}</li>
+  {% endfor %}
+{% endlocalize %}

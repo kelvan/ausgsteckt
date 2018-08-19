@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="container">
+    {% if object_list.exists %}
+      <h4>{{ page_title }}</h4>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          {% include 'buschenschank/includes/buschenschank_list.html' with buschenschank_list=object_list %}
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-warning" role="alert">
+        {% trans 'Nothing there' %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

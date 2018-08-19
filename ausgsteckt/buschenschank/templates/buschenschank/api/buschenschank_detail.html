@@ -29,6 +29,14 @@
     </li>
   {% endif %}
 </ul>
+
+{% if buschenschank.future_open_dates.exists %}
+  <dl>
+    <dt>{% trans 'Open dates' %}</dt>
+    <dd>{% include 'buschenschank/includes/open_dates.html' %}</dd>
+  </dl>
+{% endif %}
+
 {% osmtag buschenschank 'opening_hours' as opening_hours %}
 {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
 

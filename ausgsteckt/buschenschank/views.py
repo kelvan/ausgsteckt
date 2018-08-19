@@ -94,3 +94,10 @@ class SearchView(PageTitleMixin, TemplateView):
             context['results'] = Buschenschank.objects.filter(
                 name_contains | alt_name_contains | address_contains | operator_contains)
         return context
+
+
+class OpenTodayListView(PageTitleMixin, ListView):
+    page_title = _('Open today')
+
+    def get_queryset(self):
+        return Buschenschank.open_today.all()

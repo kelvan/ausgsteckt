@@ -1,12 +1,33 @@
-from django.contrib.gis import admin
+from django.contrib.gis import admin as gis_admin
+from django.contrib import admin
+from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Buschenschank, Region, Commune
+from .models import Buschenschank, Region, Commune, OpenDate
+
+
+class OpenTodayListFilter(admin.SimpleListFilter):
+    title = _('Open today')
+
+    parameter_name = 'open_today'
+
+    def lookups(self, request, model_admin):
+        return (('open', _('Open')),)
+
+    def queryset(self, request, queryset):
+        if self.value() == 'open':
+            today = timezone.now().today()
+            return queryset.filter(opendate__date_start__lte=today, opendate__date_end__gte=today)
+
+
+class OpenDateInline(admin.TabularInline):
+    model = OpenDate
+    extra = 1
 
 
 @admin.register(Buschenschank)
-class BuschenschankAdmin(admin.OSMGeoAdmin):
+class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'cuisine', 'latitude', 'longitude',
@@ -14,8 +35,10 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
         'modified_by', 'created', 'modified'
     )
     readonly_fields = ('osm_id', 'osm_type', 'is_removed')
-    list_filter = ('is_removed', 'created', 'modified', 'modified_by')
+    list_filter = ('is_removed', OpenTodayListFilter, 'created', 'modified', 'modified_by')
     search_fields = ('name', 'tags')
+
+    inlines = [OpenDateInline]
 
     def active(self, instance):
         return not instance.is_removed
@@ -37,7 +60,7 @@ class BuschenschankAdmin(admin.OSMGeoAdmin):
 
 
 @admin.register(Region)
-class RegionAdmin(admin.OSMGeoAdmin):
+class RegionAdmin(gis_admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'is_removed', 'published', 'website_link', 'created',
@@ -57,7 +80,7 @@ class RegionAdmin(admin.OSMGeoAdmin):
 
 
 @admin.register(Commune)
-class CommuneAdmin(admin.OSMGeoAdmin):
+class CommuneAdmin(gis_admin.OSMGeoAdmin):
     openlayers_url = '//openlayers.org/api/2.13.1/OpenLayers.js'
     list_display = (
         'name', 'district', 'county', 'is_removed', 'created', 'modified',
@@ -93,3 +116,8 @@ class CommuneAdmin(admin.OSMGeoAdmin):
     create_update_region.short_description = _(
         'Generate/update region with commune info'
     )
+
+
+@admin.register(OpenDate)
+class OpenDateAdmin(admin.ModelAdmin):
+    list_display = ('buschenschank', 'date_start', 'date_end')

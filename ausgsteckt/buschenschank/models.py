@@ -10,12 +10,14 @@ from django.contrib.gis.measure import Distance as D
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.postgres.fields import JSONField
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import cached_property
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from easy_thumbnails.fields import ThumbnailerImageField
+from .managers import OpenTodayManager
 
 OSMTYPES = (
     ('node', _('Node')),
@@ -63,8 +65,7 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
-                    PublishableModel, AdminURLMixin):
+class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
     name = models.CharField(_('Name'), max_length=50)
     coordinates = models.PointField(_('Coordinates'))
     modified_by = models.CharField(
@@ -74,6 +75,17 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     # include removed objects
     all = models.Manager()
+    open_today = OpenTodayManager()
+
+    @property
+    def open(self):
+        today = timezone.now().date()
+        return self.opendate_set.filter(date_start__lte=today, date_end__gte=today).exists()
+
+    @property
+    def future_open_dates(self):
+        today = timezone.now().date()
+        return self.opendate_set.exclude(date_end__lt=today)
 
     @property
     def slug(self):
@@ -205,6 +217,20 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel,
         verbose_name = 'Buschenschank'
         verbose_name_plural = 'Buschenschanken'
         ordering = ('name',)
+
+
+class OpenDate(TimeStampedModel, AdminURLMixin):
+    buschenschank = models.ForeignKey(Buschenschank, verbose_name=_('Buschenschank'), on_delete=models.CASCADE)
+    date_start = models.DateField(_('Start date'), help_text=_('First opened day'))
+    date_end = models.DateField(_('End date'), help_text=_('Last opened day'))
+
+    def __str__(self):
+        return '[{0.buschenschank}] {0.date_start}-{0.date_end}'.format(self)
+
+    class Meta:
+        verbose_name = _('Open date')
+        verbose_name_plural = _('Open dates')
+        ordering = ('date_end', 'date_start', 'buschenschank')
 
 
 class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
