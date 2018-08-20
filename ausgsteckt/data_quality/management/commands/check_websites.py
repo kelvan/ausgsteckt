@@ -1,14 +1,18 @@
+import sys
 import csv
 import logging
 import itertools
 import asyncio
 import async_timeout
+from pathlib import Path
 
 from aiohttp import ClientSession
 
 from django.core.management.base import BaseCommand
 
 from buschenschank.models import Buschenschank
+from ...models import PageCheckResult
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -81,6 +85,19 @@ class Command(BaseCommand):
             writer.writeheader()
             writer.writerows(errors)
 
+    def _save_errors_to_database(self, errors):
+        page_check_results = []
+
+        for error in errors:
+            page_check_results.append(
+                PageCheckResult(
+                    buschenschank_id=error['id'], website=error['url'], tag_name=error['tag_key'],
+                    description=error['error'] or None, return_code=error['status_code'] or None
+                )
+            )
+        PageCheckResult.objects.bulk_create(page_check_results)
+
+
     async def _checker(self):
         async with ClientSession() as session:
             tasks = []
@@ -94,9 +111,15 @@ class Command(BaseCommand):
 
         if self.report_path:
             self._save_report(errors, self.report_path)
+        self._save_errors_to_database(errors)
 
     def handle(self, *args, **options):
         self.report_path = options.get('report')
+
+        if not Path(self.report_path).parent.exists():
+            logger.fatal('Report path does not exist')
+            sys.exit(1)
+
         self.webkeys = ['website', 'contact:website', 'opening_hours:url']
         self.queryset = Buschenschank.objects.filter(
             tags__has_any_keys=self.webkeys

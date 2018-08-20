@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-19 19:08+0200\n"
-"PO-Revision-Date: 2018-08-19 19:08+0200\n"
+"POT-Creation-Date: 2018-08-20 15:09+0200\n"
+"PO-Revision-Date: 2018-08-20 15:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -148,7 +148,7 @@ msgstr "<ZIP nicht bekannt>"
 msgid "<city unknown>"
 msgstr "<Stadt/Ort nicht bekannt>"
 
-#: buschenschank/models.py:223
+#: buschenschank/models.py:223 data_quality/models.py:10
 msgid "Buschenschank"
 msgstr "Buschenschank"
 
@@ -178,7 +178,7 @@ msgstr "Ausstecktermin"
 msgid "Open dates"
 msgstr "Austecktermine"
 
-#: buschenschank/models.py:240
+#: buschenschank/models.py:240 data_quality/models.py:15
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -338,6 +338,22 @@ msgstr "Keine Einträge gefunden"
 #: buschenschank/views.py:78
 msgid "Search results for \"{}\""
 msgstr "Suchergebnisse für \"{}\""
+
+#: data_quality/models.py:13
+msgid "Website URL"
+msgstr "Webseiten URL"
+
+#: data_quality/models.py:13
+msgid "URL checked"
+msgstr "URL geprüft"
+
+#: data_quality/models.py:19
+msgid "Page check result"
+msgstr "Webseitencheckergebnis"
+
+#: data_quality/models.py:20
+msgid "Page check results"
+msgstr "Webseitencheckergebnisse"
 
 #: data_quality/templates/data_quality/broken_urls.html:9
 msgid "No broken websites found"
