@@ -4,11 +4,11 @@
   <a class="navbar-brand" href="{% url 'index' %}">
     <img src="{% static 'images/raisin.svg' %}" width="30" height="30" alt="raisin">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+  <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
       {% url 'buschenschank:buschenschank_map' as buschenschank_map_url %}
       <li class="nav-item{% if request.path == buschenschank_map_url %} active{% endif %}">
@@ -42,9 +42,6 @@
         </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'buschenschank:search' %}">
-      <input class="form-control mr-sm-2" name="q" type="text" placeholder="{% trans 'Search for buschenschank' %}" aria-label="Search"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %}>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
-    </form>
+    {% include 'includes/searchbar.html' %}
   </div>
 </nav>

@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% comment %}
+<form class="form-inline my-2 my-lg-0" method="get" action="{% url 'buschenschank:search' %}">
+  <input class="form-control mr-sm-2" name="q" type="text" placeholder="{% trans 'Search for buschenschank' %}" aria-label="Search"{% if request.GET.q %} value="{{ request.GET.q }}"{% endif %}>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
+</form>
+{% endcomment %}
+
+<form action="{% url 'buschenschank:search' %}" class="form-inline" method="GET">
+  <div class="input-group">
+    <input name="q" type="text" class="form-control" {% if request.GET.q %}value="{{ request.GET.q }}" {% endif %}placeholder="{% trans 'Search for buschenschank' %}" aria-label="{% trans 'Search' %}" aria-describedby="button-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2" title="{% trans 'search' %}">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+</form>

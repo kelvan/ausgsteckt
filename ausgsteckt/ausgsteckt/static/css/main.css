@@ -68,3 +68,7 @@ div.btn-group-map {
 .inline {
   height: 1em;
 }
+
+.form-inline {
+  margin-bottom: 0;
+}
