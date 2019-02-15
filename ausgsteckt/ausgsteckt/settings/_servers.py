@@ -1,8 +1,7 @@
 import socket
 
 hosts = {
-    'doyle': 'production', 'doyle.ist-total.org': 'production',
-    'snowden': 'production', 'snowden.ist-total.org': 'production'
+    'doyle': 'production', 'fedora': 'production',
 }
 DEFAULT = 'development'
 
