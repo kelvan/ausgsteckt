@@ -1,7 +1,7 @@
 import socket
 
 hosts = {
-    'doyle': 'production', 'fedora': 'production',
+    'doyle': 'production', 'fedora': 'production', 'fedora.ist-total.org': 'production',
 }
 DEFAULT = 'development'
 
