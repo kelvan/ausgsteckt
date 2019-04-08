@@ -1,0 +1,40 @@
+image: python:3.6-alpine
+
+stages:
+  - build
+  - qa
+
+flake8:
+  stage: qa
+  script:
+    - pip install flake8
+    - flake8
+  allow_failure: true
+
+.pages: &build_pages
+  stage: build
+  script:
+    - apk add make
+    - pip install Sphinx
+    - cd docs
+    - make html
+
+build:pages:
+  <<: *build_pages
+  artifacts:
+    paths:
+      - docs/build/html
+    expire_in: 7 day
+  except:
+    - master
+
+pages:
+  <<: *build_pages
+  after_script:
+    - mv docs/build/html public
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+  only:
+    - master
