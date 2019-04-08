@@ -97,7 +97,6 @@ class Command(BaseCommand):
             )
         PageCheckResult.objects.bulk_create(page_check_results)
 
-
     async def _checker(self):
         async with ClientSession() as session:
             tasks = []

@@ -173,7 +173,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
     @property
     def phone(self):
-        if len(self.phone_list) >=1:
+        if len(self.phone_list) >= 1:
             return self.phone_list[0]
 
     @cached_property
@@ -182,7 +182,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
     @property
     def email(self):
-        if len(self.email_list) >=1:
+        if len(self.email_list) >= 1:
             return self.email_list[0]
 
     @cached_property

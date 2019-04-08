@@ -62,14 +62,19 @@ def contact_coverage(tags, percentage=False):
 def fixme_address(item):
     if item.street or item.housenumber or item.postcode or item.city:
         if item.city:
-            city = format_html("<a href={url}>{city}</a>",
-                        city=item.city,
-                        url=reverse('data_quality:fixme_buschenschank', kwargs={'cityname': item.city})
-                        )
+            city = format_html(
+                '<a href={url}>{city}</a>',
+                city=item.city,
+                url=reverse(
+                    'data_quality:fixme_buschenschank',
+                    kwargs={'cityname': item.city}
+                )
+            )
         else:
             city = '<city unknown>'
 
-        addr = format_html('{street} {number}, {postcode} {city}',
+        addr = format_html(
+            '{street} {number}, {postcode} {city}',
             street=(item.street or item.place or '<street unknown>'),
             number=(item.housenumber or '<number unknown>'),
             postcode=(item.postcode or '<postcode unknown>'),
