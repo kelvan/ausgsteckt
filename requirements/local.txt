@@ -1,0 +1,4 @@
+-r base.txt
+ipython
+flake8
+Sphinx==2.0.0
