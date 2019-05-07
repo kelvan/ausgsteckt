@@ -1,8 +1,10 @@
-image: python:3.6-alpine
+image: python:3.7
 
 stages:
   - build
+  - install
   - qa
+  - test
 
 flake8:
   stage: qa
