@@ -16,7 +16,7 @@ flake8:
 .pages: &build_pages
   stage: build
   script:
-    - apk add make
+    - apt install make
     - pip install Sphinx
     - cd docs
     - make html
