@@ -9,7 +9,7 @@ env = environ.Env()
 env.read_env()
 
 BASE_DIR = Path(__file__).parents[2]
-DATA_DIR = BASE_DIR.parent / 'public'
+DATA_DIR = env('DJANGO_PUBLIC_ROOT', default=(BASE_DIR.parent / 'public'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'el5m47jko&tz)i-qw_@b5wp=6ots)o3qcv^ekrceu$fcm1@jll'

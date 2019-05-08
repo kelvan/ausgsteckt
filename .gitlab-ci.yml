@@ -21,7 +21,7 @@ build:js:
   artifacts:
     paths:
       - ausgsteckt/ausgsteckt/static/node_modules/
-    expire: 1 day
+    expire_in: 1 day
 
 .pages: &build_pages
   stage: build
@@ -89,6 +89,8 @@ install:python3.7:
 
   before_script:
     - source .venv/bin/activate
+    - apt-get update
+    - apt-get install -y python3-gdal
     - cd ausgsteckt
   script:
     - python manage.py test
