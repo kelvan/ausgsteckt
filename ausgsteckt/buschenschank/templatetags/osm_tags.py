@@ -23,7 +23,7 @@ def format_value_list(value, tagname=None):
     if not value:
         return ''
 
-    parts = value.split(';')
+    parts = [part.strip() for part in value.split(';')]
 
     make_badge = False
     make_list = False
