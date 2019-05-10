@@ -28,7 +28,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
 
 
 class Command(BaseCommand):
-    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'
+    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'  # NOQA: E501
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -43,13 +43,16 @@ class Command(BaseCommand):
             min_contrib = 5
 
         response = requests.post(
-            settings.OVERPASS_ENDPOINT, data={'data': settings.BUSCHENSCHANK_QUERY},
+            settings.OVERPASS_ENDPOINT,
+            data={'data': settings.BUSCHENSCHANK_QUERY},
             headers={'Accept-Charset': 'utf-8;q=0.7,*;q=0.7'}
         )
         if response.ok:
             parser = BuschenschankSaxParser()
             parseString(response.text, parser)
-            for user, count in sorted(parser.users.items(), key=operator.itemgetter(1), reverse=True):
+            sorted_items = sorted(
+                parser.users.items(), key=operator.itemgetter(1), reverse=True)
+            for user, count in sorted_items:
                 if count >= min_contrib:
                     print('%s: %d' % (user, count))
         else:

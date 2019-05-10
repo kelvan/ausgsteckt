@@ -22,7 +22,8 @@ class IncompleteBuschenschankList(PageTitleMixin, ListView):
         queryset = super().get_queryset()
         addr_exclude = Q(
             tags__has_keys=[
-                'addr:housenumber', 'addr:city', 'addr:country', 'addr:postcode'
+                'addr:housenumber', 'addr:city',
+                'addr:country', 'addr:postcode'
             ],
             tags__has_any_keys=['addr:street', 'addr:place']
         )
@@ -48,7 +49,7 @@ class IncompleteBuschenschankList(PageTitleMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['overall_buschenschank_count'] = Buschenschank.objects.count()
+        context['overall_buschenschank_count'] = Buschenschank.objects.count()  # NOQA: E501
         context['city'] = self.kwargs.get('cityname')
         return context
 
@@ -66,7 +67,8 @@ class BrokenURLView(PageTitleMixin, TemplateView):
         if not os.path.exists(report_path):
             raise Http404()
 
-        context['last_updated'] = datetime.fromtimestamp(os.stat(report_path).st_mtime)
+        context['last_updated'] = datetime.fromtimestamp(
+            os.stat(report_path).st_mtime)
 
         with open(report_path) as csvfile:
             context['error_list'] = list(csv.DictReader(csvfile))

@@ -32,5 +32,10 @@ def format_value_list(value, tagname=None):
         make_badge = tagname in BADGE_TAGS
         make_list = tagname in LIST_TAGS
 
-    context = {'values': parts, 'make_badge': make_badge, 'make_list': make_list}
-    return render_to_string('buschenschank/includes/tag_value_list.html', context=context)
+    context = {
+        'values': parts,
+        'make_badge': make_badge,
+        'make_list': make_list}
+    return render_to_string(
+        'buschenschank/includes/tag_value_list.html',
+        context=context)

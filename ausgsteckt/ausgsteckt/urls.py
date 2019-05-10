@@ -18,12 +18,17 @@ urlpatterns = [
     ),
     url(r'^buschenschank/', include('buschenschank.urls')),
     url(r'^osm/', include('data_quality.urls')),
-    url(r'^impressum/$', flatpages_views.flatpage, {'url': '/impressum/'}, name='impressum'),
+    url(
+        r'^impressum/$', flatpages_views.flatpage,
+        {'url': '/impressum/'}, name='impressum'),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [
-        url(r'^404/$', default_views.page_not_found, kwargs={'exception': Exception('Page not Found')}),
+        url(
+            r'^404/$', default_views.page_not_found,
+            kwargs={'exception': Exception('Page not Found')}),
         url(r'^500/$', default_views.server_error),
     ]

@@ -39,7 +39,7 @@ def calculate_coverage(tags, tags_target):
                 covered += 1
                 break
 
-    return min(1.0, covered/min_tags_count)
+    return min(1.0, covered / min_tags_count)
 
 
 @register.simple_tag
@@ -54,7 +54,7 @@ def address_coverage(tags, percentage=False):
 def contact_coverage(tags, percentage=False):
     coverage = calculate_coverage(tags, CONTACT_TAGS)
     if percentage:
-        return round(coverage*100, 1)
+        return round(coverage * 100, 1)
     return round(coverage, 3)
 
 
