@@ -6,7 +6,6 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 env = environ.Env()
-env.read_env()
 
 BASE_DIR = Path(__file__).parents[2]
 DATA_DIR = env('DJANGO_PUBLIC_ROOT', default=(BASE_DIR.parent / 'public'))
