@@ -22,7 +22,7 @@ build:js:
       - ausgsteckt/ausgsteckt/static/node_modules/
     expire_in: 1 day
 
-.pages: &build_pages
+.pages:
   stage: build
   script:
     - apt install make
@@ -31,7 +31,7 @@ build:js:
     - make html
 
 build:pages:
-  <<: *build_pages
+  extends: .pages
   artifacts:
     paths:
       - docs/_build/html
@@ -40,7 +40,7 @@ build:pages:
     - master
 
 pages:
-  <<: *build_pages
+  extends: .pages
   after_script:
     - mv docs/_build/html public
   artifacts:
@@ -50,7 +50,7 @@ pages:
   only:
     - master
 
-.install: &install_template
+.install:
   stage: install
   variables:
     REQUIREMENTS_FILE: "requirements/test.txt"
@@ -68,14 +68,14 @@ pages:
       - .venv
 
 install:python3.6:
-  <<: *install_template
+  extends: .install
   image: python:3.6
 
 install:python3.7:
-  <<: *install_template
+  extends: .install
   image: python:3.7
 
-.test: &test_template
+.test:
   stage: test
   services:
     - mdillon/postgis:11-alpine
@@ -99,13 +99,13 @@ install:python3.7:
       junit: report.xml
 
 test:python3.6:
-  <<: *test_template
+  extends: .test
   image: python:3.6
   dependencies:
     - install:python3.6
 
 test:python3.7:
-  <<: *test_template
+  extends: .test
   image: python:3.7
   dependencies:
     - install:python3.7
