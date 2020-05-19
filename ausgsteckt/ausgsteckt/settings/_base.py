@@ -193,7 +193,10 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Custom',
         'toolbar_Custom': [
             ['Format', 'Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            [
+                'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'
+            ],
             ['Link', 'Unlink'],
             ['RemoveFormat', 'Source']
         ]
@@ -216,7 +219,7 @@ BUSCHENSCHANK_QUERY = """
     out center meta;
 """.replace('\n', '')
 
-## Secret key generation functions
+# Secret key generation functions
 secret_key_fn = os.path.join(os.path.dirname(__file__), 'secret.key')
 
 
