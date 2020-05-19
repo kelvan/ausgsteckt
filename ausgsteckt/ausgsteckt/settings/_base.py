@@ -173,7 +173,8 @@ PIPELINE = {
         'libs': {
             'source_filenames': (
                 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-                'node_modules/font-awesome/css/font-awesome.min.css',
+                'node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css',  # NOQA: E501
+                'node_modules/@fortawesome/fontawesome-free/css/solid.min.css',
             ),
             'output_filename': 'css/libs.css',
         }

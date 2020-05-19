@@ -12,4 +12,9 @@ Requirements
 Quickstart
 ==========
 
-* yarn install --modules-folder ausgsteckt/ausgsteckt/static/node_modules/
+* npm install
+* pip install -r requirements.txt
+* createdb ausgsteckt
+* cd ausgsteckt
+* python manage.py migrate
+* python manage.py runserver
