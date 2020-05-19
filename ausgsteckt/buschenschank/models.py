@@ -65,7 +65,7 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
+class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):  # NOQA: E501
     name = models.CharField(_('Name'), max_length=50)
     coordinates = models.PointField(_('Coordinates'))
     modified_by = models.CharField(
@@ -80,7 +80,8 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     @property
     def open(self):
         today = timezone.now().date()
-        return self.opendate_set.filter(date_start__lte=today, date_end__gte=today).exists()
+        return self.opendate_set.filter(
+            date_start__lte=today, date_end__gte=today).exists()
 
     @property
     def future_open_dates(self):
@@ -173,7 +174,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
     @property
     def phone(self):
-        if len(self.phone_list) >=1:
+        if len(self.phone_list) >= 1:
             return self.phone_list[0]
 
     @cached_property
@@ -182,7 +183,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
     @property
     def email(self):
-        if len(self.email_list) >=1:
+        if len(self.email_list) >= 1:
             return self.email_list[0]
 
     @cached_property
@@ -204,11 +205,14 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def get_map_permalink(self):
-        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(
-            baseUrl=reverse('buschenschank:buschenschank_map'), buschenschank=self, zoom=18, layer='OpenStreetMap')
+        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(  # NOQA: E501
+            baseUrl=reverse('buschenschank:buschenschank_map'),
+            buschenschank=self, zoom=18, layer='OpenStreetMap')
 
     def get_absolute_url(self):
-        return reverse('buschenschank:buschenschank_details', kwargs={'pk': self.pk, 'slug': self.slug})
+        return reverse(
+            'buschenschank:buschenschank_details',
+            kwargs={'pk': self.pk, 'slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -220,9 +224,13 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
 
 class OpenDate(TimeStampedModel, AdminURLMixin):
-    buschenschank = models.ForeignKey(Buschenschank, verbose_name=_('Buschenschank'), on_delete=models.CASCADE)
-    date_start = models.DateField(_('Start date'), help_text=_('First opened day'))
-    date_end = models.DateField(_('End date'), help_text=_('Last opened day'))
+    buschenschank = models.ForeignKey(
+        Buschenschank, verbose_name=_('Buschenschank'),
+        on_delete=models.CASCADE)
+    date_start = models.DateField(
+        _('Start date'), help_text=_('First opened day'))
+    date_end = models.DateField(
+        _('End date'), help_text=_('Last opened day'))
 
     def __str__(self):
         return '[{0.buschenschank}] {0.date_start}-{0.date_end}'.format(self)
@@ -271,7 +279,8 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     def load_image_from_web(self, url):
         r = requests.get(url)
-        rel_path = os.path.join(self.__class__.region_image.field.upload_to, os.path.basename(url))
+        rel_path = os.path.join(
+            self.__class__.region_image.field.upload_to, os.path.basename(url))
         target_file = os.path.join(settings.MEDIA_ROOT, rel_path)
 
         with open(target_file, 'wb') as f:
@@ -287,23 +296,27 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
             if not self.description:
                 self.description = wp_page.summary.strip()
-                self.description += '\n' + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
+                self.description += '\n' + \
+                    WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
             if not self.region_image.name:
                 COA_FILENAME_CONTENT = ['coa', 'wappen']
                 for image in wp_page.images:
                     img_unquote = unquote(image).lower()
                     matches = [m in img_unquote for m in COA_FILENAME_CONTENT]
-                    if any(matches) and self.name.split()[0].lower() in img_unquote:
+                    if any(matches) and self.name.split()[0].lower() in img_unquote:  # NOQA: E501
                         self.load_image_from_web(image)
                         break
 
         super().save(**kwargs)
 
     def get_absolute_url(self):
-        return reverse('buschenschank:region_details', kwargs={'pk': self.pk, 'slug': self.slug})
+        return reverse(
+            'buschenschank:region_details',
+            kwargs={'pk': self.pk, 'slug': self.slug})
 
     def get_buschenschank(self):
-        return Buschenschank.objects.filter(coordinates__intersects=self.areas)
+        return Buschenschank.objects.filter(
+            coordinates__intersects=self.areas)
 
     class Meta:
         verbose_name = _('Region')
@@ -321,7 +334,8 @@ class Commune(TimeStampedModel, SoftDeletableModel):
         return self.name
 
     def get_buschenschank(self):
-        return Buschenschank.objects.filter(coordinates__intersects=self.mpoly)
+        return Buschenschank.objects.filter(
+            coordinates__intersects=self.mpoly)
 
     class Meta:
         verbose_name = _('Commune')

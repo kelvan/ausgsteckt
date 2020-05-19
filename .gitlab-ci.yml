@@ -1,0 +1,112 @@
+image: python:3.7
+
+stages:
+  - build
+  - install
+  - qa
+  - test
+
+flake8:
+  stage: qa
+  script:
+    - pip install flake8
+    - flake8
+  allow_failure: true
+
+build:js:
+  image: node:12-alpine
+  stage: build
+  script:
+    - yarn install --modules-folder ausgsteckt/ausgsteckt/static/node_modules/
+  artifacts:
+    paths:
+      - ausgsteckt/ausgsteckt/static/node_modules/
+    expire_in: 1 day
+
+.pages: &build_pages
+  stage: build
+  script:
+    - apt install make
+    - pip install Sphinx
+    - cd docs
+    - make html
+
+build:pages:
+  <<: *build_pages
+  artifacts:
+    paths:
+      - docs/_build/html
+    expire_in: 7 day
+  except:
+    - master
+
+pages:
+  <<: *build_pages
+  after_script:
+    - mv docs/_build/html public
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+  only:
+    - master
+
+.install: &install_template
+  stage: install
+  variables:
+    REQUIREMENTS_FILE: "requirements/test.txt"
+  before_script:
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install -U wheel pip setuptools
+  script:
+    - pip wheel --wheel-dir wheels -r ${REQUIREMENTS_FILE}
+    - pip install --no-index --find-links=wheels -r ${REQUIREMENTS_FILE}
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - wheels
+      - .venv
+
+install:python3.6:
+  <<: *install_template
+  image: python:3.6
+
+install:python3.7:
+  <<: *install_template
+  image: python:3.7
+
+.test: &test_template
+  stage: test
+  services:
+    - mdillon/postgis:11-alpine
+  variables:
+    DATABASE_URL: postgis://django:secret@mdillon-postgis:5432/django_test
+    DJANGO_LOG_FILE: /dev/null
+    POSTGRES_DB: django_test
+    POSTGRES_USER: django
+    POSTGRES_PASSWORD: secret
+
+  before_script:
+    - source .venv/bin/activate
+    - apt-get update
+    - apt-get install -y python3-gdal
+    - cd ausgsteckt
+  script:
+    - python manage.py test
+  coverage: '/^TOTAL.*\s([0-9\.]+)%$/'
+  artifacts:
+    reports:
+      junit: report.xml
+
+test:python3.6:
+  <<: *test_template
+  image: python:3.6
+  dependencies:
+    - install:python3.6
+
+test:python3.7:
+  <<: *test_template
+  image: python:3.7
+  dependencies:
+    - install:python3.7

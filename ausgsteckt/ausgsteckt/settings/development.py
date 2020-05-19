@@ -1,11 +1,7 @@
 from ._base import *
 
-DEBUG = True
-
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/tmp/ausgsteckt-messages'
-
-CACHE_BACKEND = 'dummy://'
 
 PIPELINE.update({
     'PIPELINE_ENABLED': False,

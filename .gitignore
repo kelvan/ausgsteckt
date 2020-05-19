@@ -1,6 +1,9 @@
 env/
+.env
+.envrc
+.vscode/
 *.pyc
-__pycache__
+__pycache__/
 *.log
 *.csv
 *.mo
@@ -21,6 +24,7 @@ secret.key
 *.xz
 *.gz
 *.bz2
+report.xml
 *.sql
 .idea/
 sentry_settings.py

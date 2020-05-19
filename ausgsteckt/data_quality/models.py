@@ -7,10 +7,13 @@ from buschenschank.models import Buschenschank
 
 
 class PageCheckResult(TimeStampedModel):
-    buschenschank = models.ForeignKey(Buschenschank, verbose_name=_('Buschenschank'),
-                                      on_delete=models.SET_NULL, null=True)
+    buschenschank = models.ForeignKey(
+        Buschenschank, verbose_name=_('Buschenschank'),
+        on_delete=models.SET_NULL, null=True)
     tag_name = models.CharField(max_length=255)
-    website = models.CharField(_('Website URL'), help_text=_('URL checked'), max_length=255)
+    website = models.CharField(
+        _('Website URL'), help_text=_('URL checked'),
+        max_length=255)
     return_code = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.TextField(_('Description'), blank=True, null=True)
 

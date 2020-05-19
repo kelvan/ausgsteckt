@@ -59,7 +59,8 @@ async def check_url(session, buschenschank, tag_key):
                 errors.append(error)
         except Exception as e:
             logger.error(
-                '%s -> %s: [%s] %s', buschenschank.name, tag_key, e.__class__, e
+                '%s -> %s: [%s] %s', buschenschank.name,
+                tag_key, e.__class__, e
             )
             error['error'] = e
             errors.append(error)
@@ -91,12 +92,14 @@ class Command(BaseCommand):
         for error in errors:
             page_check_results.append(
                 PageCheckResult(
-                    buschenschank_id=error['id'], website=error['url'], tag_name=error['tag_key'],
-                    description=error['error'] or None, return_code=error['status_code'] or None
+                    buschenschank_id=error['id'],
+                    website=error['url'],
+                    tag_name=error['tag_key'],
+                    description=error['error'] or None,
+                    return_code=error['status_code'] or None
                 )
             )
         PageCheckResult.objects.bulk_create(page_check_results)
-
 
     async def _checker(self):
         async with ClientSession() as session:

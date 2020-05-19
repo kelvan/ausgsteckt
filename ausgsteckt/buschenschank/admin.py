@@ -18,7 +18,9 @@ class OpenTodayListFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value() == 'open':
             today = timezone.now().today()
-            return queryset.filter(opendate__date_start__lte=today, opendate__date_end__gte=today)
+            return queryset.filter(
+                opendate__date_start__lte=today,
+                opendate__date_end__gte=today)
 
 
 class OpenDateInline(admin.TabularInline):
@@ -35,7 +37,9 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
         'modified_by', 'created', 'modified'
     )
     readonly_fields = ('osm_id', 'osm_type', 'is_removed')
-    list_filter = ('is_removed', OpenTodayListFilter, 'created', 'modified', 'modified_by')
+    list_filter = (
+        'is_removed', OpenTodayListFilter, 'created', 'modified',
+        'modified_by')
     search_fields = ('name', 'tags')
 
     inlines = [OpenDateInline]
@@ -46,7 +50,8 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
 
     def website_link(self, instance):
         if instance.website:
-            return format_html('<a href="{url}">{url}</a>', url=instance.website)
+            return format_html(
+                '<a href="{url}">{url}</a>', url=instance.website)
 
     def cuisine(self, instance):
         return instance.tags.get('cuisine')
@@ -73,7 +78,9 @@ class RegionAdmin(gis_admin.OSMGeoAdmin):
 
     def website_link(self, instance):
         if instance.website:
-            return format_html('<a target="_blank" href="{url}">{url}</a>', url=instance.website)
+            return format_html(
+                '<a target="_blank" href="{url}">{url}</a>',
+                url=instance.website)
 
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
@@ -101,7 +108,8 @@ class CommuneAdmin(gis_admin.OSMGeoAdmin):
         updated = 0
         for commune in queryset:
             defaults = {'areas': commune.mpoly}
-            obj, new = Region.objects.update_or_create(name=commune.name, defaults=defaults)
+            obj, new = Region.objects.update_or_create(
+                name=commune.name, defaults=defaults)
             if new:
                 created += 1
             else:

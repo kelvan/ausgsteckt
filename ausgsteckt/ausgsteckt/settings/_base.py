@@ -1,16 +1,20 @@
 import os
+import environ
 import logging
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-DATA_DIR = os.path.join(os.path.dirname(BASE_DIR), 'public')
+env = environ.Env()
+
+BASE_DIR = Path(__file__).parents[2]
+DATA_DIR = env('DJANGO_PUBLIC_ROOT', default=(BASE_DIR.parent / 'public'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'el5m47jko&tz)i-qw_@b5wp=6ots)o3qcv^ekrceu$fcm1@jll'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
 
 ALLOWED_HOSTS = []
 
@@ -66,14 +70,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ausgsteckt.wsgi.application'
 
+TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+TEST_OUTPUT_DESCRIPTIONS = env.bool('TEST_OUTPUT_DESCRIPTIONS', default=False)
+TEST_OUTPUT_DIR = env('TEST_OUTPUT_DIR', default='.')
+TEST_OUTPUT_FILE_NAME = env('TEST_OUTPUT_FILE_NAME', default='report.xml')
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'ausgsteckt'
-    }
+    'default': env.db('DATABASE_URL', default='postgis:///ausgsteckt'),
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -106,11 +110,15 @@ USE_I18N = True
 USE_L10N = False
 USE_TZ = True
 
+SECURE_PROXY_SSL_HEADER = (
+    'HTTP_X_FORWARDED_PROTO', env('HTTP_X_FORWARDED_PROTO', default='http'))
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
-STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+MEDIA_ROOT = DATA_DIR / 'media'
+STATIC_ROOT = DATA_DIR / 'static'
+
+CACHE_BACKEND = env.cache('DJANGO_CACHE_BACKEND', default='locmemcache://')
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

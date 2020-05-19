@@ -39,7 +39,7 @@ def calculate_coverage(tags, tags_target):
                 covered += 1
                 break
 
-    return min(1.0, covered/min_tags_count)
+    return min(1.0, covered / min_tags_count)
 
 
 @register.simple_tag
@@ -54,7 +54,7 @@ def address_coverage(tags, percentage=False):
 def contact_coverage(tags, percentage=False):
     coverage = calculate_coverage(tags, CONTACT_TAGS)
     if percentage:
-        return round(coverage*100, 1)
+        return round(coverage * 100, 1)
     return round(coverage, 3)
 
 
@@ -62,14 +62,19 @@ def contact_coverage(tags, percentage=False):
 def fixme_address(item):
     if item.street or item.housenumber or item.postcode or item.city:
         if item.city:
-            city = format_html("<a href={url}>{city}</a>",
-                        city=item.city,
-                        url=reverse('data_quality:fixme_buschenschank', kwargs={'cityname': item.city})
-                        )
+            city = format_html(
+                '<a href={url}>{city}</a>',
+                city=item.city,
+                url=reverse(
+                    'data_quality:fixme_buschenschank',
+                    kwargs={'cityname': item.city}
+                )
+            )
         else:
             city = '<city unknown>'
 
-        addr = format_html('{street} {number}, {postcode} {city}',
+        addr = format_html(
+            '{street} {number}, {postcode} {city}',
             street=(item.street or item.place or '<street unknown>'),
             number=(item.housenumber or '<number unknown>'),
             postcode=(item.postcode or '<postcode unknown>'),

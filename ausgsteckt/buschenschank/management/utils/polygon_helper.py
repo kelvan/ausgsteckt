@@ -72,7 +72,7 @@ class Relation:
             if member['type'] == 'way':
                 node_obj = way_pool[member['ref']]
             elif member['type'] == 'node':
-                #node_obj = node_pool[member['ref']]
+                # node_obj = node_pool[member['ref']]
                 logger.warn(
                     'Node member of relation ignored'
                 )
@@ -117,7 +117,7 @@ class Relation:
         new_membership = [current_elem]
 
         for i in range(len(self.members)):
-            possible_next = self._get_possible_next_ways(current_elem.nodes[-1])
+            possible_next = self._get_possible_next_ways(current_elem.nodes[-1])  # NOQA: E501
             if len(possible_next) > 1:
                 raise ValueError('Ambiguous next node')
             if not possible_next:

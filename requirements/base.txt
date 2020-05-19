@@ -1,0 +1,22 @@
+Django~=2.2.12
+django-environ~=0.4.5
+django-model-utils~=3.1.2
+psycopg2-binary~=2.8.5
+python-dateutil~=2.8.1
+requests~=2.23.0
+aiohttp~=3.5.4
+cchardet~=2.1.4
+aiodns~=1.2.0
+python-memcached==1.59
+django-pipeline~=1.6.13
+lesscpy~=0.13.0
+raven~=6.10.0
+Pillow~=5.4.1
+easy-thumbnails~=2.6.0
+pytz
+# using system version, won't compile on archlinux
+#pyproj~=1.9.5
+#gdal~=2.3.0
+jsmin~=2.2.2
+django-ckeditor~=5.6.1
+wikipedia~=1.4.0
