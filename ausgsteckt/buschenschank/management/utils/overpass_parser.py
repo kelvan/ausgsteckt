@@ -9,7 +9,7 @@ DATEFORMAT = '%Y-%m-%dT%H:%M:%SZ'
 class NodeCenterSaxParser(handler.ContentHandler):
     """ Extract single point elements from nodes, ways and relations from overpass xml
     Needs center tag for ways and relations
-    """
+    """  # NOQA: E501
 
     def __init__(self):
         """ fields_from_tags:
