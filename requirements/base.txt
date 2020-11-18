@@ -11,7 +11,7 @@ python-memcached==1.59
 django-pipeline~=1.6.13
 lesscpy~=0.13.0
 raven~=6.10.0
-Pillow~=5.4.1
+Pillow~=8.0.1
 easy-thumbnails~=2.6.0
 pytz
 # using system version, won't compile on archlinux
