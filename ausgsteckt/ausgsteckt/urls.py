@@ -21,6 +21,9 @@ urlpatterns = [
     url(
         r'^impressum/$', flatpages_views.flatpage,
         {'url': '/impressum/'}, name='impressum'),
+    url(
+        r'^about/$', flatpages_views.flatpage,
+        {'url': '/about/'}, name='about'),
 ]
 
 if settings.DEBUG:
