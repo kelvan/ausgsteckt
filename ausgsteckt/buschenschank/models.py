@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance as D
 from django.contrib.gis.db.models.functions import Distance
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify

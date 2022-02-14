@@ -128,6 +128,4 @@ class Command(BaseCommand):
             tags__has_any_keys=self.webkeys
         )
 
-        loop = asyncio.get_event_loop()
-        future = asyncio.ensure_future(self._checker())
-        loop.run_until_complete(future)
+        asyncio.run(self._checker())
