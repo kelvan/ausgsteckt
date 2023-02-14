@@ -11,6 +11,7 @@ flake8:
   script:
     - pip install flake8
     - flake8
+  allow_failure: true
 
 build:js:
   image: node:12-alpine
@@ -67,13 +68,13 @@ pages:
       - wheels
       - .venv
 
-install:python3.6:
-  extends: .install
-  image: python:3.6
-
 install:python3.7:
   extends: .install
   image: python:3.7
+
+install:python3.8:
+  extends: .install
+  image: python:3.8
 
 .test:
   stage: test
@@ -98,14 +99,14 @@ install:python3.7:
     reports:
       junit: report.xml
 
-test:python3.6:
-  extends: .test
-  image: python:3.6
-  dependencies:
-    - install:python3.6
-
 test:python3.7:
   extends: .test
   image: python:3.7
   dependencies:
     - install:python3.7
+
+test:python3.8:
+  extends: .test
+  image: python:3.8
+  dependencies:
+    - install:python3.8

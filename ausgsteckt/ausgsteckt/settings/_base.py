@@ -78,6 +78,9 @@ TEST_OUTPUT_FILE_NAME = env('TEST_OUTPUT_FILE_NAME', default='report.xml')
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgis:///ausgsteckt'),
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -129,7 +132,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'pipeline.finders.CachedFileFinder',
 )
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
 PIPELINE = {
     'PIPELINE_ENABLED': True,
