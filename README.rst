@@ -13,7 +13,7 @@ Quickstart
 ==========
 
 * npm install
-* pip install -r requirements.txt
+* poetry install  # --with dev,docs,server,test
 * createdb ausgsteckt
 * cd ausgsteckt
 * python manage.py migrate

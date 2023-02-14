@@ -4,13 +4,14 @@ stages:
   - build
   - install
   - qa
+  - docs
   - test
 
 flake8:
   stage: qa
   script:
-    - pip install flake8
-    - flake8
+    - pip install ruff
+    - ruff .
   allow_failure: true
 
 build:js:
@@ -23,13 +24,37 @@ build:js:
       - ausgsteckt/ausgsteckt/static/node_modules/
     expire_in: 1 day
 
+.install:
+  stage: install
+  before_script:
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install -U wheel pip setuptools poetry
+  script:
+    - poetry install --with dev,test,docs
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - .venv
+
+install:python3.7:
+  extends: .install
+  image: python:3.7
+
+install:python3.8:
+  extends: .install
+  image: python:3.8
+
 .pages:
-  stage: build
+  stage: docs
   script:
     - apt install make
-    - pip install Sphinx
+    - . .venv/bin/activate
     - cd docs
     - make html
+  image: python:3.7
+  dependencies:
+    - install:python3.7
 
 build:pages:
   extends: .pages
@@ -51,31 +76,6 @@ pages:
   only:
     - master
 
-.install:
-  stage: install
-  variables:
-    REQUIREMENTS_FILE: "requirements/test.txt"
-  before_script:
-    - python -m venv .venv
-    - source .venv/bin/activate
-    - pip install -U wheel pip setuptools
-  script:
-    - pip wheel --wheel-dir wheels -r ${REQUIREMENTS_FILE}
-    - pip install --no-index --find-links=wheels -r ${REQUIREMENTS_FILE}
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - wheels
-      - .venv
-
-install:python3.7:
-  extends: .install
-  image: python:3.7
-
-install:python3.8:
-  extends: .install
-  image: python:3.8
-
 .test:
   stage: test
   services:
@@ -88,9 +88,9 @@ install:python3.8:
     POSTGRES_PASSWORD: secret
 
   before_script:
-    - source .venv/bin/activate
     - apt-get update
     - apt-get install -y python3-gdal
+    - source .venv/bin/activate
     - cd ausgsteckt
   script:
     - python manage.py test
