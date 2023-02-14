@@ -8,7 +8,7 @@ readme = "README.rst"
 [tool.poetry.dependencies]
 python = ">3.7,<4.0"
 django = ">=3.2.12,<3.3.0"
-psycopg2 = "^2.9.5"
+psycopg2-binary = "^2.9.5"
 django-environ = "<0.9"
 django-model-utils = ">=4.2.0,<4.3.0"
 python-dateutil = ">=2.8.2,<2.9.0"
