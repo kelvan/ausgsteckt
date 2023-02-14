@@ -49,7 +49,7 @@ class IncompleteBuschenschankList(PageTitleMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['overall_buschenschank_count'] = Buschenschank.objects.count()  # NOQA: E501
+        context['overall_buschenschank_count'] = Buschenschank.objects.count()
         context['city'] = self.kwargs.get('cityname')
         return context
 

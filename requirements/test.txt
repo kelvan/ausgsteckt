@@ -1,2 +1,0 @@
--r base.txt
-unittest-xml-reporting~=2.5.1

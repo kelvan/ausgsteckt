@@ -6,7 +6,7 @@ import requests
 
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.contrib.gis.measure import Distance as D
+from django.contrib.gis.measure import Distance as D  # NOQA: N817
 from django.contrib.gis.db.models.functions import Distance
 from django.db.models import JSONField
 from django.urls import reverse
@@ -34,9 +34,7 @@ WEBSITE_KEYS = ['contact:website', 'website']
 
 class AdminURLMixin:
     def get_admin_url(self):
-        return reverse('admin:{0}_{1}_change'.format(
-            self._meta.app_label, self._meta.model_name), args=(self.pk,)
-        )
+        return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=(self.pk,))
 
 
 class PublicManager(models.Manager):
@@ -65,7 +63,7 @@ class PublishableModel(models.Model):
         abstract = True
 
 
-class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):  # NOQA: E501
+class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
     name = models.CharField(_('Name'), max_length=50)
     coordinates = models.PointField(_('Coordinates'))
     modified_by = models.CharField(
@@ -127,11 +125,11 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     @property
     def address(self):
         if self.street or self.housenumber or self.postcode or self.city:
-            addr = '%s %s, %s %s' % (
-                self.street or self.place or _('<street unknown>'),
-                self.housenumber or _('<number unknown>'),
-                self.postcode or _('<postcode unknown>'),
-                self.city or _('<city unknown>')
+            addr = (
+                f"{self.street or self.place or _('<street unknown>')} "
+                f"{self.housenumber or _('<number unknown>')}, "
+                f"{self.postcode or _('<postcode unknown>')} "
+                f"{self.city or _('<city unknown>')}"
             )
             if self.country:
                 addr += ', ' + self.country
@@ -205,7 +203,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def get_map_permalink(self):
-        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(  # NOQA: E501
+        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(
             baseUrl=reverse('buschenschank:buschenschank_map'),
             buschenschank=self, zoom=18, layer='OpenStreetMap')
 
@@ -299,11 +297,11 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
                 self.description += '\n' + \
                     WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
             if not self.region_image.name:
-                COA_FILENAME_CONTENT = ['coa', 'wappen']
+                coa_filename_content = ['coa', 'wappen']
                 for image in wp_page.images:
                     img_unquote = unquote(image).lower()
-                    matches = [m in img_unquote for m in COA_FILENAME_CONTENT]
-                    if any(matches) and self.name.split()[0].lower() in img_unquote:  # NOQA: E501
+                    matches = [m in img_unquote for m in coa_filename_content]
+                    if any(matches) and self.name.split()[0].lower() in img_unquote:
                         self.load_image_from_web(image)
                         break
 

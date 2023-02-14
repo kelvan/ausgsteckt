@@ -84,16 +84,16 @@ os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # NOQA: E501
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # NOQA: E501
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # NOQA: E501
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # NOQA: E501
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -180,7 +180,7 @@ PIPELINE = {
         'libs': {
             'source_filenames': (
                 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-                'node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css',  # NOQA: E501
+                'node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css',
                 'node_modules/@fortawesome/fontawesome-free/css/solid.min.css',
             ),
             'output_filename': 'css/libs.css',

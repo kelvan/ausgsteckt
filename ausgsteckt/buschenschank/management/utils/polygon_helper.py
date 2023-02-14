@@ -12,8 +12,8 @@ logger.addHandler(ch)
 
 class Node:
 
-    def __init__(self, id, lat, lon, *args, **kwargs):
-        self.id = id
+    def __init__(self, node_id, lat, lon, *args, **kwargs):
+        self.id = node_id
         self.lat = lat
         self.lon = lon
         self.ways = {}
@@ -31,14 +31,13 @@ class Node:
 
 class Way:
 
-    def __init__(self, id, nodes, *args, **kwargs):
-        self.id = id
+    def __init__(self, way_id, nodes, *args, **kwargs):
+        self.id = way_id
         self.nodes = nodes
         self.relations = {}
 
     def __iter__(self):
-        for node in self.nodes:
-            yield node
+        yield from self.nodes
 
     def convert_nodes(self, node_pool):
         """ Replace node id list with refernces to Node objects
@@ -62,8 +61,8 @@ class Way:
 
 class Relation:
 
-    def __init__(self, id, members, *args, **kwargs):
-        self.id = id
+    def __init__(self, rel_id, members, *args, **kwargs):
+        self.id = rel_id
         self.members = members
 
     def convert_members(self, way_pool, node_pool):
@@ -116,8 +115,8 @@ class Relation:
         current_elem = self.members.pop()
         new_membership = [current_elem]
 
-        for i in range(len(self.members)):
-            possible_next = self._get_possible_next_ways(current_elem.nodes[-1])  # NOQA: E501
+        for _ in range(len(self.members)):
+            possible_next = self._get_possible_next_ways(current_elem.nodes[-1])
             if len(possible_next) > 1:
                 raise ValueError('Ambiguous next node')
             if not possible_next:

@@ -28,7 +28,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
 
 
 class Command(BaseCommand):
-    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'  # NOQA: E501
+    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -54,6 +54,6 @@ class Command(BaseCommand):
                 parser.users.items(), key=operator.itemgetter(1), reverse=True)
             for user, count in sorted_items:
                 if count >= min_contrib:
-                    print('%s: %d' % (user, count))
+                    logger.info(f'{user}: {count}')
         else:
             logger.error('Not possible to get XML: %d' % response.status_code)
