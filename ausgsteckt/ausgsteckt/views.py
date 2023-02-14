@@ -27,7 +27,7 @@ class JSONResponseMixin:
         return context
 
 
-class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):  # NOQA: E501
+class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):
 
     def render_to_response(self, context):
         # Look for a 'format=json' GET argument

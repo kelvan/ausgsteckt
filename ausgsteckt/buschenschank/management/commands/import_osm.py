@@ -60,13 +60,13 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         ).first()
         if buschenschank is None:
             logger.info(
-                'New Buschenschank found: {tags[name]} by {user}'.format(**element)  # NOQA: E501
+                'New Buschenschank found: {tags[name]} by {user}'.format(**element)
             )
             buschenschank = Buschenschank(osm_id=osm_id, osm_type=osm_type)
             self.new += 1
         elif buschenschank.modified < element['timestamp']:
             logger.info(
-                'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)  # NOQA: E501
+                'Updated Buschenschank found: {tags[name]} by {user}'.format(**element)
             )
             self.updated += 1
         else:
@@ -76,7 +76,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         name_len = Buschenschank._meta.get_field('name').max_length
         buschenschank.name = name[:name_len]
         buschenschank.coordinates = Point(float(lon), float(lat))
-        modified_by_len = Buschenschank._meta.get_field('modified_by').max_length  # NOQA: E501
+        modified_by_len = Buschenschank._meta.get_field('modified_by').max_length
         buschenschank.modified_by = element['user'][:modified_by_len]
         buschenschank.modified = element['timestamp']
         buschenschank.tags = tags

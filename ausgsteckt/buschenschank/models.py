@@ -205,7 +205,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
 
     def get_map_permalink(self):
-        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(  # NOQA: E501
+        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(
             baseUrl=reverse('buschenschank:buschenschank_map'),
             buschenschank=self, zoom=18, layer='OpenStreetMap')
 
@@ -303,7 +303,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
                 for image in wp_page.images:
                     img_unquote = unquote(image).lower()
                     matches = [m in img_unquote for m in COA_FILENAME_CONTENT]
-                    if any(matches) and self.name.split()[0].lower() in img_unquote:  # NOQA: E501
+                    if any(matches) and self.name.split()[0].lower() in img_unquote:
                         self.load_image_from_web(image)
                         break
 

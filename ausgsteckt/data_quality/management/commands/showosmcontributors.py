@@ -28,7 +28,7 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
 
 
 class Command(BaseCommand):
-    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'  # NOQA: E501
+    help = 'Extract active OSM contributors editing Buschenschank/Heuriger nodes'
 
     def add_arguments(self, parser):
         parser.add_argument(
