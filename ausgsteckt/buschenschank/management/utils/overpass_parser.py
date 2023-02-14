@@ -21,7 +21,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
         # current subtag (No, Description, ...)
         self._currentTag = ''
 
-    def startElement(self, name, attrs):
+    def startElement(self, name, attrs):  # NOQA: N802
         if name in ['node', 'way', 'relation']:
             self._inItem = True
             self._item = {
@@ -44,7 +44,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
         if self._inItem:
             self._currentTag = name
 
-    def endElement(self, name):
+    def endElement(self, name):  # NOQA: N802
         if name in ['node', 'way', 'relation']:
             self._inItem = False
             self._currentItem = ''
