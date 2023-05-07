@@ -5,7 +5,7 @@ ausgsteckt
 Requirements
 ============
 
-* python >= 3.4 (<3.6 untested)
+* python >= 3.8
 * postgresql with postgis
 * see requirements.txt (dev libs like image stuff for easythumbnails, ...)
 

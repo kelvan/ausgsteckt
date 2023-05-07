@@ -127,6 +127,10 @@ STATIC_ROOT = DATA_DIR / 'static'
 
 CACHE_BACKEND = env.cache('DJANGO_CACHE_BACKEND', default='locmemcache://')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR.parent, 'node_modules'),
+]
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -140,22 +144,22 @@ PIPELINE = {
     'JAVASCRIPT': {
         'map': {
             'source_filenames': (
-                'node_modules/leaflet/dist/leaflet.js',
-                'node_modules/leaflet-providers/leaflet-providers.js',
-                'node_modules/leaflet-plugins/control/Permalink.js',
-                'node_modules/leaflet-plugins/control/Permalink.Marker.js',
-                'node_modules/leaflet-plugins/control/Permalink.Layer.js',
-                'node_modules/leaflet-plugins/control/Permalink.Overlay.js',
+                'leaflet/dist/leaflet.js',
+                'leaflet-providers/leaflet-providers.js',
+                'leaflet-plugins/control/Permalink.js',
+                'leaflet-plugins/control/Permalink.Marker.js',
+                'leaflet-plugins/control/Permalink.Layer.js',
+                'leaflet-plugins/control/Permalink.Overlay.js',
                 'js/leaflet.markercluster.js',
                 'js/buschenschank/map.js',
             ),
-            'output_filename': 'js/map.js'
+            'output_filename': 'js/maps.js'
         },
         'libs': {
             'source_filenames': (
-                'node_modules/jquery/dist/jquery.min.js',
-                'node_modules/popper.js/dist/umd/popper.js',
-                'node_modules/bootstrap/dist/js/bootstrap.min.js',
+                'jquery/dist/jquery.min.js',
+                'popper.js/dist/umd/popper.js',
+                'bootstrap/dist/js/bootstrap.min.js',
             ),
             'output_filename': 'js/libs.js',
         },
@@ -171,17 +175,17 @@ PIPELINE = {
         'map': {
             'source_filenames': (
                 'css/buschenschank/map.css',
-                'node_modules/leaflet/dist/leaflet.css',
+                'leaflet/dist/leaflet.css',
                 'css/MarkerCluster.css',
                 'css/MarkerCluster.Default.css',
             ),
-            'output_filename': 'css/map.css',
+            'output_filename': 'css/maps.css',
         },
         'libs': {
             'source_filenames': (
-                'node_modules/bootstrap/dist/css/bootstrap.min.css',
-                'node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css',
-                'node_modules/@fortawesome/fontawesome-free/css/solid.min.css',
+                'bootstrap/dist/css/bootstrap.min.css',
+                '@fortawesome/fontawesome-free/css/fontawesome.min.css',
+                '@fortawesome/fontawesome-free/css/solid.min.css',
             ),
             'output_filename': 'css/libs.css',
         }

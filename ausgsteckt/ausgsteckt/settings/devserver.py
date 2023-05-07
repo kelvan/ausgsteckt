@@ -1,9 +1,6 @@
-import os
+from .production import *
 
-from .development import *
-
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'public', 'static/')
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'public', 'media/')
+ALLOWED_HOSTS = ["django"]
 
 LOGGING = {
     'version': 1,
@@ -15,21 +12,20 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'console': {
             'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '%s/../logs/ausgsteckt.log' % BASE_DIR,
+            'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
     },
     'loggers': {
         '': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },

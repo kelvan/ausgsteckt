@@ -1,11 +1,11 @@
 import socket
 
 hosts = {
-    'doyle': 'production', 'fedora': 'production', 'fedora.ist-total.org': 'production',
+    'fedora': 'production', 'fedora.ist-total.org': 'production',
 }
 DEFAULT = 'development'
 
-
 def get_server_type():
     host = socket.gethostname()
-    return hosts.get(host, DEFAULT)
+    server_type = hosts.get(host, DEFAULT)
+    return server_type
