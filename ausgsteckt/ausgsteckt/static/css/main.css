@@ -26,6 +26,12 @@ body {
   min-height: 56px;
 }
 
+.navbar-brand {
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+  height: 30px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
