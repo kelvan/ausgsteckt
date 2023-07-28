@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 'Removed Buschenschank found: [%s/%d] %s',
                 obsolete.osm_type, obsolete.osm_id, obsolete.name
             )
-        if obsoletes.count() < 5 or force_delete is True:
+        if obsoletes.count() < 20 or force_delete is True:
             obsoletes.update(is_removed=True)
         else:
             logger.warning(
