@@ -312,9 +312,10 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
             'buschenschank:region_details',
             kwargs={'pk': self.pk, 'slug': self.slug})
 
-    def get_buschenschank(self):
-        return Buschenschank.objects.filter(
+    def get_buschenschank(self) -> models.QuerySet[Buschenschank]:
+        queryset = Buschenschank.available_objects.filter(
             coordinates__intersects=self.areas)
+        return queryset.filter(published=True)
 
     class Meta:
         verbose_name = _('Region')
