@@ -1,4 +1,6 @@
 import logging
+from typing import Any
+from django.db import models
 
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -26,7 +28,7 @@ class MainMapView(PageTitleMixin, TemplateView):
 
 
 class BuschenschankAPIDetailView(HybridDetailView):
-    model = Buschenschank
+    queryset = Buschenschank.available_objects
     template_name = 'buschenschank/api/buschenschank_detail.html'
 
     def get_data(self, context):
@@ -39,19 +41,25 @@ class BuschenschankAPIDetailView(HybridDetailView):
 
 
 class BuschenschankDetailView(PageTitleMixin, DetailView):
-    model = Buschenschank
+    queryset = Buschenschank.available_objects
     template_name = 'buschenschank/buschenschank_detail.html'
+
+    def get_queryset(self) -> models.QuerySet[Any]:
+        queryset = super().get_queryset()
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(published=True)
+        return queryset
 
     def get_page_title(self):
         return self.object.name
 
 
 class PublicBuschenschankGeoJsonView(ListView):
-    model = Buschenschank
+    queryset = Buschenschank.available_objects
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(is_removed=False)
+        return queryset.filter(published=True)
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -76,6 +84,11 @@ class RegionDetailView(PageTitleMixin, DetailView):
 class SearchView(PageTitleMixin, TemplateView):
     template_name = 'buschenschank/search_result.html'
     page_title = _('Search results for "{}"')
+    queryset = Buschenschank.available_objects
+
+    def get_queryset(self) -> models.QuerySet[Any]:
+        queryset = super().get_queryset()
+        return queryset.filter(published=True)
 
     def get_page_title(self):
         page_title = super().get_page_title()
@@ -91,7 +104,7 @@ class SearchView(PageTitleMixin, TemplateView):
                                 | Q(**{'tags__addr:city__icontains': q})
                                 | Q(**{'tags__addr:postcode__icontains': q}))
             alt_name_contains = Q(tags__alt_name__icontains=q)
-            context['results'] = Buschenschank.objects.filter(
+            context['results'] = self.queryset.filter(published=True).filter(
                 name_contains
                 | alt_name_contains
                 | address_contains
