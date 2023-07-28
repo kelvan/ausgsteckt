@@ -15,6 +15,9 @@
     {% endblock %}
     <meta name="description" content="{% trans 'Information about Heurige in austria' %}">
     <meta name="keywords" content="Heuriger,Buschenschank,ausgsteckt,wine,austria,Wein,Österreich,austria,OpenStreetMap,OpenData">
+    {% if noindex %}
+      <meta name="robots" content="noindex">
+    {% endif %}
     {% block extrameta %}{% endblock %}
   </head>
   <body {% block bodyattr %}{% endblock %}>
