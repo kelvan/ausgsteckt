@@ -41,10 +41,6 @@ install:python3.10:
   extends: .install
   image: python:3.10
 
-install:python3.11:
-  extends: .install
-  image: python:3.11
-
 .pages:
   stage: docs
   script:
@@ -104,9 +100,3 @@ test:python3.10:
   image: python:3.10
   dependencies:
     - install:python3.10
-
-test:python3.11:
-  extends: .test
-  image: python:3.11
-  dependencies:
-    - install:python3.11
