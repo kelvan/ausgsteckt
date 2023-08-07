@@ -37,6 +37,7 @@ install:python3.10:
 ruff:
   stage: qa
   script:
+    - source .venv/bin/activate
     - ruff .
   allow_failure: true
   dependencies:
@@ -45,6 +46,7 @@ ruff:
 mypy:
   stage: qa
   script:
+    - source .venv/bin/activate
     - mypy .
   allow_failure: true
   dependencies:
