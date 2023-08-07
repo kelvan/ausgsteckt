@@ -42,6 +42,14 @@ ruff:
   dependencies:
     - install:python3.10
 
+mypy:
+  stage: qa
+  script:
+    - mypy .
+  allow_failure: true
+  dependencies:
+    - install:python3.10
+
 .pages:
   stage: docs
   script:

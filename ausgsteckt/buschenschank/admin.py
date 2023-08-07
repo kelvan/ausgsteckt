@@ -46,7 +46,7 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
     list_filter = ("is_removed", OpenTodayListFilter, "created", "modified", "modified_by")
     search_fields = ("name", "tags")
 
-    inlines: ClassVar[list[admin.InlineModelAdmin]] = [OpenDateInline]
+    inlines: ClassVar[list[admin.options.InlineModelAdmin]] = [OpenDateInline]
 
     def active(self, instance):
         return not instance.is_removed
