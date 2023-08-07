@@ -80,7 +80,7 @@ TEST_OUTPUT_DIR = env("TEST_OUTPUT_DIR", default=".")
 TEST_OUTPUT_FILE_NAME = env("TEST_OUTPUT_FILE_NAME", default="report.xml")
 
 DATABASES = {
-    "default": config.database_url,
+    "default": env.db('DJANGO_DATABASE_URL', default='postgis:///ausgsteckt'),
 }
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 

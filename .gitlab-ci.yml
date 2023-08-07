@@ -75,9 +75,9 @@ pages:
 .test:
   stage: test
   services:
-    - mdillon/postgis:12-alpine
+    - postgis/postgis:15-3.3-alpine
   variables:
-    DATABASE_URL: postgis://django:secret@mdillon-postgis:5432/django_test
+    DJANGO_DATABASE_URL: postgis://django:secret@postgis:5432/django_test
     DJANGO_LOG_FILE: /dev/null
     POSTGRES_DB: django_test
     POSTGRES_USER: django

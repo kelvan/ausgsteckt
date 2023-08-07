@@ -30,3 +30,4 @@ report.xml
 sentry_settings.py
 bin/
 etc/
+*.lock
