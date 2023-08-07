@@ -7,7 +7,7 @@ stages:
   - docs
   - test
 
-flake8:
+ruff:
   stage: qa
   script:
     - pip install ruff
