@@ -1,23 +1,22 @@
-import sys
-import csv
-import logging
-import itertools
 import asyncio
-import async_timeout
+import csv
+import itertools
+import logging
+import sys
 from pathlib import Path
 
+import async_timeout
 from aiohttp import ClientSession
-
 from django.core.management.base import BaseCommand
 
 from buschenschank.models import Buschenschank
-from ...models import PageCheckResult
 
+from ...models import PageCheckResult
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(levelname)s] %(message)s')
+formatter = logging.Formatter("[%(levelname)s] %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -33,54 +32,44 @@ async def check_url(session, buschenschank, tag_key):
     url = buschenschank.tags.get(tag_key)
     if url:
         error = {
-            'id': buschenschank.id, 'buschenschank_name': buschenschank.name,
-            'url': url, 'tag_key': tag_key, 'error': '',
-            'status_code': '', 'osm_url': buschenschank.get_osm_url()
+            "id": buschenschank.id,
+            "buschenschank_name": buschenschank.name,
+            "url": url,
+            "tag_key": tag_key,
+            "error": "",
+            "status_code": "",
+            "osm_url": buschenschank.get_osm_url(),
         }
-        if not url.startswith('http'):
-            logger.error(
-                'InvalidURL: %s -> %s: %s', buschenschank.name,
-                tag_key, url
-            )
+        if not url.startswith("http"):
+            logger.error("InvalidURL: %s -> %s: %s", buschenschank.name, tag_key, url)
             new_error = dict(**error)
-            new_error['error'] = 'InvalidURL'
+            new_error["error"] = "InvalidURL"
             errors.append(new_error)
-            url = 'http://' + url
-            error['url'] = url
-            logger.info('Replaced url with: %s', url)
+            url = "http://" + url
+            error["url"] = url
+            logger.info("Replaced url with: %s", url)
         try:
             r = await fetch(session, url)
             if not r.status == 200:
-                logger.warning(
-                    '[%s] %s -> %s', r.status,
-                    buschenschank.name, tag_key
-                )
-                error['status_code'] = r.status
+                logger.warning("[%s] %s -> %s", r.status, buschenschank.name, tag_key)
+                error["status_code"] = r.status
                 errors.append(error)
         except Exception as e:
-            logger.error(
-                '%s -> %s: [%s] %s', buschenschank.name,
-                tag_key, e.__class__, e
-            )
-            error['error'] = e
+            logger.error("%s -> %s: [%s] %s", buschenschank.name, tag_key, e.__class__, e)
+            error["error"] = e
             errors.append(error)
     return errors
 
 
 class Command(BaseCommand):
-    help = 'Check Buschenschank websites'
+    help = "Check Buschenschank websites"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--report', dest='report', help='Save report as csv'
-        )
+        parser.add_argument("--report", dest="report", help="Save report as csv")
 
     def _save_report(self, errors, report_path):
-        with open(report_path, 'w') as csvfile:
-            fieldnames = [
-                'id', 'buschenschank_name', 'tag_key', 'url', 'status_code',
-                'error', 'osm_url'
-            ]
+        with open(report_path, "w") as csvfile:
+            fieldnames = ["id", "buschenschank_name", "tag_key", "url", "status_code", "error", "osm_url"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             writer.writeheader()
@@ -92,11 +81,11 @@ class Command(BaseCommand):
         for error in errors:
             page_check_results.append(
                 PageCheckResult(
-                    buschenschank_id=error['id'],
-                    website=error['url'],
-                    tag_name=error['tag_key'],
-                    description=error['error'] or None,
-                    return_code=error['status_code'] or None
+                    buschenschank_id=error["id"],
+                    website=error["url"],
+                    tag_name=error["tag_key"],
+                    description=error["error"] or None,
+                    return_code=error["status_code"] or None,
                 )
             )
         PageCheckResult.objects.bulk_create(page_check_results)
@@ -110,22 +99,20 @@ class Command(BaseCommand):
 
             errors = await asyncio.gather(*tasks)
             errors = list(itertools.chain.from_iterable(errors))
-            logger.info('Errors: %d', len(errors))
+            logger.info("Errors: %d", len(errors))
 
         if self.report_path:
             self._save_report(errors, self.report_path)
         self._save_errors_to_database(errors)
 
     def handle(self, *args, **options):
-        self.report_path = options.get('report')
+        self.report_path = options.get("report")
 
         if not Path(self.report_path).parent.exists():
-            logger.fatal('Report path does not exist')
+            logger.fatal("Report path does not exist")
             sys.exit(1)
 
-        self.webkeys = ['website', 'contact:website', 'opening_hours:url']
-        self.queryset = Buschenschank.objects.filter(
-            tags__has_any_keys=self.webkeys
-        )
+        self.webkeys = ["website", "contact:website", "opening_hours:url"]
+        self.queryset = Buschenschank.objects.filter(tags__has_any_keys=self.webkeys)
 
         asyncio.run(self._checker())
