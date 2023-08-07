@@ -1,4 +1,4 @@
-image: python:3.8
+image: python:3.10
 
 stages:
   - build
@@ -37,9 +37,13 @@ build:js:
     paths:
       - .venv
 
-install:python3.8:
+install:python3.10:
   extends: .install
-  image: python:3.8
+  image: python:3.10
+
+install:python3.11:
+  extends: .install
+  image: python:3.11
 
 .pages:
   stage: docs
@@ -48,9 +52,9 @@ install:python3.8:
     - . .venv/bin/activate
     - cd docs
     - make html
-  image: python:3.8
+  image: python:3.10
   dependencies:
-    - install:python3.8
+    - install:python3.10
 
 build:pages:
   extends: .pages
@@ -75,7 +79,7 @@ pages:
 .test:
   stage: test
   services:
-    - mdillon/postgis:11-alpine
+    - mdillon/postgis:12-alpine
   variables:
     DATABASE_URL: postgis://django:secret@mdillon-postgis:5432/django_test
     DJANGO_LOG_FILE: /dev/null
@@ -95,8 +99,14 @@ pages:
     reports:
       junit: report.xml
 
-test:python3.8:
+test:python3.10:
   extends: .test
-  image: python:3.8
+  image: python:3.10
   dependencies:
-    - install:python3.8
+    - install:python3.10
+
+test:python3.11:
+  extends: .test
+  image: python:3.11
+  dependencies:
+    - install:python3.11
