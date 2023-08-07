@@ -35,7 +35,7 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
-ruff = "^0.0.246"
+ruff = "^0.0.282"
 mypy = "^1.0.0"
 ipython = "<8"
 

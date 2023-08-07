@@ -7,13 +7,6 @@ stages:
   - docs
   - test
 
-ruff:
-  stage: qa
-  script:
-    - pip install ruff
-    - ruff .
-  allow_failure: true
-
 build:js:
   image: node:12-alpine
   stage: build
@@ -40,6 +33,14 @@ build:js:
 install:python3.10:
   extends: .install
   image: python:3.10
+
+ruff:
+  stage: qa
+  script:
+    - ruff .
+  allow_failure: true
+  dependencies:
+    - install:python3.10
 
 .pages:
   stage: docs

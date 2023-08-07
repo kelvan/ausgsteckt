@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
+from typing import ClassVar
 
-from confz import BaseConfig, EnvSource, FileSource
+from confz import BaseConfig, ConfigSource, EnvSource, FileSource
 from pydantic import AnyUrl
 
 
@@ -20,7 +21,7 @@ class DjangoConfig(BaseConfig):
     media_url: str = "/media/"
     cache_backend: AnyUrl = "locmemcache://"
 
-    CONFIG_SOURCES = [
+    CONFIG_SOURCES: ClassVar[list[ConfigSource]] = [
         EnvSource(prefix="DJANGO_"),
         FileSource(file=os.environ.get("DJANGO_CONFIG_FILE", Path(__file__).parents[3] / "config.yaml"), optional=True),
     ]

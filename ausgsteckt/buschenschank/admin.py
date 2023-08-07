@@ -1,3 +1,4 @@
+from typing import ClassVar
 from django.contrib import admin
 from django.contrib.gis import admin as gis_admin
 from django.utils import timezone
@@ -45,7 +46,7 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
     list_filter = ("is_removed", OpenTodayListFilter, "created", "modified", "modified_by")
     search_fields = ("name", "tags")
 
-    inlines = [OpenDateInline]
+    inlines: ClassVar[list[admin.InlineModelAdmin]] = [OpenDateInline]
 
     def active(self, instance):
         return not instance.is_removed
@@ -91,7 +92,7 @@ class CommuneAdmin(gis_admin.OSMGeoAdmin):
     readonly_fields = ("name", "district", "county", "is_removed", "created", "modified")
     list_filter = ("is_removed", "county", "created", "modified")
     search_fields = ("name", "district")
-    actions = ["create_update_region"]
+    actions: ClassVar[list[str]] = ["create_update_region"]
 
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
