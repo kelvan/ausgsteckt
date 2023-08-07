@@ -7,7 +7,7 @@ register = template.Library()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
-formatter = logging.Formatter('[%(levelname)s] %(message)s')
+formatter = logging.Formatter("[%(levelname)s] %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -18,5 +18,5 @@ def template_exists(template_name):
         template.loader.get_template(template_name)
         return True
     except template.TemplateDoesNotExist:
-        logger.info('Template not found %s', template_name)
+        logger.info("Template not found %s", template_name)
         return False

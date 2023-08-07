@@ -3,6 +3,7 @@
   width:  100%;
 }
 #buschenschank_maps {
+  height: 100%;
   transition: width 0.3s ease, margin 0.3s ease;
 }
 .map-small {

@@ -1,61 +1,53 @@
 import os
 from urllib.parse import unquote
 
-import wikipedia
 import requests
-
+import wikipedia
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.contrib.gis.measure import Distance as D  # NOQA: N817
 from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.measure import Distance as D  # NOQA: N817
 from django.db.models import JSONField
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from django.utils.functional import cached_property
-
-from model_utils.models import TimeStampedModel, SoftDeletableModel
 from easy_thumbnails.fields import ThumbnailerImageField
+from model_utils.models import SoftDeletableModel, TimeStampedModel
+
 from .managers import OpenTodayManager
 
-OSMTYPES = (
-    ('node', _('Node')),
-    ('way', _('Way')),
-    ('relation', _('Relation'))
-)
+OSMTYPES = (("node", _("Node")), ("way", _("Way")), ("relation", _("Relation")))
 
-WIKIPEDIA_CITE = '-- https://{lang}.wikipedia.org/wiki/{page} (CC by-sa)'
+WIKIPEDIA_CITE = "-- https://{lang}.wikipedia.org/wiki/{page} (CC by-sa)"
 
-PHONE_KEYS = ['contact:phone', 'phone', 'contact:mobile', 'mobile']
-EMAIL_KEYS = ['contact:email', 'email']
-WEBSITE_KEYS = ['contact:website', 'website']
+PHONE_KEYS = ["contact:phone", "phone", "contact:mobile", "mobile"]
+EMAIL_KEYS = ["contact:email", "email"]
+WEBSITE_KEYS = ["contact:website", "website"]
 
 
 class AdminURLMixin:
     def get_admin_url(self):
-        return reverse(f'admin:{self._meta.app_label}_{self._meta.model_name}_change', args=(self.pk,))
+        return reverse(f"admin:{self._meta.app_label}_{self._meta.model_name}_change", args=(self.pk,))
 
 
 class PublicManager(models.Manager):
-
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(published=True)
 
 
 class OSMItemModel(models.Model):
-    osm_id = models.BigIntegerField(_('OSM ID'), blank=True, null=True)
-    osm_type = models.CharField(
-        _('OSM Type'), blank=True, null=True, max_length=8, choices=OSMTYPES
-    )
+    osm_id = models.BigIntegerField(_("OSM ID"), blank=True, null=True)
+    osm_type = models.CharField(_("OSM Type"), blank=True, null=True, max_length=8, choices=OSMTYPES)
 
     class Meta:
         abstract = True
 
 
 class PublishableModel(models.Model):
-    published = models.BooleanField(_('Published'), default=True)
+    published = models.BooleanField(_("Published"), default=True)
 
     public = PublicManager()
 
@@ -64,12 +56,10 @@ class PublishableModel(models.Model):
 
 
 class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
-    name = models.CharField(_('Name'), max_length=50)
-    coordinates = models.PointField(_('Coordinates'))
-    modified_by = models.CharField(
-        _('Last edit OSM user'), max_length=50, blank=True, null=True
-    )
-    tags = JSONField(_('Tags'), blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=50)
+    coordinates = models.PointField(_("Coordinates"))
+    modified_by = models.CharField(_("Last edit OSM user"), max_length=50, blank=True, null=True)
+    tags = JSONField(_("Tags"), blank=True, null=True)
 
     # include removed objects
     all = models.Manager()
@@ -78,8 +68,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     @property
     def open(self):
         today = timezone.now().date()
-        return self.opendate_set.filter(
-            date_start__lte=today, date_end__gte=today).exists()
+        return self.opendate_set.filter(date_start__lte=today, date_end__gte=today).exists()
 
     @property
     def future_open_dates(self):
@@ -100,27 +89,27 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
 
     @property
     def country(self):
-        return self.tags.get('addr:country')
+        return self.tags.get("addr:country")
 
     @property
     def postcode(self):
-        return self.tags.get('addr:postcode')
+        return self.tags.get("addr:postcode")
 
     @property
     def city(self):
-        return self.tags.get('addr:city')
+        return self.tags.get("addr:city")
 
     @property
     def street(self):
-        return self.tags.get('addr:street')
+        return self.tags.get("addr:street")
 
     @property
     def place(self):
-        return self.tags.get('addr:place')
+        return self.tags.get("addr:place")
 
     @property
     def housenumber(self):
-        return self.tags.get('addr:housenumber')
+        return self.tags.get("addr:housenumber")
 
     @property
     def address(self):
@@ -132,16 +121,16 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
                 f"{self.city or _('<city unknown>')}"
             )
             if self.country:
-                addr += ', ' + self.country
+                addr += ", " + self.country
             return addr
 
     @property
     def opening_hours(self):
-        return self.tags.get('opening_hours')
+        return self.tags.get("opening_hours")
 
     @property
     def opening_hours_url(self):
-        return self.tags.get('opening_hours:url')
+        return self.tags.get("opening_hours:url")
 
     @property
     def website(self):
@@ -152,8 +141,8 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     def website_list(self):
         websites = self.tag_values_list(WEBSITE_KEYS)
         for i, website in enumerate(websites):
-            if not website.startswith('http'):
-                websites[i] = 'http://' + website
+            if not website.startswith("http"):
+                websites[i] = "http://" + website
         return websites
 
     def tag_values_list(self, tag_keys):
@@ -193,80 +182,64 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return Region.objects.filter(areas__contains=self.coordinates).first()
 
     def get_nearby(self, distance_km=1.5):
-        nearby = Buschenschank.objects.exclude(pk=self.pk).annotate(
-            distance=Distance('coordinates', self.coordinates)
-        ).order_by('distance')
+        nearby = (
+            Buschenschank.objects.exclude(pk=self.pk)
+            .annotate(distance=Distance("coordinates", self.coordinates))
+            .order_by("distance")
+        )
         nearby = nearby.filter(distance__lte=D(km=distance_km))
         return nearby
 
     def get_osm_url(self):
-        return 'https://openstreetmap.org/%s/%d' % (self.osm_type, self.osm_id)
+        return "https://openstreetmap.org/%s/%d" % (self.osm_type, self.osm_id)
 
     def get_map_permalink(self):
-        return '{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}'.format(
-            baseUrl=reverse('buschenschank:buschenschank_map'),
-            buschenschank=self, zoom=18, layer='OpenStreetMap')
+        return "{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}".format(
+            baseUrl=reverse("buschenschank:buschenschank_map"), buschenschank=self, zoom=18, layer="OpenStreetMap"
+        )
 
     def get_absolute_url(self):
-        return reverse(
-            'buschenschank:buschenschank_details',
-            kwargs={'pk': self.pk, 'slug': self.slug})
+        return reverse("buschenschank:buschenschank_details", kwargs={"pk": self.pk, "slug": self.slug})
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Buschenschank'
-        verbose_name_plural = 'Buschenschanken'
-        ordering = ('name',)
+        verbose_name = "Buschenschank"
+        verbose_name_plural = "Buschenschanken"
+        ordering = ("name",)
 
 
 class OpenDate(TimeStampedModel, AdminURLMixin):
-    buschenschank = models.ForeignKey(
-        Buschenschank, verbose_name=_('Buschenschank'),
-        on_delete=models.CASCADE)
-    date_start = models.DateField(
-        _('Start date'), help_text=_('First opened day'))
-    date_end = models.DateField(
-        _('End date'), help_text=_('Last opened day'))
+    buschenschank = models.ForeignKey(Buschenschank, verbose_name=_("Buschenschank"), on_delete=models.CASCADE)
+    date_start = models.DateField(_("Start date"), help_text=_("First opened day"))
+    date_end = models.DateField(_("End date"), help_text=_("Last opened day"))
 
     def __str__(self):
-        return '[{0.buschenschank}] {0.date_start}-{0.date_end}'.format(self)
+        return "[{0.buschenschank}] {0.date_start}-{0.date_end}".format(self)
 
     class Meta:
-        verbose_name = _('Open date')
-        verbose_name_plural = _('Open dates')
-        ordering = ('date_end', 'date_start', 'buschenschank')
+        verbose_name = _("Open date")
+        verbose_name_plural = _("Open dates")
+        ordering = ("date_end", "date_start", "buschenschank")
 
 
-class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
-             PublishableModel, AdminURLMixin):
-    name = models.CharField(_('Name'), max_length=50)
+class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableModel, AdminURLMixin):
+    name = models.CharField(_("Name"), max_length=50)
     description = models.TextField(
-        _('Description'), help_text=_('Description shown on region page'),
-        blank=True, null=True
+        _("Description"), help_text=_("Description shown on region page"), blank=True, null=True
     )
     wikipedia_page = models.CharField(
-        _('Wikipedia page'), max_length=50, blank=True, null=True,
-        help_text=_('Used to load description if none set')
+        _("Wikipedia page"), max_length=50, blank=True, null=True, help_text=_("Used to load description if none set")
     )
     region_image = ThumbnailerImageField(
-        _('Region image'),
-        help_text=_('Image displayed on region page'),
-        upload_to='images/regions', blank=True
+        _("Region image"), help_text=_("Image displayed on region page"), upload_to="images/regions", blank=True
     )
-    areas = models.MultiPolygonField(_('Areas'))
-    website = models.URLField(_('Website'), blank=True, null=True)
-    calendar_website = models.URLField(
-        _('Calendar website'), blank=True, null=True
-    )
-    keywords = models.CharField(
-        _('Keywords'), blank=True, null=True, max_length=255
-    )
-    notes = models.TextField(
-        _('Notes'), help_text=_('Internal notes'),
-        blank=True, null=True
-    )
+    areas = models.MultiPolygonField(_("Areas"))
+    website = models.URLField(_("Website"), blank=True, null=True)
+    calendar_website = models.URLField(_("Calendar website"), blank=True, null=True)
+    keywords = models.CharField(_("Keywords"), blank=True, null=True, max_length=255)
+    notes = models.TextField(_("Notes"), help_text=_("Internal notes"), blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -277,11 +250,10 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
     def load_image_from_web(self, url):
         r = requests.get(url)
-        rel_path = os.path.join(
-            self.__class__.region_image.field.upload_to, os.path.basename(url))
+        rel_path = os.path.join(self.__class__.region_image.field.upload_to, os.path.basename(url))
         target_file = os.path.join(settings.MEDIA_ROOT, rel_path)
 
-        with open(target_file, 'wb') as f:
+        with open(target_file, "wb") as f:
             f.write(r.content)
         self.region_image.name = rel_path
         self.save()
@@ -294,10 +266,9 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
 
             if not self.description:
                 self.description = wp_page.summary.strip()
-                self.description += '\n' + \
-                    WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
+                self.description += "\n" + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
             if not self.region_image.name:
-                coa_filename_content = ['coa', 'wappen']
+                coa_filename_content = ["coa", "wappen"]
                 for image in wp_page.images:
                     img_unquote = unquote(image).lower()
                     matches = [m in img_unquote for m in coa_filename_content]
@@ -308,35 +279,31 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel,
         super().save(**kwargs)
 
     def get_absolute_url(self):
-        return reverse(
-            'buschenschank:region_details',
-            kwargs={'pk': self.pk, 'slug': self.slug})
+        return reverse("buschenschank:region_details", kwargs={"pk": self.pk, "slug": self.slug})
 
     def get_buschenschank(self) -> models.QuerySet[Buschenschank]:
-        queryset = Buschenschank.available_objects.filter(
-            coordinates__intersects=self.areas)
+        queryset = Buschenschank.available_objects.filter(coordinates__intersects=self.areas)
         return queryset.filter(published=True)
 
     class Meta:
-        verbose_name = _('Region')
-        verbose_name_plural = _('Regions')
-        ordering = ('name',)
+        verbose_name = _("Region")
+        verbose_name_plural = _("Regions")
+        ordering = ("name",)
 
 
 class Commune(TimeStampedModel, SoftDeletableModel):
-    name = models.CharField(_('Name'), max_length=100)
-    district = models.CharField(_('District'), max_length=100)
-    county = models.CharField(_('County'), max_length=20)
-    mpoly = models.MultiPolygonField(_('Multipolygon'))
+    name = models.CharField(_("Name"), max_length=100)
+    district = models.CharField(_("District"), max_length=100)
+    county = models.CharField(_("County"), max_length=20)
+    mpoly = models.MultiPolygonField(_("Multipolygon"))
 
     def __str__(self):
         return self.name
 
     def get_buschenschank(self):
-        return Buschenschank.objects.filter(
-            coordinates__intersects=self.mpoly)
+        return Buschenschank.objects.filter(coordinates__intersects=self.mpoly)
 
     class Meta:
-        verbose_name = _('Commune')
-        verbose_name_plural = _('Communes')
-        unique_together = ('name', 'district', 'county')
+        verbose_name = _("Commune")
+        verbose_name_plural = _("Communes")
+        unique_together = ("name", "district", "county")

@@ -1,37 +1,29 @@
-import os
+from .production import *
 
-from .development import *
-
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'public', 'static/')
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'public', 'media/')
+ALLOWED_HOSTS = ["django"]
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt': "%d/%b/%Y %H:%M:%S"
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': '%s/../logs/ausgsteckt.log' % BASE_DIR,
-            'formatter': 'verbose'
+    "handlers": {
+        "console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"},
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": True,
         },
     },
-    'loggers': {
-        '': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
 }

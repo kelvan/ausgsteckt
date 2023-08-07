@@ -28,3 +28,6 @@ report.xml
 *.sql
 .idea/
 sentry_settings.py
+bin/
+etc/
+*.lock
