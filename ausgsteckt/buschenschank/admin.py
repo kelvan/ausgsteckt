@@ -1,4 +1,5 @@
 from typing import ClassVar
+
 from django.contrib import admin
 from django.contrib.gis import admin as gis_admin
 from django.utils import timezone
