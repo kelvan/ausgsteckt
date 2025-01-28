@@ -28,7 +28,7 @@
       <tbody>
         {% for buschenschank in object_list %}
           <tr>
-            <td>{{ buschenschank.name }}</td>
+            <td>{{ buschenschank }}</td>
             <td>
               {% if buschenschank.address %}
                 {{ buschenschank|fixme_address }}

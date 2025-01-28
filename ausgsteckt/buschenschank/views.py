@@ -32,7 +32,7 @@ class BuschenschankAPIDetailView(HybridDetailView):
 
     def get_data(self, context):
         buschenschank = context["buschenschank"]
-        return {"name": buschenschank.name, "osm_id": buschenschank.osm_id, "tags": buschenschank.tags}
+        return {"name": str(buschenschank), "osm_id": buschenschank.osm_id, "tags": buschenschank.tags}
 
 
 class BuschenschankDetailView(PageTitleMixin, DetailView):
