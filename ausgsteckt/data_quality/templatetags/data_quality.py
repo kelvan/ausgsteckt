@@ -1,6 +1,9 @@
+from urllib.parse import quote_plus as quote
+
 from django import template
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 register = template.Library()
@@ -54,7 +57,7 @@ def fixme_address(item):
             city = format_html(
                 "<a href={url}>{city}</a>",
                 city=item.city,
-                url=reverse("data_quality:fixme_buschenschank", kwargs={"cityname": item.city}),
+                url=reverse("data_quality:fixme_buschenschank", kwargs={"cityname": quote(item.city)}),
             )
         else:
             city = "<city unknown>"
