@@ -88,6 +88,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return self.coordinates.x
 
     @property
+    def alt_name(self):
+        return self.tags.get("alt_name")
+
+    @property
     def country(self):
         return self.tags.get("addr:country")
 
@@ -202,7 +206,10 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return reverse("buschenschank:buschenschank_details", kwargs={"pk": self.pk, "slug": self.slug})
 
     def __str__(self):
-        return self.name
+        if self.alt_name:
+            return f"{self.name} [{self.alt_name}]"
+        else:
+            return self.name
 
     class Meta:
         verbose_name = "Buschenschank"

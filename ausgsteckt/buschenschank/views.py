@@ -100,7 +100,7 @@ class SearchView(PageTitleMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         q = self.request.GET.get("q")
         if q:
-            name_contains = Q(name__icontains=q)
+            name_contains = Q(name__icontains=q) | Q(tags__alt_name__icontains=q)
             operator_contains = Q(tags__operator__icontains=q)
             address_contains = (
                 Q(**{"tags__addr:street__icontains": q})
