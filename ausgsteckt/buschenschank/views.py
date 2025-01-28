@@ -1,16 +1,15 @@
 import logging
 from typing import Any
 
+from ausgsteckt.views import HybridDetailView, PageTitleMixin
 from django.core.serializers import serialize
 from django.db import models
 from django.db.models import Q
 from django.http import HttpResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-
-from ausgsteckt.views import HybridDetailView, PageTitleMixin
 
 from .models import Buschenschank, Region
 

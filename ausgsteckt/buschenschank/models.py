@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.text import slugify
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from easy_thumbnails.fields import ThumbnailerImageField
 from model_utils.models import SoftDeletableModel, TimeStampedModel
 
@@ -191,7 +191,7 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
         return nearby
 
     def get_osm_url(self):
-        return "https://openstreetmap.org/%s/%d" % (self.osm_type, self.osm_id)
+        return f"https://openstreetmap.org/{self.osm_type}/{self.osm_id}"
 
     def get_map_permalink(self):
         return "{baseUrl}#lat={buschenschank.latitude}&lon={buschenschank.longitude}&zoom={zoom}&layer={layer}".format(
@@ -216,7 +216,7 @@ class OpenDate(TimeStampedModel, AdminURLMixin):
     date_end = models.DateField(_("End date"), help_text=_("Last opened day"))
 
     def __str__(self):
-        return "[{0.buschenschank}] {0.date_start}-{0.date_end}".format(self)
+        return f"[{self.buschenschank}] {self.date_start}-{self.date_end}"
 
     class Meta:
         verbose_name = _("Open date")

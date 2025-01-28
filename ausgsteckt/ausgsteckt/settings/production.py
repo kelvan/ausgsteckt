@@ -30,13 +30,13 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "%s/ausgsteckt.log" % LOG_DIR,
+            "filename": f"{LOG_DIR}/ausgsteckt.log",
             "formatter": "verbose",
         },
         "import_osm_file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "%s/import_osm.log" % LOG_DIR,
+            "filename": f"{LOG_DIR}/import_osm.log",
             "formatter": "verbose",
         },
     },

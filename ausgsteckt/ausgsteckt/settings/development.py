@@ -25,7 +25,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "%s/ausgsteckt.log" % BASE_DIR,
+            "filename": f"{BASE_DIR}/ausgsteckt.log",
             "formatter": "verbose",
         },
     },

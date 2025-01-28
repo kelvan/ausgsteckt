@@ -42,7 +42,7 @@ class Command(BaseCommand):
         osm_type = options["osm_type"]
 
         if osm_type not in osm_types:
-            raise CommandError("Only %s allowed" % osm_types)
+            raise CommandError(f"Only {osm_types} allowed")
 
         query = REGION_QUERY.format(osm_type=osm_type, osm_id=osm_id)
 

@@ -3,10 +3,9 @@ import operator
 from xml.sax import parseString
 
 import requests
+from buschenschank.management.utils.overpass_parser import NodeCenterSaxParser
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
-from buschenschank.management.utils.overpass_parser import NodeCenterSaxParser
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -56,4 +55,4 @@ class Command(BaseCommand):
                 if count >= min_contrib:
                     logger.info(f"{user}: {count}")
         else:
-            logger.error("Not possible to get XML: %d" % response.status_code)
+            logger.error(f"Not possible to get XML: {response.status_code}")

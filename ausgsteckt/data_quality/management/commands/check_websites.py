@@ -7,9 +7,8 @@ from pathlib import Path
 
 import async_timeout
 from aiohttp import ClientSession
-from django.core.management.base import BaseCommand
-
 from buschenschank.models import Buschenschank
+from django.core.management.base import BaseCommand
 
 from ...models import PageCheckResult
 

@@ -25,7 +25,7 @@ class Node:
         self.relations[relation.id] = relation
 
     def __str__(self):
-        return "[%d] %.2f %.2f" % (self.id, self.lon, self.lat)
+        return f"[{self.id}] {self.lon:.2f} {self.lat:.2f}"
 
 
 class Way:
@@ -53,7 +53,7 @@ class Way:
         self.nodes.reverse()
 
     def __str__(self):
-        return "[%d] %s -> %s" % (self.id, self.nodes[0], self.nodes[-1])
+        return f"[{self.id}] {self.nodes[0]} -> {self.nodes[-1]}"
 
 
 class Relation:

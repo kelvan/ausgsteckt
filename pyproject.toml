@@ -6,69 +6,62 @@ authors = ["Florian Schweikert <kelvan@ist-total.org>"]
 readme = "README.rst"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.11"
-django = ">=3.2.12,<3.3.0"
-psycopg2-binary = "^2.9.5"
-django-environ = "<0.9"
-django-model-utils = ">=4.2.0,<4.3.0"
-python-dateutil = ">=2.8.2,<2.9.0"
-requests = ">=2.27.1,<2.32.0"
-aiohttp = "^3.8.4"
-cchardet = "^2.1.7"
-aiodns = "^3.0.0"
-python-memcached = "^1.59"
-django-pipeline = "^2.1.0"
+python = ">=3.12,<3.13"
+django = ">=4.2.8,<4.3.0"
+psycopg2-binary = "^2.9.10"
+django-environ = ">=0.12.0,<0.13.0"
+django-model-utils = ">=5.0.0,<6.0.0"
+python-dateutil = ">=2.8.2,<2.10.0"
+requests = ">=2.32.3,<2.33.0"
+aiohttp = "^3.11.11"
+aiodns = "^3.2.0"
+python-memcached = "^1.62"
+django-pipeline = ">=2.1.0,<3.0.0"
 lesscpy = "^0.15.1"
-pillow = "^9.4.0"
-easy-thumbnails = "^2.8.5"
-pytz = "^2022.7.1"
-pyproj = ">=3.6.0,<3.7.0"
+pillow = "^11.1.0"
+easy-thumbnails = "^2.10"
+pytz = "^2024.2"
+pyproj = ">=3.7.0,<3.8.0"
 jsmin = "^3.0.1"
-django-ckeditor = ">=5.7.1,<5.8.0"
-django-js-asset = ">=1.2.2,<1.3.0"
+django-prose-editor = ">=0.10.3,<0.11.0"
 wikipedia = "^1.4.0"
-poetry = ">=1.3.0"
-confz = "^2.0.0"
+poetry = ">=2.0.1,<3.0.0"
+confz = "^2.0.1"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-ruff = "^0.0.282"
-mypy = "^1.0.0"
-ipython = "<8"
-django-stubs = ">=4.2.3,<4.3"
-types-requests = "^2.31.0.2"
+ruff = "^0.9.3"
+mypy = ">=1.14.1"
+ipython = "<9.0.0"
+django-stubs = ">=5.1.2,<5.2.0"
+types-requests = ">=2.32.0"
 
 [tool.poetry.group.docs]
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "<6"
+sphinx = ">=8.1.3,<9.0.0"
 
 [tool.poetry.group.server]
 optional = true
 
 [tool.poetry.group.server.dependencies]
-gunicorn = "^20.1.0"
-gevent = "^22.10.2"
+gunicorn = "^23.0.0"
+gevent = "^24.11.1 "
 
 [tool.poetry.group.test]
 optional = true
 
 [tool.poetry.group.test.dependencies]
-unittest-xml-reporting = ">=2.5.1,<2.6.0"
+unittest-xml-reporting = ">=3.2.0,<4.0.0"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
+requires = ["poetry-core", "setuptools", "wheel"]
 
 [tool.ruff]
-select = ["E", "F", "W", "A", "B", "N", "UP", "T", "PL", "RUF"]
-ignore = ["PLR0913", "PLR2004", "N805", "A003"]
-
+src = ["ausgsteckt/*"]
 exclude = [
     "docs",
     ".direnv",
@@ -90,42 +83,17 @@ exclude = [
     "public",
 ]
 line-length = 120
-target-version = "py310"
+target-version = "py312"
 
-[tool.ruff.per-file-ignores]
-"*/settings/*.py" = ["F403", "F405", "UP015"]
+[tool.ruff.lint]
+select = ["E", "F", "W", "A", "B", "N", "UP", "T", "PL", "RUF", "I"]
+ignore = ["A001", "A002", "B008", "PLR0913", "PLR2004", "N805", "N812"]
+per-file-ignores = {"*/settings/*.py" = ["F403", "F405", "UP015"]}
+mccabe.max-complexity = 10
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 show_error_codes = true
 exclude = ["env", "venv", "migrations", "public", "docs"]
-
-[tool.black]
-line-length = 120
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.tox
-  | \.venv
-  | env
-  | venv
-  | docs
-  | _skbuild
-  | _build
-  | buck-out
-  | build
-  | dist
-  | migrations
-  | public
-)/
-'''
-
-[tool.isort]
-profile = "hug"
-src_paths = ["ausgsteckt"]
-skip = ["env", "migrations", "public"]

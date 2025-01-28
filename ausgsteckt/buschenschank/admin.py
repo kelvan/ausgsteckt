@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.gis import admin as gis_admin
 from django.utils import timezone
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .models import Buschenschank, Commune, OpenDate, Region
 
@@ -72,7 +72,17 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
 @admin.register(Region)
 class RegionAdmin(gis_admin.OSMGeoAdmin):
     openlayers_url = "//openlayers.org/api/2.13.1/OpenLayers.js"
-    list_display = ("name", "region_image_preview", "is_removed", "published", "website_link", "has_description", "created", "modified", "buschenschank_count")
+    list_display = (
+        "name",
+        "region_image_preview",
+        "is_removed",
+        "published",
+        "website_link",
+        "has_description",
+        "created",
+        "modified",
+        "buschenschank_count",
+    )
     readonly_fields = ("osm_id", "osm_type", "is_removed")
     list_filter = ("is_removed", "published", "created", "modified")
     search_fields = ("name", "description", "notes")
@@ -87,10 +97,16 @@ class RegionAdmin(gis_admin.OSMGeoAdmin):
 
     def has_description(self, instance):
         return bool(instance.description)
+
     has_description.boolean = True
 
     def region_image_preview(self, instance):
-        return format_html('<a href="{img_url}" target="_blank"><img src="{thumbnail_url}"></img></a>', thumbnail_url=instance.region_image.get_thumbnail({"size": (30, 30)}).url, img_url=instance.region_image.url)
+        return format_html(
+            '<a href="{img_url}" target="_blank"><img src="{thumbnail_url}"></img></a>',
+            thumbnail_url=instance.region_image.get_thumbnail({"size": (30, 30)}).url,
+            img_url=instance.region_image.url,
+        )
+
     region_image_preview.short_description = "CoA"
 
 
