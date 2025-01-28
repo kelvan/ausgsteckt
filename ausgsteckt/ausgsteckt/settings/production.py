@@ -9,6 +9,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "..", "public", "static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "public", "media/")
 
 ALLOWED_HOSTS = ["ausgsteckt.ist-total.org"]
+CSRF_TRUSTED_ORIGINS=["https://ausgsteckt.ist-total.org"]
 
 # pipeline keeps fucking up map js files
 PIPELINE["PIPELINE_ENABLED"] = False
@@ -60,7 +61,7 @@ LOGGING = {
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
         "LOCATION": "127.0.0.1:11211",
     }
 }
