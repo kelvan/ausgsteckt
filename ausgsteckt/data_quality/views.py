@@ -1,6 +1,7 @@
 import csv
 import os
 from datetime import datetime
+from urllib.parse import unquote_plus as unquote
 
 from django.conf import settings
 from django.db.models import Q
@@ -32,9 +33,8 @@ class IncompleteBuschenschankList(PageTitleMixin, ListView):
             )
         )
         queryset = queryset.exclude(addr_exclude and contact_exclude)
-        city = self.kwargs.get("cityname")
-        if city:
-            queryset = queryset.filter(tags__contains={"addr:city": city})
+        if city := self.kwargs.get("cityname"):
+            queryset = queryset.filter(tags__contains={"addr:city": unquote(city)})
         # XXX no json order support in django yet
         return queryset.order_by(
             RawSQL("tags->>%s", ("addr:city",)), RawSQL("tags->>%s", ("addr:postcode",)), RawSQL("tags->>%s", ("name",))
