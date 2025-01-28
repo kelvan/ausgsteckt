@@ -1,45 +1,47 @@
 {% load static i18n %}
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="{% url 'index' %}">
     <img src="{% static 'images/raisin.svg' %}" width="30" height="30" alt="raisin">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbar">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav me-auto">
       {% url 'buschenschank:buschenschank_map' as buschenschank_map_url %}
       <li class="nav-item{% if request.path == buschenschank_map_url %} active{% endif %}">
         <a class="nav-link" href="{{ buschenschank_map_url }}"><strong>{% trans 'Map' %}</strong></a>
       </li>
       {% if regions %}
         <li class="nav-item dropdown{% if '/region' in request.path %} active{% endif %}">
-          <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="{% url 'buschenschank:region_list' %}" id="dropdown_regions" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {% trans 'Regions' %}
           </a>
-          <div class="dropdown-menu" aria-labelledby="dropdown_regions">
+          <ul class="dropdown-menu" aria-labelledby="dropdown_regions">
             {% for region in regions|slice:':10' %}
               {% if region.get_buschenschank.exists %}
-                <a class="dropdown-item" href="{{ region.get_absolute_url }}">
-                  {% if region.region_image %}
-                    <img src="{{ region.region_image.dropdown.url }}">
-                  {% endif %}
-                  {{ region.name }} ({{ region.get_buschenschank.count }})
-                </a>
+                <li>
+                  <a class="dropdown-item" href="{{ region.get_absolute_url }}">
+                    {% if region.region_image %}
+                      <img src="{{ region.region_image.dropdown.url }}" alt="{{ region.name }}">
+                    {% endif %}
+                    {{ region.name }} ({{ region.get_buschenschank.count }})
+                  </a>
+                </li>
               {% endif %}
             {% endfor %}
-            <a class="dropdown-item" href="{% url 'buschenschank:region_list' %}">{% trans 'View all regions' %}</a>
-          </div>
+            <li><a class="dropdown-item" href="{% url 'buschenschank:region_list' %}">{% trans 'View all regions' %}</a></li>
+          </ul>
         </li>
       {% endif %}
       <li class="nav-item dropdown{% if '/osm/' in request.path %} active{% endif %}">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdown_contribute" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Contribute' %}</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown_contribute">
-          <a class="dropdown-item" href="{% url 'data_quality:fixme_buschenschank' %}">{% trans 'Data quality' %}</a>
-          <a class="dropdown-item" href="{% url 'data_quality:fixme_websites' %}">{% trans 'Broken websites' %}</a>
-        </div>
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown_contribute" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans 'Contribute' %}</a>
+        <ul class="dropdown-menu" aria-labelledby="dropdown_contribute">
+          <li><a class="dropdown-item" href="{% url 'data_quality:fixme_buschenschank' %}">{% trans 'Data quality' %}</a></li>
+          <li><a class="dropdown-item" href="{% url 'data_quality:fixme_websites' %}">{% trans 'Broken websites' %}</a></li>
+        </ul>
       </li>
       <li class="nav-item{% if request.path == '/about/' %} active{% endif %}">
         <a class="nav-link" href="/about/">{% trans 'About' %}</a>

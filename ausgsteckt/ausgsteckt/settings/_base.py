@@ -162,8 +162,7 @@ PIPELINE = {
         "libs": {
             "source_filenames": (
                 "jquery/dist/jquery.min.js",
-                "popper.js/dist/umd/popper.js",
-                "bootstrap/dist/js/bootstrap.min.js",
+                "bootstrap/dist/js/bootstrap.bundle.min.js",
             ),
             "output_filename": "js/libs.js",
         },
