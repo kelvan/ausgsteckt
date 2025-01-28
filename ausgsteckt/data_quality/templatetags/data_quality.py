@@ -3,6 +3,7 @@ from urllib.parse import quote_plus as quote
 from django import template
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 register = template.Library()
