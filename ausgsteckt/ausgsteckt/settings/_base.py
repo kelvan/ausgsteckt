@@ -18,7 +18,7 @@ DATA_DIR = config.public_root or (BASE_DIR.parent / "public")
 SECRET_KEY = "el5m47jko&tz)i-qw_@b5wp=6ots)o3qcv^ekrceu$fcm1@jll"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config.debug
+DEBUG = env.bool("DJANGO_DEBUG", False)
 
 ALLOWED_HOSTS = []
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "easy_thumbnails",
     "pipeline",
-    "ckeditor",
+    "django_prose_editor",
     "ausgsteckt",
     "buschenschank",
     "data_quality",
@@ -257,7 +257,7 @@ def create_secret_key_file(secret_key):
 
 
 def load_secret_key_file():
-    with open(secret_key_fn, "r") as f:
+    with open(secret_key_fn) as f:
         # Read one byte more to check content length
         skey = f.read(51)
         if len(skey) != 50:

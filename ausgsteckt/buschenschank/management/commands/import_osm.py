@@ -111,11 +111,9 @@ class Command(BaseCommand):
             self.check_removed(parser.processed_ids, force_delete=options["force_delete"])
             logger.info(
                 "Import finished: "
-                "{new} added, {updated} updated, "
-                "{skipped} skipped (of {amount})".format(
-                    new=parser.new, updated=parser.updated, skipped=parser.skipped, amount=parser.amount
-                )
+                f"{parser.new} added, {parser.updated} updated, "
+                f"{parser.skipped} skipped (of {parser.amount})"
             )
 
         else:
-            logger.error("Not possible to get XML: %d" % response.status_code)
+            logger.error(f"Not possible to get XML: {response.status_code}")

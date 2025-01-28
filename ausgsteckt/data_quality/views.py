@@ -3,15 +3,14 @@ import os
 from datetime import datetime
 from urllib.parse import unquote_plus as unquote
 
+from ausgsteckt.views import PageTitleMixin
+from buschenschank.models import Buschenschank
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
 from django.http import Http404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
-
-from ausgsteckt.views import PageTitleMixin
-from buschenschank.models import Buschenschank
 
 
 class IncompleteBuschenschankList(PageTitleMixin, ListView):

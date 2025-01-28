@@ -24,6 +24,7 @@
   margin-bottom: 1em;
 }
 dl.buschenschank-description {
+  min-height: 20em;
   margin-bottom: 0.5em !important;
 }
 .buschenschank-description dd {

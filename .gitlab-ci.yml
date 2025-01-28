@@ -1,8 +1,7 @@
-image: python:3.10
+image: python:3.12-slim
 
 stages:
   - build
-  - install
   - qa
   - docs
   - test
@@ -18,7 +17,7 @@ build:js:
     expire_in: 1 day
 
 .install:
-  stage: install
+  stage: build
   before_script:
     - python -m venv .venv
     - source .venv/bin/activate
@@ -30,38 +29,39 @@ build:js:
     paths:
       - .venv
 
-install:python3.10:
+install:python3.12:
   extends: .install
-  image: python:3.10
 
 ruff:
   stage: qa
   script:
     - source .venv/bin/activate
-    - ruff .
+    - ruff --version
+    - ruff check .
   allow_failure: true
   dependencies:
-    - install:python3.10
+    - install:python3.12
 
 mypy:
   stage: qa
   script:
     - source .venv/bin/activate
+    - mypy --version
     - mypy .
   allow_failure: true
   dependencies:
-    - install:python3.10
+    - install:python3.12
 
 .pages:
   stage: docs
   script:
+    - apt update
     - apt install make
     - . .venv/bin/activate
     - cd docs
     - make html
-  image: python:3.10
   dependencies:
-    - install:python3.10
+    - install:python3.12
 
 build:pages:
   extends: .pages
@@ -86,7 +86,7 @@ pages:
 .test:
   stage: test
   services:
-    - postgis/postgis:15-3.3-alpine
+    - postgis/postgis:17-3.5-alpine
   variables:
     DJANGO_DATABASE_URL: postgis://django:secret@postgis:5432/django_test
     DJANGO_LOG_FILE: /dev/null
@@ -105,9 +105,3 @@ pages:
   artifacts:
     reports:
       junit: report.xml
-
-test:python3.10:
-  extends: .test
-  image: python:3.10
-  dependencies:
-    - install:python3.10
