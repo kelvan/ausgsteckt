@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     "pipeline",
     "django_prose_editor",
+    "django_json_widget",
     "ausgsteckt",
     "buschenschank",
     "data_quality",

@@ -655,6 +655,16 @@ django = ">=4.2"
 tests = ["coverage"]
 
 [[package]]
+name = "django-json-widget"
+version = "2.0.1"
+description = "Django json widget is an alternative widget that makes it easy to edit the jsonfield field of django."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-json-widget-2.0.1.tar.gz", hash = "sha256:adb4cab17fe5a04139037d7d84725369530ef35b912c3790d3a7b13f99351358"},
+]
+
+[[package]]
 name = "django-model-utils"
 version = "5.0.0"
 description = "Django model mixins and utilities"
@@ -3523,4 +3533,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "305fbd98a1bdb3c5f5634332ed31791bf9cb2dc93407f172d37e4380f35c944c"
+content-hash = "6752ba71037634cd3f8fed5edf7c0b68707223c53508640316ec7b2779dea229"

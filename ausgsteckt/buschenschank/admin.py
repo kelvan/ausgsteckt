@@ -2,9 +2,11 @@ from typing import ClassVar
 
 from django.contrib import admin
 from django.contrib.gis import admin as gis_admin
+from django.db.models import JSONField
 from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from django_json_widget.widgets import JSONEditorWidget
 
 from .models import Buschenschank, Commune, OpenDate, Region
 
@@ -46,6 +48,9 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
     readonly_fields = ("osm_id", "osm_type", "is_removed")
     list_filter = ("is_removed", OpenTodayListFilter, "created", "modified", "modified_by")
     search_fields = ("name", "tags")
+    formfield_overrides: ClassVar[dict] = {
+        JSONField: {"widget": JSONEditorWidget},
+    }
 
     inlines: ClassVar[list[admin.options.InlineModelAdmin]] = [OpenDateInline]
 
