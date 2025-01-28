@@ -13,29 +13,29 @@
       {% endif %}
     </h2>
     <div class="row">
-      <div class="col-xs-2 col-md-2 img_region">
+      <div class="col-12 col-md-2 img_region">
         {% if region.region_image %}
-          <img src="{{ region.region_image.details.url }}"></img>
+          <img src="{{ region.region_image.details.url }}" class="img-fluid"></img>
         {% else %}
-          <img src="{% static 'images/region_placeholder.png' %}"></img>
+          <img src="{% static 'images/region_placeholder.png' %}" class="img-fluid"></img>
         {% endif %}
       </div>
-      <div class="col-xs-10 col-md-10">
+      <div class="col-12 col-md-10">
         {% if region.description %}
-          <div class="well">
+          <div class="alert alert-secondary">
             {{ region.description|linebreaks }}
           </div>
         {% endif %}
         {% if region.website or region.calendar_website %}
-          <dl class="dl-horizontal">
+          <dl class="row">
             {% if region.website %}
-              <dt>{% trans 'Website' %}</dt>
-              <dd><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
+              <dt class="col-sm-3">{% trans 'Website' %}</dt>
+              <dd class="col-sm-9"><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
             {% endif %}
 
             {% if region.calendar_website %}
-              <dt>{% trans 'Calendar' %}</dt>
-              <dd>
+              <dt class="col-sm-3">{% trans 'Calendar' %}</dt>
+              <dd class="col-sm-9">
                 <a href="{{ region.calendar_website }}" target="_blank">{% trans 'Calendar (external)' %}</a>
               </dd>
             {% endif %}
@@ -49,7 +49,7 @@
         {% endwith %}
 
         <div class="bg-light clearfix">
-          <a class="btn btn-secondary float-left" href="{% url 'buschenschank:region_list' %}">
+          <a class="btn btn-secondary float-start" href="{% url 'buschenschank:region_list' %}">
             <i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;{% trans 'Back to region list' %}
           </a>
         </div>

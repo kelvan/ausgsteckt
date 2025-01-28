@@ -12,14 +12,14 @@
             <div class="d-flex flex-row">
               {% if region.region_image %}
                 <div class="p-1">
-                  <img src="{{ region.region_image.list.url }}">&nbsp;
+                  <img src="{{ region.region_image.list.url }}" class="img-fluid" alt="Coat of arms {{ region.name }}">&nbsp;
                 </div>
               {% endif %}
               <div class="p-1">
                 <a href="{{ region.get_absolute_url }}">{{ region }}</a>
               </div>
             </div>
-            <span class="badge badge-raisin badge-pill" title="{% trans 'Buschenschank count' %}">
+            <span class="badge badge-raisin rounded-pill" title="{% trans 'Buschenschank count' %}">
               {{ region.get_buschenschank.count }}
             </span>
           </li>
