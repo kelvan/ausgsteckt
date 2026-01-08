@@ -35,7 +35,7 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.9.3"
-mypy = ">=1.14.1"
+ty = "*"
 ipython = "<9.0.0"
 django-stubs = ">=5.1.2,<5.2.0"
 types-requests = ">=2.32.0.20241016"
@@ -92,10 +92,3 @@ select = ["E", "F", "W", "A", "B", "N", "UP", "T", "PL", "RUF", "I"]
 ignore = ["A001", "A002", "B008", "PLR0913", "PLR2004", "N805", "N812"]
 per-file-ignores = {"*/settings/*.py" = ["F403", "F405", "UP015"]}
 mccabe.max-complexity = 10
-
-[tool.mypy]
-python_version = "3.12"
-warn_return_any = true
-warn_unused_configs = true
-show_error_codes = true
-exclude = ["env", "venv", "migrations", "public", "docs"]

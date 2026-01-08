@@ -37,7 +37,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        if options.get("min").isdigit():
+        if "min" in options and options["min"].isdigit():
             min_contrib = int(options["min"])
         else:
             min_contrib = 5

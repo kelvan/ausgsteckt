@@ -42,12 +42,12 @@ ruff:
   dependencies:
     - install:python3.13
 
-mypy:
+ty:
   stage: qa
   script:
     - source .venv/bin/activate
-    - mypy --version
-    - mypy .
+    - ty --version
+    - ty check
   allow_failure: true
   dependencies:
     - install:python3.13
