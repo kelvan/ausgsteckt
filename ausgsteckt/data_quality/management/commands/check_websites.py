@@ -112,6 +112,6 @@ class Command(BaseCommand):
             sys.exit(1)
 
         self.webkeys = ["website", "contact:website", "opening_hours:url"]
-        self.queryset = Buschenschank.objects.filter(tags__has_any_keys=self.webkeys)
+        self.queryset = Buschenschank.public.filter(tags__has_any_keys=self.webkeys)
 
         asyncio.run(self._checker())
