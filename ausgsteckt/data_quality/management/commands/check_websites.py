@@ -5,7 +5,7 @@ import logging
 import sys
 from pathlib import Path
 
-import async_timeout
+from async_timeout import timeout
 from aiohttp import ClientSession
 from buschenschank.models import Buschenschank
 from django.core.management.base import BaseCommand
@@ -21,7 +21,7 @@ logger.addHandler(ch)
 
 
 async def fetch(session, url):
-    with async_timeout.timeout(30):
+    async with timeout(30):
         async with session.get(url) as response:
             return response
 
