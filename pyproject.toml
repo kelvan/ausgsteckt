@@ -60,7 +60,7 @@ optional = true
 unittest-xml-reporting = ">=3.2.0,<4.0.0"
 
 [build-system]
-requires = ["poetry-core", "setuptools", "wheel"]
+requires = ["poetry-core"]
 
 [tool.ruff]
 src = ["ausgsteckt/*"]
@@ -85,7 +85,7 @@ exclude = [
     "public",
 ]
 line-length = 120
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "A", "B", "N", "UP", "T", "PL", "RUF", "I"]

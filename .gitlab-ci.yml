@@ -1,4 +1,4 @@
-image: python:3.12-slim
+image: python:3.13-slim
 
 stages:
   - build
@@ -7,7 +7,7 @@ stages:
   - test
 
 build:js:
-  image: node:12-alpine
+  image: node:24-alpine
   stage: build
   script:
     - yarn install --modules-folder ausgsteckt/ausgsteckt/static/node_modules/
@@ -29,7 +29,7 @@ build:js:
     paths:
       - .venv
 
-install:python3.12:
+install:python3.13:
   extends: .install
 
 ruff:
@@ -40,7 +40,7 @@ ruff:
     - ruff check .
   allow_failure: true
   dependencies:
-    - install:python3.12
+    - install:python3.13
 
 mypy:
   stage: qa
@@ -50,7 +50,7 @@ mypy:
     - mypy .
   allow_failure: true
   dependencies:
-    - install:python3.12
+    - install:python3.13
 
 .pages:
   stage: docs
@@ -61,7 +61,7 @@ mypy:
     - cd docs
     - make html
   dependencies:
-    - install:python3.12
+    - install:python3.13
 
 build:pages:
   extends: .pages
@@ -86,7 +86,7 @@ pages:
 .test:
   stage: test
   services:
-    - postgis/postgis:17-3.5-alpine
+    - postgis/postgis:18-3.6-alpine
   variables:
     DJANGO_DATABASE_URL: postgis://django:secret@postgis:5432/django_test
     DJANGO_LOG_FILE: /dev/null

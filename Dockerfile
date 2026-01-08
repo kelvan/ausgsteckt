@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 ENV DJANGO_PUBLIC_ROOT /srv/
 ENV APP_HOME /usr/local/app
