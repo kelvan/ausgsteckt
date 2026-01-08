@@ -5,8 +5,8 @@ import logging
 import sys
 from pathlib import Path
 
-from async_timeout import timeout
 from aiohttp import ClientSession
+from async_timeout import timeout
 from buschenschank.models import Buschenschank
 from django.core.management.base import BaseCommand
 
