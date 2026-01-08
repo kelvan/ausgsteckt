@@ -9,7 +9,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "..", "public", "static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "..", "public", "media/")
 
 ALLOWED_HOSTS = ["ausgsteckt.ist-total.org"]
-CSRF_TRUSTED_ORIGINS=["https://ausgsteckt.ist-total.org"]
+CSRF_TRUSTED_ORIGINS = ["https://ausgsteckt.ist-total.org"]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # pipeline keeps fucking up map js files
 PIPELINE["PIPELINE_ENABLED"] = False

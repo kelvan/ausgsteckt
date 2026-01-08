@@ -3,8 +3,8 @@ import socket
 from .conf import DjangoConfig
 
 hosts = {
-    "fedora": "production",
-    "fedora.ist-total.org": "production",
+    "ausgsteckt": "production",
+    "ausgsteckt.ist-total.org": "production",
 }
 DEFAULT = "development"
 
