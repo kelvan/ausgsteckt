@@ -31,8 +31,7 @@ class OpenDateInline(admin.TabularInline):
 
 
 @admin.register(Buschenschank)
-class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
-    openlayers_url = "//openlayers.org/api/2.13.1/OpenLayers.js"
+class BuschenschankAdmin(gis_admin.GISModelAdmin):
     list_display = (
         "name",
         "cuisine",
@@ -75,8 +74,7 @@ class BuschenschankAdmin(gis_admin.OSMGeoAdmin):
 
 
 @admin.register(Region)
-class RegionAdmin(gis_admin.OSMGeoAdmin):
-    openlayers_url = "//openlayers.org/api/2.13.1/OpenLayers.js"
+class RegionAdmin(gis_admin.GISModelAdmin):
     list_display = (
         "name",
         "region_image_preview",
@@ -116,8 +114,7 @@ class RegionAdmin(gis_admin.OSMGeoAdmin):
 
 
 @admin.register(Commune)
-class CommuneAdmin(gis_admin.OSMGeoAdmin):
-    openlayers_url = "//openlayers.org/api/2.13.1/OpenLayers.js"
+class CommuneAdmin(gis_admin.GISModelAdmin):
     list_display = ("name", "district", "county", "is_removed", "created", "modified", "buschenschank_count")
     readonly_fields = ("name", "district", "county", "is_removed", "created", "modified")
     list_filter = ("is_removed", "county", "created", "modified")
