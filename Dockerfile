@@ -1,10 +1,9 @@
 FROM python:3.14-slim
 
-ENV DJANGO_PUBLIC_ROOT /srv/
 ENV APP_HOME /usr/local/app
 
 RUN apt-get update && \
-    apt-get install -y python3-gdal gettext wait-for-it && \
+    apt-get install -y python3-gdal gettext npm && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -15,11 +14,12 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 COPY pyproject.toml $APP_HOME/
 COPY uv.lock $APP_HOME/
 RUN uv sync --no-dev --group server
+COPY package.json package-lock.json /usr/local/
+RUN npm install --prefix /usr/local
 COPY ausgsteckt $APP_HOME
-RUN uv run python manage.py collectstatic --noinput
 RUN uv run python manage.py compilemessages
 COPY docker/docker-entrypoint.sh /
 
 EXPOSE 8000
-VOLUME $DJANGO_PUBLIC_ROOT
+VOLUME /srv
 ENTRYPOINT ["/docker-entrypoint.sh"]

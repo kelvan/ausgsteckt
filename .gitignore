@@ -24,6 +24,7 @@ secret.key
 *.psql
 *.xz
 *.gz
+*.zst
 *.bz2
 report.xml
 *.sql

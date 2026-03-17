@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   db:
-    image: postgis/postgis:15-3.3-alpine
+    image: postgis/postgis:18-3.6
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -10,7 +10,7 @@ services:
   django:
     build: .
     environment:
-      DATABASE_URL: postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/ausgsteckt
+      DJANGO_DATABASE_URL: postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/ausgsteckt
     depends_on:
       - db
     volumes:
