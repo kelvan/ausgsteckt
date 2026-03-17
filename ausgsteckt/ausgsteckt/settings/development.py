@@ -3,12 +3,6 @@ from ._base import *
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "/tmp/ausgsteckt-messages"
 
-PIPELINE.update(
-    {
-        "PIPELINE_ENABLED": False,
-        "PIPELINE_COLLECTOR_ENABLED": True,
-    }
-)
 
 ALLOWED_HOSTS = ["*"]
 

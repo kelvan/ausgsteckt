@@ -14,9 +14,6 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# pipeline keeps fucking up map js files
-PIPELINE["PIPELINE_ENABLED"] = False
-
 LOG_DIR = os.path.join(os.path.dirname(BASE_DIR), "log")
 if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)

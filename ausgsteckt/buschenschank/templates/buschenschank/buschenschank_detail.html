@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n pipeline %}
+{% load i18n static %}
 
 {% block content %}
   <div class="container">
@@ -28,11 +28,21 @@
 {% endblock %}
 
 {% block extracss %}
-  {% stylesheet 'map' %}
+  <link rel="stylesheet" href="{% static 'css/buschenschank/map.css' %}">
+  <link rel="stylesheet" href="{% static 'leaflet/dist/leaflet.css' %}">
+  <link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}">
+  <link rel="stylesheet" href="{% static 'css/MarkerCluster.Default.css' %}">
 {% endblock %}
 
 {% block extrajs %}
-  {% javascript 'map' %}
+  <script src="{% static 'leaflet/dist/leaflet.js' %}"></script>
+  <script src="{% static 'leaflet-providers/leaflet-providers.js' %}"></script>
+  <script src="{% static 'leaflet-plugins/control/Permalink.js' %}"></script>
+  <script src="{% static 'leaflet-plugins/control/Permalink.Marker.js' %}"></script>
+  <script src="{% static 'leaflet-plugins/control/Permalink.Layer.js' %}"></script>
+  <script src="{% static 'leaflet-plugins/control/Permalink.Overlay.js' %}"></script>
+  <script src="{% static 'js/leaflet.markercluster.js' %}"></script>
+  <script src="{% static 'js/buschenschank/map.js' %}"></script>
 {% endblock %}
 
 {% block bodyattr %}

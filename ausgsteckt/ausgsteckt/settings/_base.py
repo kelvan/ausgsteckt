@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     "django.contrib.flatpages",
     "django.contrib.gis",
     "easy_thumbnails",
-    "pipeline",
     "django_prose_editor",
     "django_json_widget",
     "ausgsteckt",
@@ -136,60 +135,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR.parent, "node_modules"),
 ]
 
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "pipeline.finders.CachedFileFinder",
-)
-STATICFILES_STORAGE = "pipeline.storage.PipelineStorage"
-
-PIPELINE = {
-    "PIPELINE_ENABLED": True,
-    "JS_COMPRESSOR": "pipeline.compressors.NoopCompressor",
-    "JAVASCRIPT": {
-        "map": {
-            "source_filenames": (
-                "leaflet/dist/leaflet.js",
-                "leaflet-providers/leaflet-providers.js",
-                "leaflet-plugins/control/Permalink.js",
-                "leaflet-plugins/control/Permalink.Marker.js",
-                "leaflet-plugins/control/Permalink.Layer.js",
-                "leaflet-plugins/control/Permalink.Overlay.js",
-                "js/leaflet.markercluster.js",
-                "js/buschenschank/map.js",
-            ),
-            "output_filename": "js/maps.js",
-        },
-        "libs": {
-            "source_filenames": (
-                "jquery/dist/jquery.min.js",
-                "bootstrap/dist/js/bootstrap.bundle.min.js",
-            ),
-            "output_filename": "js/libs.js",
-        },
-    },
-    "CSS_COMPRESSOR": "pipeline.compressors.NoopCompressor",
-    "STYLESHEETS": {
-        "main": {"source_filenames": ("css/main.css",), "output_filename": "css/main.css"},
-        "map": {
-            "source_filenames": (
-                "css/buschenschank/map.css",
-                "leaflet/dist/leaflet.css",
-                "css/MarkerCluster.css",
-                "css/MarkerCluster.Default.css",
-            ),
-            "output_filename": "css/maps.css",
-        },
-        "libs": {
-            "source_filenames": (
-                "bootstrap/dist/css/bootstrap.min.css",
-                "@fortawesome/fontawesome-free/css/fontawesome.min.css",
-                "@fortawesome/fontawesome-free/css/solid.min.css",
-            ),
-            "output_filename": "css/libs.css",
-        },
-    },
-}
 
 THUMBNAIL_ALIASES = {
     "": {
