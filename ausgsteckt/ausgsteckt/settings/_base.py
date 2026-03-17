@@ -123,6 +123,7 @@ USE_L10N = config.use_l10n
 USE_TZ = config.use_tz
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", env("HTTP_X_FORWARDED_PROTO", default="http"))
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 STATIC_URL = config.static_url
 MEDIA_URL = config.media_url
