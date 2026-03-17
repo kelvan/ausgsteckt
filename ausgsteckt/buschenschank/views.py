@@ -41,7 +41,7 @@ class BuschenschankDetailView(PageTitleMixin, DetailView):
 
     def get_queryset(self) -> models.QuerySet[Any]:
         queryset = super().get_queryset()
-        if not self.request.user.is_staff:  # ty: ignore[possibly-missing-attribute]
+        if not getattr(self.request.user, "is_staff", False):
             queryset = queryset.filter(published=True)
         return queryset
 

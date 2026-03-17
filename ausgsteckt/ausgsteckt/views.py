@@ -25,12 +25,12 @@ class JSONResponseMixin:
 
 
 class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):
-    def render_to_response(self, context):
+    def render_to_response(self, context, **response_kwargs):
         # Look for a 'format=json' GET argument
-        if "application/json" in self.request.META.get("HTTP_ACCEPT"):
+        if "application/json" in self.request.META.get("HTTP_ACCEPT", ""):
             return self.render_to_json_response(context)
         else:
-            return super().render_to_response(context)
+            return super().render_to_response(context, **response_kwargs)
 
 
 class PageTitleMixin:
@@ -40,6 +40,6 @@ class PageTitleMixin:
         return self.page_title
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)  # ty: ignore[unresolved-attribute]
         context["page_title"] = self.get_page_title()
         return context

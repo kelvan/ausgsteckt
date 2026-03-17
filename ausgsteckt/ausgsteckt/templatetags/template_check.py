@@ -1,6 +1,7 @@
 import logging
 
 from django import template
+from django.template import loader
 
 register = template.Library()
 
@@ -15,7 +16,7 @@ logger.addHandler(ch)
 @register.simple_tag
 def template_exists(template_name):
     try:
-        template.loader.get_template(template_name)
+        loader.get_template(template_name)
         return True
     except template.TemplateDoesNotExist:
         logger.info("Template not found %s", template_name)

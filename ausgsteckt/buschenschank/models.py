@@ -9,7 +9,6 @@ from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import Distance as D  # NOQA: N817
 from django.db.models import JSONField
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _

@@ -51,12 +51,11 @@ class BuschenschankAdmin(gis_admin.GISModelAdmin):
         JSONField: {"widget": JSONEditorWidget},
     }
 
-    inlines: ClassVar[list[admin.options.InlineModelAdmin]] = [OpenDateInline]
+    inlines: ClassVar[list[type[admin.options.InlineModelAdmin]]] = [OpenDateInline]
 
+    @admin.display(boolean=True)
     def active(self, instance):
         return not instance.is_removed
-
-    active.boolean = True
 
     def website_link(self, instance):
         if instance.website:
@@ -98,19 +97,17 @@ class RegionAdmin(gis_admin.GISModelAdmin):
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
 
+    @admin.display(boolean=True)
     def has_description(self, instance):
         return bool(instance.description)
 
-    has_description.boolean = True
-
+    @admin.display(description="CoA")
     def region_image_preview(self, instance):
         return format_html(
             '<a href="{img_url}" target="_blank"><img src="{thumbnail_url}"></img></a>',
             thumbnail_url=instance.region_image.get_thumbnail({"size": (30, 30)}).url,
             img_url=instance.region_image.url,
         )
-
-    region_image_preview.short_description = "CoA"
 
 
 @admin.register(Commune)
@@ -124,12 +121,13 @@ class CommuneAdmin(gis_admin.GISModelAdmin):
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
 
+    @admin.action(description=_("Generate/update region with commune info"))
     def create_update_region(self, request, queryset):
         created = 0
         updated = 0
         for commune in queryset:
             defaults = {"areas": commune.mpoly}
-            obj, new = Region.objects.update_or_create(name=commune.name, defaults=defaults)
+            _obj, new = Region.objects.update_or_create(name=commune.name, defaults=defaults)
             if new:
                 created += 1
             else:
@@ -140,8 +138,6 @@ class CommuneAdmin(gis_admin.GISModelAdmin):
                 created_count=created, updated_count=updated
             ),
         )
-
-    create_update_region.short_description = _("Generate/update region with commune info")
 
 
 @admin.register(OpenDate)

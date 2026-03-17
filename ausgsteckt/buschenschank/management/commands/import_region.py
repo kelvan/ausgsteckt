@@ -24,9 +24,7 @@ REGION_QUERY = """
     out body;
     >;
     out skel qt;
-""".replace(
-    "\n", ""
-)
+""".replace("\n", "")
 
 
 class Command(BaseCommand):
@@ -59,6 +57,6 @@ class Command(BaseCommand):
             # TODO support relation with subrelations/ways as MultiPolygon
             defaults["areas"] = MultiPolygon(polygon)
 
-            region, created = Region.objects.update_or_create(osm_type=osm_type, osm_id=osm_id, defaults=defaults)
+            Region.objects.update_or_create(osm_type=osm_type, osm_id=osm_id, defaults=defaults)
         else:
             logger.error("Not possible to get %s: %d", osm_type, response.status_code)

@@ -11,7 +11,7 @@ class DjangoConfig(BaseConfig):
     base_dir: Path = Path(__file__).parents[2]
     public_root: Path | None = None
     debug: bool = False
-    database_url: AnyUrl = "postgis:///ausgsteckt"
+    database_url: AnyUrl = "postgis:///ausgsteckt"  # ty: ignore[invalid-assignment]
     site_id: int = 1
     timezone: str = "Europe/Vienna"
     use_i18n: bool = True
@@ -19,7 +19,7 @@ class DjangoConfig(BaseConfig):
     use_tz: bool = True
     static_url: str = "/static/"
     media_url: str = "/media/"
-    cache_backend: AnyUrl = "locmemcache://"
+    cache_backend: AnyUrl = "locmemcache://"  # ty: ignore[invalid-assignment]
 
     CONFIG_SOURCES: ClassVar[list[ConfigSource]] = [
         EnvSource(prefix="DJANGO_"),

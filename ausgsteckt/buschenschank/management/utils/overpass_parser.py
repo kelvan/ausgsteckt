@@ -1,8 +1,7 @@
-from datetime import datetime
+from datetime import UTC, datetime
+from typing import Any
 from xml.sax import handler, xmlreader
 from xml.sax.saxutils import unescape
-
-import pytz
 
 DATEFORMAT = "%Y-%m-%dT%H:%M:%SZ"
 
@@ -24,10 +23,10 @@ class NodeCenterSaxParser(handler.ContentHandler):
     def startElement(self, name: str, attrs: xmlreader.AttributesImpl):  # NOQA: N802
         if name in ["node", "way", "relation"]:
             self._inItem = True
-            self._item = {
+            self._item: dict[str, Any] = {
                 "id": int(attrs["id"]),
                 "type": name,
-                "timestamp": datetime.strptime(attrs["timestamp"], DATEFORMAT).replace(tzinfo=pytz.UTC),
+                "timestamp": datetime.strptime(attrs["timestamp"], DATEFORMAT).replace(tzinfo=UTC),
                 "user": attrs["user"],
                 "tags": {},
             }
@@ -37,7 +36,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
             self._item["lon"] = float(attrs["lon"])
 
         if name == "tag":
-            self._item["tags"][attrs["k"]] = unescape(attrs["v"])  # ty:ignore[invalid-assignment]
+            self._item["tags"][attrs["k"]] = unescape(attrs["v"])
 
         if self._inItem:
             self._currentTag = name
