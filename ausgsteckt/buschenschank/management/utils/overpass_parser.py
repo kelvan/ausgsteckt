@@ -1,5 +1,5 @@
 from datetime import datetime
-from xml.sax import handler
+from xml.sax import handler, xmlreader
 from xml.sax.saxutils import unescape
 
 import pytz
@@ -21,7 +21,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
         # current subtag (No, Description, ...)
         self._currentTag = ""
 
-    def startElement(self, name, attrs):  # NOQA: N802
+    def startElement(self, name: str, attrs: xmlreader.AttributesImpl):  # NOQA: N802
         if name in ["node", "way", "relation"]:
             self._inItem = True
             self._item = {
@@ -37,7 +37,7 @@ class NodeCenterSaxParser(handler.ContentHandler):
             self._item["lon"] = float(attrs["lon"])
 
         if name == "tag":
-            self._item["tags"][attrs["k"]] = unescape(attrs["v"])
+            self._item["tags"][attrs["k"]] = unescape(attrs["v"])  # ty:ignore[invalid-assignment]
 
         if self._inItem:
             self._currentTag = name

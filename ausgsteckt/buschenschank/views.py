@@ -41,7 +41,7 @@ class BuschenschankDetailView(PageTitleMixin, DetailView):
 
     def get_queryset(self) -> models.QuerySet[Any]:
         queryset = super().get_queryset()
-        if not self.request.user.is_staff:
+        if not self.request.user.is_staff:  # ty: ignore[possibly-missing-attribute]
             queryset = queryset.filter(published=True)
         return queryset
 
@@ -89,12 +89,13 @@ class SearchView(PageTitleMixin, TemplateView):
     queryset = Buschenschank.available_objects
 
     def get_queryset(self) -> models.QuerySet[Any]:
-        queryset = super().get_queryset()
+        queryset = super().get_queryset()  # ty: ignore[unresolved-attribute]
         return queryset.filter(published=True)
 
     def get_page_title(self):
         page_title = super().get_page_title()
-        return page_title.format(self.request.GET.get("q", ""))
+        if page_title:
+            return page_title.format(self.request.GET.get("q", ""))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

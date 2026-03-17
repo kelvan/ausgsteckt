@@ -68,9 +68,10 @@ class Relation:
                 node_obj = way_pool[member["ref"]]
             elif member["type"] == "node":
                 # node_obj = node_pool[member['ref']]
-                logger.warn("Node member of relation ignored")
+                logger.warning("Node member of relation ignored")
+                continue
             elif member["type"] == "relation":
-                logger.warn("Sub relations not implemented yet")
+                logger.warning("Sub relations not implemented yet")
                 continue
             else:
                 logger.error("Unknown type for relation member: %s", member["type"])

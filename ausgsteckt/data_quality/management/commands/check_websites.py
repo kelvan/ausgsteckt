@@ -105,7 +105,7 @@ class Command(BaseCommand):
         self._save_errors_to_database(errors)
 
     def handle(self, *args, **options):
-        self.report_path = options.get("report")
+        self.report_path = options["report"]
 
         if not Path(self.report_path).parent.exists():
             logger.fatal("Report path does not exist")

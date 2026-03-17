@@ -29,7 +29,7 @@ WEBSITE_KEYS = ["contact:website", "website"]
 
 class AdminURLMixin:
     def get_admin_url(self):
-        return reverse(f"admin:{self._meta.app_label}_{self._meta.model_name}_change", args=(self.pk,))
+        return reverse(f"admin:{self._meta.app_label}_{self._meta.model_name}_change", args=(self.pk,))  # ty:ignore[unresolved-attribute]
 
 
 class PublicManager(models.Manager):
@@ -64,16 +64,6 @@ class Buschenschank(OSMItemModel, TimeStampedModel, SoftDeletableModel, Publisha
     # include removed objects
     all = models.Manager()
     open_today = OpenTodayManager()
-
-    @property
-    def open(self):
-        today = timezone.now().date()
-        return self.opendate_set.filter(date_start__lte=today, date_end__gte=today).exists()
-
-    @property
-    def future_open_dates(self):
-        today = timezone.now().date()
-        return self.opendate_set.exclude(date_end__lt=today)
 
     @property
     def slug(self):
@@ -257,7 +247,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
 
     def load_image_from_web(self, url):
         r = requests.get(url)
-        rel_path = os.path.join(self.__class__.region_image.field.upload_to, os.path.basename(url))
+        rel_path = os.path.join(str(self.__class__.region_image.field.upload_to), os.path.basename(url))
         target_file = os.path.join(settings.MEDIA_ROOT, rel_path)
 
         with open(target_file, "wb") as f:
@@ -265,7 +255,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
         self.region_image.name = rel_path
         self.save()
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         if self.wikipedia_page:
             lang = settings.LANGUAGE_CODE[:2]
             wikipedia.set_lang(lang)
@@ -290,7 +280,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
 
     def get_buschenschank(self) -> models.QuerySet[Buschenschank]:
         queryset = Buschenschank.available_objects.filter(coordinates__intersects=self.areas)
-        return queryset.filter(published=True)
+        return queryset.filter(published=True)  # ty:ignore[invalid-return-type]
 
     class Meta:
         verbose_name = _("Region")

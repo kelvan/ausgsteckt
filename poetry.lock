@@ -875,38 +875,36 @@ tests = ["coverage", "nh3"]
 
 [[package]]
 name = "django-stubs"
-version = "5.1.3"
+version = "4.2.7"
 description = "Mypy stubs for Django"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "django_stubs-5.1.3-py3-none-any.whl", hash = "sha256:716758ced158b439213062e52de6df3cff7c586f9f9ad7ab59210efbea5dfe78"},
-    {file = "django_stubs-5.1.3.tar.gz", hash = "sha256:8c230bc5bebee6da282ba8a27ad1503c84a0c4cd2f46e63d149e76d2a63e639a"},
+    {file = "django-stubs-4.2.7.tar.gz", hash = "sha256:8ccd2ff4ee5adf22b9e3b7b1a516d2e1c2191e9d94e672c35cc2bc3dd61e0f6b"},
+    {file = "django_stubs-4.2.7-py3-none-any.whl", hash = "sha256:4cf4de258fa71adc6f2799e983091b9d46cfc67c6eebc68fe111218c9a62b3b8"},
 ]
 
 [package.dependencies]
-asgiref = "*"
 django = "*"
-django-stubs-ext = ">=5.1.3"
+django-stubs-ext = ">=4.2.7"
+types-pytz = "*"
 types-PyYAML = "*"
-typing-extensions = ">=4.11.0"
+typing-extensions = "*"
 
 [package.extras]
-compatible-mypy = ["mypy (>=1.12,<1.16)"]
-oracle = ["oracledb"]
-redis = ["redis"]
+compatible-mypy = ["mypy (>=1.7.0,<1.8.0)"]
 
 [[package]]
 name = "django-stubs-ext"
-version = "5.2.8"
+version = "4.2.7"
 description = "Monkey-patching and extensions for django-stubs"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "django_stubs_ext-5.2.8-py3-none-any.whl", hash = "sha256:1dd5470c9675591362c78a157a3cf8aec45d0e7a7f0cf32f227a1363e54e0652"},
-    {file = "django_stubs_ext-5.2.8.tar.gz", hash = "sha256:b39938c46d7a547cd84e4a6378dbe51a3dd64d70300459087229e5fee27e5c6b"},
+    {file = "django-stubs-ext-4.2.7.tar.gz", hash = "sha256:519342ac0849cda1559746c9a563f03ff99f636b0ebe7c14b75e816a00dfddc3"},
+    {file = "django_stubs_ext-4.2.7-py3-none-any.whl", hash = "sha256:45a5d102417a412e3606e3c358adb4744988a92b7b58ccf3fd64bddd5d04d14c"},
 ]
 
 [package.dependencies]
@@ -3723,6 +3721,18 @@ files = [
 ]
 
 [[package]]
+name = "types-pytz"
+version = "2025.2.0.20251108"
+description = "Typing stubs for pytz"
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "types_pytz-2025.2.0.20251108-py3-none-any.whl", hash = "sha256:0f1c9792cab4eb0e46c52f8845c8f77cf1e313cb3d68bf826aa867fe4717d91c"},
+    {file = "types_pytz-2025.2.0.20251108.tar.gz", hash = "sha256:fca87917836ae843f07129567b74c1929f1870610681b4c92cb86a3df5817bdb"},
+]
+
+[[package]]
 name = "types-pyyaml"
 version = "6.0.12.20250915"
 description = "Typing stubs for PyYAML"
@@ -4259,4 +4269,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "ce295927056c46c1d636fea4a7c332404e3646a94228ce7b6db1a68f823be242"
+content-hash = "321905fe3e79bfc0659b5fbc87744864057f6a9dd19e8ccce3e10bf3b0f8d579"

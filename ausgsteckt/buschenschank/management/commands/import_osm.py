@@ -26,12 +26,12 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         self.amount = 0
         self.processed_ids = []
 
-    def process_item(self, element):
-        lat = element["lat"]
-        lon = element["lon"]
-        osm_id = element["id"]
-        osm_type = element["type"]
-        tags = element["tags"]
+    def process_item(self, item):
+        lat = item["lat"]
+        lon = item["lon"]
+        osm_id = item["id"]
+        osm_type = item["type"]
+        tags = item["tags"]
         name = tags.get("name")
         self.amount += 1
 
@@ -43,7 +43,9 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
             logger.warning("Badly named %s: %d", osm_type, osm_id)
 
         if tags.get("disused", None) == "yes":
-            b = Buschenschank.objects.filter(is_removed=False, osm_id=osm_id, osm_type=osm_type).first()
+            b = Buschenschank.objects.filter(
+                is_removed=False, osm_id=osm_id, osm_type=osm_type
+            ).first()
             if b is not None:
                 logger.info("Delete disused: %s", name)
                 b.delete()
@@ -52,27 +54,33 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
             self.skipped += 1
             return False
 
-        buschenschank = Buschenschank.objects.filter(osm_id=osm_id, osm_type=osm_type).first()
+        buschenschank = Buschenschank.objects.filter(
+            osm_id=osm_id, osm_type=osm_type
+        ).first()
         if buschenschank is None:
-            logger.info("New Buschenschank found: {tags[name]} by {user}".format(**element))
+            logger.info(
+                "New Buschenschank found: {tags[name]} by {user}".format(**item)
+            )
             buschenschank = Buschenschank(osm_id=osm_id, osm_type=osm_type)
             self.new += 1
-        elif buschenschank.modified < element["timestamp"]:
-            logger.info("Updated Buschenschank found: {tags[name]} by {user}".format(**element))
+        elif buschenschank.modified < item["timestamp"]:  # ty:ignore[unresolved-attribute]
+            logger.info(
+                "Updated Buschenschank found: {tags[name]} by {user}".format(**item)
+            )
             self.updated += 1
         else:
-            self.processed_ids.append(buschenschank.id)
+            self.processed_ids.append(buschenschank.id)  # ty:ignore[unresolved-attribute]
             return False
 
-        name_len = Buschenschank._meta.get_field("name").max_length
-        buschenschank.name = name[:name_len]
-        buschenschank.coordinates = Point(float(lon), float(lat))
-        modified_by_len = Buschenschank._meta.get_field("modified_by").max_length
-        buschenschank.modified_by = element["user"][:modified_by_len]
-        buschenschank.modified = element["timestamp"]
-        buschenschank.tags = tags
+        name_len = Buschenschank._meta.get_field("name").max_length  # ty:ignore[possibly-missing-attribute]
+        buschenschank.name = name[:name_len]  # ty:ignore[unresolved-attribute]
+        buschenschank.coordinates = Point(float(lon), float(lat))  # ty:ignore[unresolved-attribute]
+        modified_by_len = Buschenschank._meta.get_field("modified_by").max_length  # ty:ignore[possibly-missing-attribute]
+        buschenschank.modified_by = item["user"][:modified_by_len]  # ty:ignore[unresolved-attribute]
+        buschenschank.modified = item["timestamp"]  # ty:ignore[unresolved-attribute]
+        buschenschank.tags = tags  # ty:ignore[unresolved-attribute]
         buschenschank.save()
-        self.processed_ids.append(buschenschank.id)
+        self.processed_ids.append(buschenschank.id)  # ty:ignore[unresolved-attribute]
 
 
 class Command(BaseCommand):
@@ -90,12 +98,18 @@ class Command(BaseCommand):
     def check_removed(self, processed_ids, force_delete=False):
         obsoletes = Buschenschank.objects.exclude(id__in=processed_ids)
         for obsolete in obsoletes:
-            logger.warning("Removed Buschenschank found: [%s/%d] %s", obsolete.osm_type, obsolete.osm_id, obsolete.name)
+            logger.warning(
+                "Removed Buschenschank found: [%s/%d] %s",
+                obsolete.osm_type,  # ty:ignore[unresolved-attribute]
+                obsolete.osm_id,  # ty:ignore[unresolved-attribute]
+                obsolete.name,  # ty:ignore[unresolved-attribute]
+            )
         if obsoletes.count() < 20 or force_delete is True:
             obsoletes.update(is_removed=True)
         else:
             logger.warning(
-                "Unusual amount of deleted OSM elements: %d objects deleted, " "skipping mark as removed step",
+                "Unusual amount of deleted OSM elements: %d objects deleted, "
+                "skipping mark as removed step",
                 obsoletes.count(),
             )
 
@@ -108,7 +122,9 @@ class Command(BaseCommand):
         if response.ok:
             parser = BuschenschankSaxParser()
             parseString(response.text, parser)
-            self.check_removed(parser.processed_ids, force_delete=options["force_delete"])
+            self.check_removed(
+                parser.processed_ids, force_delete=options["force_delete"]
+            )
             logger.info(
                 "Import finished: "
                 f"{parser.new} added, {parser.updated} updated, "

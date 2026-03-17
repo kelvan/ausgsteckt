@@ -20,8 +20,8 @@ class BuschenschankSaxParser(NodeCenterSaxParser):
         super().__init__(*args, **kwargs)
         self.users = {}
 
-    def process_item(self, element):
-        user = element["user"]
+    def process_item(self, item):
+        user = item["user"]
         self.users[user] = self.users.get(user, 0) + 1
 
 
