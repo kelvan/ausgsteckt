@@ -1,5 +1,8 @@
 import logging
 import os
+import random
+import string
+from pathlib import Path
 
 import environ
 
@@ -80,7 +83,7 @@ TEST_OUTPUT_DIR = env("TEST_OUTPUT_DIR", default=".")
 TEST_OUTPUT_FILE_NAME = env("TEST_OUTPUT_FILE_NAME", default="report.xml")
 
 DATABASES = {
-    "default": env.db('DJANGO_DATABASE_URL', default='postgis:///ausgsteckt'),
+    "default": env.db("DJANGO_DATABASE_URL", default="postgis:///ausgsteckt"),
 }
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
@@ -115,7 +118,7 @@ LANGUAGES = (
     ("en", ugettext("English")),
 )
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = (BASE_DIR / "locale",)
 TIME_ZONE = config.timezone
 USE_I18N = config.use_i18n
 USE_L10N = config.use_l10n
@@ -132,7 +135,7 @@ STATIC_ROOT = DATA_DIR / "static"
 CACHE_BACKEND = config.cache_backend
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR.parent, "node_modules"),
+    BASE_DIR.parent / "node_modules",
 ]
 
 
@@ -181,18 +184,13 @@ BUSCHENSCHANK_QUERY = """
         relation(area.boundaryarea)["cuisine"~"heuriger"];
     );
     out center meta;
-""".replace(
-    "\n", ""
-)
+""".replace("\n", "")
 
 # Secret key generation functions
-secret_key_fn = os.path.join(os.path.dirname(__file__), "secret.key")
+secret_key_fn = Path(__file__).parent / "secret.key"
 
 
 def create_secret_key():
-    import random
-    import string
-
     return "".join([random.SystemRandom().choice(string.printable) for i in range(50)])
 
 
@@ -211,7 +209,7 @@ def load_secret_key_file():
         return skey
 
 
-if os.path.exists(secret_key_fn):
+if secret_key_fn.exists():
     logger.info("Load secret key from file")
     SECRET_KEY = load_secret_key_file()
 else:

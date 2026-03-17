@@ -8,7 +8,7 @@ from pydantic import AnyUrl
 
 class DjangoConfig(BaseConfig):
     server_type: str | None = None
-    base_dir: Path | None = Path(__file__).parents[2]
+    base_dir: Path = Path(__file__).parents[2]
     public_root: Path | None = None
     debug: bool = False
     database_url: AnyUrl = "postgis:///ausgsteckt"

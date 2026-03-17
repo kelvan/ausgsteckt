@@ -5,8 +5,8 @@ DEBUG = False
 DEFAULT_FROM_EMAIL = "info@ausgsteckt.ist-total.org"
 EMAIL_NOTIFICATION = ["ausgsteckt-admin@ist-total.org"]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "public", "static/")
-MEDIA_ROOT = os.path.join(BASE_DIR, "..", "public", "media/")
+STATIC_ROOT = BASE_DIR.parent / "public" / "static"
+MEDIA_ROOT = BASE_DIR.parent / "public" / "media"
 
 ALLOWED_HOSTS = ["ausgsteckt.ist-total.org"]
 CSRF_TRUSTED_ORIGINS = ["https://ausgsteckt.ist-total.org"]
@@ -14,9 +14,8 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-LOG_DIR = os.path.join(os.path.dirname(BASE_DIR), "log")
-if not os.path.exists(LOG_DIR):
-    os.mkdir(LOG_DIR)
+LOG_DIR = BASE_DIR.parent / "log"
+LOG_DIR.mkdir(exist_ok=True)
 
 LOGGING = {
     "version": 1,
