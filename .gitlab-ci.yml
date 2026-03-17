@@ -19,11 +19,9 @@ build:js:
 .install:
   stage: build
   before_script:
-    - python -m venv .venv
-    - source .venv/bin/activate
-    - pip install -U wheel pip setuptools poetry
+    - pip install uv
   script:
-    - poetry install --with dev,test,docs
+    - uv sync --group dev --group test --group docs
   artifacts:
     expire_in: 1 day
     paths:

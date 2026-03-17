@@ -32,3 +32,4 @@ sentry_settings.py
 bin/
 etc/
 *.lock
+!uv.lock

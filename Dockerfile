@@ -1,4 +1,4 @@
-FROM python:3.13-slim
+FROM python:3.14-slim
 
 ENV DJANGO_PUBLIC_ROOT /srv/
 ENV APP_HOME /usr/local/app
@@ -11,13 +11,13 @@ RUN apt-get update && \
 RUN mkdir $APP_HOME
 RUN mkdir -p $DJANGO_PUBLIC_ROOT/media $DJANGO_PUBLIC_ROOT/static
 WORKDIR $APP_HOME
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 COPY pyproject.toml $APP_HOME/
-COPY poetry.lock $APP_HOME/
-RUN pip install -U pip wheel setuptools poetry
-RUN poetry install --no-root --with server
+COPY uv.lock $APP_HOME/
+RUN uv sync --no-dev --group server
 COPY ausgsteckt $APP_HOME
-RUN poetry run python manage.py collectstatic --noinput
-RUN poetry run python manage.py compilemessages
+RUN uv run python manage.py collectstatic --noinput
+RUN uv run python manage.py compilemessages
 COPY docker/docker-entrypoint.sh /
 
 EXPOSE 8000
