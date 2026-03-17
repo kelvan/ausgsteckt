@@ -10,7 +10,7 @@ build:js:
   image: node:24-alpine
   stage: build
   script:
-    - yarn install --modules-folder ausgsteckt/ausgsteckt/static/node_modules/
+    - npm install
   artifacts:
     paths:
       - ausgsteckt/ausgsteckt/static/node_modules/
@@ -30,12 +30,21 @@ build:js:
 install:python3.13:
   extends: .install
 
-ruff:
+ruff:check:
   stage: qa
   script:
     - source .venv/bin/activate
     - ruff --version
     - ruff check .
+  allow_failure: true
+  dependencies:
+    - install:python3.13
+
+ruff:format:
+  stage: qa
+  script:
+    - source .venv/bin/activate
+    - ruff format --check .
   allow_failure: true
   dependencies:
     - install:python3.13
