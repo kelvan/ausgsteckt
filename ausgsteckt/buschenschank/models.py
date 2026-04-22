@@ -1,9 +1,9 @@
 import os
-from urllib.parse import unquote
 
 import requests
-import wikipedia
 from django.conf import settings
+
+from .wikipedia import fetch_wikipedia_data
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import Distance as D  # NOQA: N817
@@ -257,19 +257,19 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
     def save(self, *args, **kwargs):
         if self.wikipedia_page:
             lang = settings.LANGUAGE_CODE[:2]
-            wikipedia.set_lang(lang)
-            wp_page = wikipedia.page(self.wikipedia_page)
+            summary, images = fetch_wikipedia_data(self.wikipedia_page, lang)
 
             if not self.description:
-                self.description = wp_page.summary.strip()
+                self.description = summary
                 self.description += "\n" + WIKIPEDIA_CITE.format(page=self.wikipedia_page, lang=lang)
             if not self.region_image.name:
                 coa_filename_content = ["coa", "wappen"]
-                for image in wp_page.images:
-                    img_unquote = unquote(image).lower()
-                    matches = [m in img_unquote for m in coa_filename_content]
-                    if any(matches) and self.name.split()[0].lower() in img_unquote:
-                        self.load_image_from_web(image)
+                for image in images:
+                    img_lower = image.lower()
+                    matches = [m in img_lower for m in coa_filename_content]
+                    if any(matches) and self.name.split()[0].lower() in img_lower:
+                        image_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{image}"
+                        self.load_image_from_web(image_url)
                         break
 
         super().save(**kwargs)

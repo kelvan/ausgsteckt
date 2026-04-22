@@ -22,10 +22,8 @@ dependencies = [
     "jsmin>=3.0.1,<4",
     "django-prose-editor>=0.10.3,<0.11.0",
 
-    "wikipedia>=1.4.0,<2",
     "confz>=2.0.1,<3",
     "django-json-widget>=2.0.1,<3",
-    "async-timeout>=5.0.1,<6",
 ]
 
 [dependency-groups]
