@@ -8,11 +8,6 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter("[%(levelname)s] %(message)s")
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 
 
 class BuschenschankSaxParser(NodeCenterSaxParser):

@@ -12,11 +12,6 @@ from django.core.management.base import BaseCommand
 from ...models import PageCheckResult
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter("[%(levelname)s] %(message)s")
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 
 
 async def fetch(session, url):

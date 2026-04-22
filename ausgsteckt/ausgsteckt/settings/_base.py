@@ -3,6 +3,7 @@ import os
 import random
 import string
 from pathlib import Path
+from typing import Any
 
 import environ
 
@@ -121,6 +122,26 @@ USE_TZ = config.use_tz
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", env("HTTP_X_FORWARDED_PROTO", default="http"))
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+LOGGING: dict[str, Any] = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "[%(levelname)s] %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
 
 STATIC_URL = config.static_url
 MEDIA_URL = config.media_url
