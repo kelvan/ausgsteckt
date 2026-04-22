@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
+{% load i18n thumbnail %}
 
 {% block content %}
   <div class="container">
@@ -12,7 +12,9 @@
             <div class="d-flex flex-row">
               {% if region.region_image %}
                 <div class="p-1">
-                  <img src="{{ region.region_image.list.url }}" class="img-fluid" alt="Coat of arms {{ region.name }}">&nbsp;
+                  {% thumbnail region.region_image "25x25" crop="center" format="PNG" as thumb %}
+                    <img src="{{ thumb.url }}" class="img-fluid" alt="Coat of arms {{ region.name }}">&nbsp;
+                  {% endthumbnail %}
                 </div>
               {% endif %}
               <div class="p-1">

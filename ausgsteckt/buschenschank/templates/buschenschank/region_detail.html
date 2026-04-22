@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n static %}
+{% load i18n static thumbnail %}
 
 {% block content %}
   <div class="container">
@@ -15,7 +15,9 @@
     <div class="row">
       <div class="col-12 col-md-2 img_region">
         {% if region.region_image %}
-          <img src="{{ region.region_image.details.url }}" class="img-fluid"></img>
+          {% thumbnail region.region_image "150" format="PNG" as thumb %}
+            <img src="{{ thumb.url }}" class="img-fluid">
+          {% endthumbnail %}
         {% else %}
           <img src="{% static 'images/region_placeholder.png' %}" class="img-fluid"></img>
         {% endif %}

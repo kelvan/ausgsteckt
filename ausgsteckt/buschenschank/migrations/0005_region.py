@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 import django.contrib.gis.db.models.fields
 from django.db import migrations, models
 import django.utils.timezone
-import easy_thumbnails.fields
 import model_utils.fields
 
 
@@ -26,7 +25,7 @@ class Migration(migrations.Migration):
                 ('published', models.BooleanField(default=True)),
                 ('name', models.CharField(max_length=50)),
                 ('description', models.TextField(blank=True, help_text='Description shown on region page', null=True, verbose_name='Description')),
-                ('region_image', easy_thumbnails.fields.ThumbnailerImageField(blank=True, help_text='Image displayed on region page', upload_to='images/regions', verbose_name='Region image')),
+                ('region_image', models.ImageField(blank=True, help_text='Image displayed on region page', upload_to='images/regions', verbose_name='Region image')),
                 ('areas', django.contrib.gis.db.models.fields.MultiPolygonField(srid=4326)),
                 ('website', models.URLField(blank=True, null=True)),
                 ('calendar_website', models.URLField(blank=True, null=True)),

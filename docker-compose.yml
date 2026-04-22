@@ -18,7 +18,8 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - public:/srv
+      - ./public/static:/srv/static
+      - ./public/media:/srv/media
 
   nginx:
     build: docker/nginx/
@@ -27,7 +28,7 @@ services:
     depends_on:
       - django
     volumes:
-      - public:/srv
+      - ./public/static:/srv/static
+      - ./public/media:/srv/media
 
 volumes:
-  public:

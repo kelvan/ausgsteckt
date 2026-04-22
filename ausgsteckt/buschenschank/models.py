@@ -10,7 +10,6 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from easy_thumbnails.fields import ThumbnailerImageField
 from model_utils.models import SoftDeletableModel, TimeStampedModel
 
 from .managers import OpenTodayManager
@@ -227,7 +226,7 @@ class Region(OSMItemModel, TimeStampedModel, SoftDeletableModel, PublishableMode
     wikipedia_page = models.CharField(
         _("Wikipedia page"), max_length=50, blank=True, null=True, help_text=_("Used to load description if none set")
     )
-    region_image = ThumbnailerImageField(
+    region_image = models.ImageField(
         _("Region image"), help_text=_("Image displayed on region page"), upload_to="images/regions", blank=True
     )
     areas = models.MultiPolygonField(_("Areas"))

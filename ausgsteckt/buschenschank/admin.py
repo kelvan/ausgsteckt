@@ -103,9 +103,10 @@ class RegionAdmin(gis_admin.GISModelAdmin):
 
     @admin.display(description="CoA")
     def region_image_preview(self, instance):
+        if not instance.region_image:
+            return ""
         return format_html(
-            '<a href="{img_url}" target="_blank"><img src="{thumbnail_url}"></img></a>',
-            thumbnail_url=instance.region_image.get_thumbnail({"size": (30, 30)}).url,
+            '<a href="{img_url}" target="_blank"><img src="{img_url}" style="height:30px"></a>',
             img_url=instance.region_image.url,
         )
 

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.flatpages",
     "django.contrib.gis",
-    "easy_thumbnails",
+    "sorl.thumbnail",
     "django_prose_editor",
     "django_json_widget",
     "ausgsteckt",
@@ -154,14 +154,6 @@ STATICFILES_DIRS = [
     BASE_DIR.parent / "node_modules",
 ]
 
-
-THUMBNAIL_ALIASES = {
-    "": {
-        "details": {"size": (150, 0), "crop": False},
-        "dropdown": {"size": (15, 15), "crop": False},
-        "list": {"size": (25, 25), "crop": False},
-    },
-}
 
 CKEDITOR_CONFIGS = {
     "flatpage": {

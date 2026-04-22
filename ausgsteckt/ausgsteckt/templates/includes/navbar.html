@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n thumbnail %}
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="{% url 'index' %}">
@@ -25,7 +25,9 @@
                 <li>
                   <a class="dropdown-item" href="{{ region.get_absolute_url }}">
                     {% if region.region_image %}
-                      <img src="{{ region.region_image.dropdown.url }}" alt="{{ region.name }}">
+                      {% thumbnail region.region_image "15x15" crop="center" format="PNG" as thumb %}
+                        <img src="{{ thumb.url }}" alt="{{ region.name }}">
+                      {% endthumbnail %}
                     {% endif %}
                     {{ region.name }} ({{ region.get_buschenschank.count }})
                   </a>
