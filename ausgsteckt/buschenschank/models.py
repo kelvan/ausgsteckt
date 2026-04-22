@@ -2,8 +2,6 @@ import os
 
 import requests
 from django.conf import settings
-
-from .wikipedia import fetch_wikipedia_data
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import Distance as D  # NOQA: N817
@@ -16,6 +14,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from model_utils.models import SoftDeletableModel, TimeStampedModel
 
 from .managers import OpenTodayManager
+from .wikipedia import fetch_wikipedia_data
 
 OSMTYPES = (("node", _("Node")), ("way", _("Way")), ("relation", _("Relation")))
 
