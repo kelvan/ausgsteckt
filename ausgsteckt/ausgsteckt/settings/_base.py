@@ -85,7 +85,6 @@ TEST_OUTPUT_FILE_NAME = env("TEST_OUTPUT_FILE_NAME", default="report.xml")
 DATABASES = {
     "default": env.db("DJANGO_DATABASE_URL", default="postgis:///ausgsteckt"),
 }
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
@@ -109,13 +108,9 @@ SITE_ID = config.site_id
 LANGUAGE_CODE = "de-at"
 
 
-def ugettext(s):
-    return s
-
-
 LANGUAGES = (
-    ("de", ugettext("German")),
-    ("en", ugettext("English")),
+    ("de", "German"),
+    ("en", "English"),
 )
 
 LOCALE_PATHS = (BASE_DIR / "locale",)
