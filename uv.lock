@@ -178,8 +178,8 @@ dependencies = [
     { name = "aiodns" },
     { name = "aiohttp" },
     { name = "confz" },
+    { name = "dj-database-url" },
     { name = "django" },
-    { name = "django-environ" },
     { name = "django-json-widget" },
     { name = "django-model-utils" },
     { name = "django-prose-editor" },
@@ -218,8 +218,8 @@ requires-dist = [
     { name = "aiodns", specifier = ">=3.2.0,<4" },
     { name = "aiohttp", specifier = ">=3.11.11,<4" },
     { name = "confz", specifier = ">=2.0.1,<3" },
+    { name = "dj-database-url", specifier = ">=2.3,<3" },
     { name = "django", specifier = ">=5.2,<5.3" },
-    { name = "django-environ", specifier = ">=0.12.0,<0.13.0" },
     { name = "django-json-widget", specifier = ">=2.0.1,<3" },
     { name = "django-model-utils", specifier = ">=5.0.0,<6.0.0" },
     { name = "django-prose-editor", specifier = ">=0.25.1,<0.26" },
@@ -431,6 +431,19 @@ wheels = [
 ]
 
 [[package]]
+name = "dj-database-url"
+version = "2.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/98/9f/fc9905758256af4f68a55da94ab78a13e7775074edfdcaddd757d4921686/dj_database_url-2.3.0.tar.gz", hash = "sha256:ae52e8e634186b57e5a45e445da5dc407a819c2ceed8a53d1fac004cc5288787", size = 10980, upload-time = "2024-10-23T10:05:19.953Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e5/91/641a4e5c8903ed59f6cbcce571003bba9c5d2f731759c31db0ba83bb0bdb/dj_database_url-2.3.0-py3-none-any.whl", hash = "sha256:bb0d414ba0ac5cd62773ec7f86f8cc378a9dbb00a80884c2fc08cc570452521e", size = 7793, upload-time = "2024-10-23T10:05:41.254Z" },
+]
+
+[[package]]
 name = "django"
 version = "5.2.12"
 source = { registry = "https://pypi.org/simple" }
@@ -442,15 +455,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/bd/55/b9445fc0695b03746f355c05b2eecc54c34e05198c686f4fc4406b722b52/django-5.2.12.tar.gz", hash = "sha256:6b809af7165c73eff5ce1c87fdae75d4da6520d6667f86401ecf55b681eb1eeb", size = 10860574, upload-time = "2026-03-03T13:56:05.509Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4e/32/4b144e125678efccf5d5b61581de1c4088d6b0286e46096e3b8de0d556c8/django-5.2.12-py3-none-any.whl", hash = "sha256:4853482f395c3a151937f6991272540fcbf531464f254a347bf7c89f53c8cff7", size = 8310245, upload-time = "2026-03-03T13:56:01.174Z" },
-]
-
-[[package]]
-name = "django-environ"
-version = "0.12.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d4/3c/b2de27581c28929e3b33c5797e3d075c93541b4a8499ddc84dfd659d550f/django_environ-0.12.1.tar.gz", hash = "sha256:22859c6e905ab7637fa3348d1787543bb4492f38d761104a3ce0519b7b752845", size = 58257, upload-time = "2026-02-14T01:19:50.733Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3a/1c/a6c55b856cb2c5824ee2fe5e27d6f54909ac7c228672b359ecbca99a6b41/django_environ-0.12.1-py2.py3-none-any.whl", hash = "sha256:064ba2d5082f833e6d7fe4def4928bde1eedc0248a417575da7db147aeec1c20", size = 20035, upload-time = "2026-02-14T01:19:48.683Z" },
 ]
 
 [[package]]

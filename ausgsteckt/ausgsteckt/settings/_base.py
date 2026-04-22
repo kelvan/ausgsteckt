@@ -5,15 +5,13 @@ import string
 from pathlib import Path
 from typing import Any
 
-import environ
+import dj_database_url
 
 from .conf import DjangoConfig
 
 config = DjangoConfig()
 
 logger = logging.getLogger(__name__)
-
-env = environ.Env()
 
 BASE_DIR = config.base_dir
 DATA_DIR = config.public_root or (BASE_DIR.parent / "public")
@@ -22,7 +20,7 @@ DATA_DIR = config.public_root or (BASE_DIR.parent / "public")
 SECRET_KEY = "el5m47jko&tz)i-qw_@b5wp=6ots)o3qcv^ekrceu$fcm1@jll"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = config.debug
 
 ALLOWED_HOSTS = []
 
@@ -79,12 +77,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "ausgsteckt.wsgi.application"
 
 TEST_RUNNER = "xmlrunner.extra.djangotestrunner.XMLTestRunner"
-TEST_OUTPUT_DESCRIPTIONS = env.bool("TEST_OUTPUT_DESCRIPTIONS", default=False)
-TEST_OUTPUT_DIR = env("TEST_OUTPUT_DIR", default=".")
-TEST_OUTPUT_FILE_NAME = env("TEST_OUTPUT_FILE_NAME", default="report.xml")
+TEST_OUTPUT_DESCRIPTIONS = False
+TEST_OUTPUT_DIR = "."
+TEST_OUTPUT_FILE_NAME = "report.xml"
 
 DATABASES = {
-    "default": env.db("DJANGO_DATABASE_URL", default="postgis:///ausgsteckt"),
+    "default": dj_database_url.parse(
+        os.environ.get("DJANGO_DATABASE_URL", "postgis:///ausgsteckt"),
+        engine="django.contrib.gis.db.backends.postgis"
+    ),
 }
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
@@ -120,7 +121,7 @@ USE_I18N = config.use_i18n
 USE_L10N = config.use_l10n
 USE_TZ = config.use_tz
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", env("HTTP_X_FORWARDED_PROTO", default="http"))
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", config.forwarded_proto)
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
 LOGGING: dict[str, Any] = {
