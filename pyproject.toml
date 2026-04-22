@@ -19,7 +19,6 @@ dependencies = [
     "sorl-thumbnail>=12.11.0,<13",
     "pytz>=2024.2",
     "pyproj>=3.7.0,<4",
-    "jsmin>=3.0.1,<4",
     "django-prose-editor>=0.25.1,<0.26",
 
     "confz>=2.0.1,<3",
