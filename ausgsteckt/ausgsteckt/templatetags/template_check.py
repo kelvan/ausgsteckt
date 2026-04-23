@@ -19,5 +19,5 @@ def template_exists(template_name):
         loader.get_template(template_name)
         return True
     except template.TemplateDoesNotExist:
-        logger.info("Template not found %s", template_name)
+        logger.debug("Template not found %s", template_name)
         return False
