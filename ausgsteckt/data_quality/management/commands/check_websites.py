@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 from aiohttp import ClientSession
+from asgiref.sync import sync_to_async
 from buschenschank.models import Buschenschank
 from django.core.management.base import BaseCommand
 
@@ -83,10 +84,11 @@ class Command(BaseCommand):
             )
         PageCheckResult.objects.bulk_create(page_check_results)
 
-    async def _checker(self):
+
+    async def _checker(self, buschenschank_list):
         async with ClientSession() as session:
             tasks = []
-            for buschenschank in self.queryset:
+            for buschenschank in buschenschank_list:
                 for key in self.webkeys:
                     tasks.append(check_url(session, buschenschank, key))
 
@@ -96,7 +98,8 @@ class Command(BaseCommand):
 
         if self.report_path:
             self._save_report(errors, self.report_path)
-        self._save_errors_to_database(errors)
+
+        await sync_to_async(self._save_errors_to_database)(errors)
 
     def handle(self, *args, **options):
         self.report_path = options["report"]
@@ -106,6 +109,6 @@ class Command(BaseCommand):
             sys.exit(1)
 
         self.webkeys = ["website", "contact:website", "opening_hours:url"]
-        self.queryset = Buschenschank.public.filter(tags__has_any_keys=self.webkeys)
+        buschenschank_list = list(Buschenschank.public.filter(tags__has_any_keys=self.webkeys))
 
-        asyncio.run(self._checker())
+        asyncio.run(self._checker(buschenschank_list))
