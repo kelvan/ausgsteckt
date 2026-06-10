@@ -117,7 +117,7 @@ class CommuneAdmin(gis_admin.GISModelAdmin):
     readonly_fields = ("name", "district", "county", "is_removed", "created", "modified")
     list_filter = ("is_removed", "county", "created", "modified")
     search_fields = ("name", "district")
-    actions = ["create_update_region"]
+    actions = ("create_update_region",)
 
     def buschenschank_count(self, instance):
         return instance.get_buschenschank().count()
