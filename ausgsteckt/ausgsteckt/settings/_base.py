@@ -83,8 +83,7 @@ TEST_OUTPUT_FILE_NAME = "report.xml"
 
 DATABASES = {
     "default": dj_database_url.parse(
-        os.environ.get("DJANGO_DATABASE_URL", "postgis:///ausgsteckt"),
-        engine="django.contrib.gis.db.backends.postgis"
+        os.environ.get("DJANGO_DATABASE_URL", "postgis:///ausgsteckt"), engine="django.contrib.gis.db.backends.postgis"
     ),
 }
 
