@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -105,13 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
 
 SITE_ID = config.site_id
 
-LANGUAGE_CODE = "de-at"
+LANGUAGE_CODE = "de"
 
 
 LANGUAGES = (
     ("de", "German"),
     ("en", "English"),
 )
+
+# Django defaults this to a session-only cookie, so a visitor's language choice
+# is lost as soon as the browser/tab closes. Persist it for a year instead.
+LANGUAGE_COOKIE_AGE = 60 * 60 * 24 * 365
 
 LOCALE_PATHS = (BASE_DIR / "locale",)
 TIME_ZONE = config.timezone
