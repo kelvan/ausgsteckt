@@ -2,58 +2,71 @@
 
 {% load i18n osm_tags %}
 
-<h4>
-  {{ buschenschank }}
-  {% include 'buschenschank/includes/smoking.html' %}
-  {% if buschenschank.region %}
-    (<a href="{{ buschenschank.region.get_absolute_url }}">{{ buschenschank.region.name }}</a>)
-  {% endif %}
-</h4>
-<ul class="list-unstyled">
-  {% if buschenschank.address %}
-    <li><strong>{{ buschenschank.address }}</strong></li>
-  {% endif %}
-  {% if buschenschank.email %}
-    <li>{% trans 'Email' %}: {{ buschenschank.email|urlize }}</li>
-  {% endif %}
-  {% if buschenschank.phone %}
-    <li>
-      {% trans 'Phone' %}:
-      <a href="tel:{{ buschenschank.phone|cut:' ' }}">{{ buschenschank.phone }}</a>
-    </li>
-  {% endif %}
-  {% if buschenschank.website %}
-    <li>
-      {% trans 'Website' %}:
-      <a href="{{ buschenschank.website }}" target="_blank">{{ buschenschank.website }}</a>
-    </li>
-  {% endif %}
-</ul>
+<div class="max-w-full font-sans">
+  <h4 class="font-serif font-semibold text-[15px] text-ink leading-snug m-0 mb-1.5">{{ buschenschank }}</h4>
 
-{% if buschenschank.future_open_dates.exists %}
-  <dl>
-    <dt>{% trans 'Open dates' %}</dt>
-    <dd>{% include 'buschenschank/includes/open_dates.html' %}</dd>
-  </dl>
-{% endif %}
-
-{% osmtag buschenschank 'opening_hours' as opening_hours %}
-{% osmtag buschenschank 'opening_hours:url' as opening_hours_url_raw %}
-{% with opening_hours_url=opening_hours_url_raw|external_url %}
-
-{% if opening_hours or opening_hours_url %}
-  <dl>
-    <dt>{% trans 'Opening hours' %}</dt>
-    <dd>
-      {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
-      {% if opening_hours_url %}
-        <a href="{{ opening_hours_url }}" target="_blank" rel="noopener noreferrer">{% trans 'Opening hours info (external)' %}</a>
+  {% if buschenschank.region or buschenschank.tags.smoking %}
+    <div class="flex flex-wrap gap-1.5 mb-2">
+      {% if buschenschank.region %}
+        <a href="{{ buschenschank.region.get_absolute_url }}" class="inline-flex items-center px-2 py-0.5 rounded-full bg-burgundy-tint text-burgundy text-[11px] font-semibold">{{ buschenschank.region.name }}</a>
       {% endif %}
-    </dd>
-  </dl>
-{% endif %}
-{% endwith %}
+      {% include 'buschenschank/includes/smoking.html' %}
+    </div>
+  {% endif %}
 
-<a class="btn btn-info text-light" href="{{ buschenschank.get_absolute_url }}" role="button">{% trans 'Details' %}&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+  {% if buschenschank.address %}
+    <div class="flex items-start gap-1.5 text-xs text-ink-soft mb-2">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 mt-0.5 text-ink-faint"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      <span>{{ buschenschank.address }}</span>
+    </div>
+  {% endif %}
+
+  {% if buschenschank.phone or buschenschank.email or buschenschank.website %}
+    <div class="flex flex-col gap-1 mb-2 text-xs">
+      {% if buschenschank.phone %}
+        <a href="tel:{{ buschenschank.phone|cut:' ' }}" class="flex items-center gap-1.5 text-ink hover:text-burgundy">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.79.63 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.2a2 2 0 0 1 2.11-.45c.86.3 1.75.51 2.65.63A2 2 0 0 1 22 16.92Z"/></svg>
+          {{ buschenschank.phone }}
+        </a>
+      {% endif %}
+      {% if buschenschank.email %}
+        <a href="mailto:{{ buschenschank.email }}" class="flex items-center gap-1.5 text-ink hover:text-burgundy break-all">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          {{ buschenschank.email }}
+        </a>
+      {% endif %}
+      {% if buschenschank.website %}
+        <a href="{{ buschenschank.website }}" target="_blank" class="flex items-center gap-1.5 text-ink hover:text-burgundy break-all">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg>
+          {{ buschenschank.website }}
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% osmtag buschenschank 'opening_hours' as opening_hours %}
+  {% osmtag buschenschank 'opening_hours:url' as opening_hours_url_raw %}
+  {% with opening_hours_url=opening_hours_url_raw|external_url %}
+  {% if opening_hours %}
+    <div class="mb-2">{% include 'buschenschank/includes/opening_hours.html' %}</div>
+  {% elif opening_hours_url %}
+    <a href="{{ opening_hours_url }}" target="_blank" rel="noopener noreferrer" class="block text-xs font-semibold text-burgundy mb-2">{% trans 'Opening hours info (external)' %}</a>
+  {% endif %}
+  {% endwith %}
+
+  {% if buschenschank.future_open_dates.exists %}
+    <div class="mb-2">
+      <div class="text-xs font-semibold text-ink mb-1">{% trans 'Open dates' %}</div>
+      <div class="flex flex-wrap gap-1">
+        {% include 'buschenschank/includes/open_dates.html' %}
+      </div>
+    </div>
+  {% endif %}
+
+  <a href="{{ buschenschank.get_absolute_url }}" class="flex items-center justify-center gap-1.5 bg-burgundy hover:bg-burgundy-hover text-paper py-2 rounded-lg text-xs font-semibold mt-1.5">
+    {% trans 'Details' %}
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
 
 {% endspaceless %}

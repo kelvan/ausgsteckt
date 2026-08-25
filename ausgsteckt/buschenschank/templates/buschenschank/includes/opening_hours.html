@@ -1,4 +1,4 @@
 {% load osm_tags %}
 
 {# TODO parse opening_hours render nice representation #}
-{{ opening_hours|format_value_list:'opening_hours' }}
+<div class="text-xs text-ink-soft bg-surface rounded-lg px-3 py-2 font-mono [&_ul]:list-none [&_ul]:p-0 [&_ul]:m-0 [&_ul]:space-y-0.5">{{ opening_hours|format_value_list:'opening_hours' }}</div>

@@ -3,12 +3,12 @@
 {% load i18n %}
 
 {% block content %}
-
-  <div class="container">
-    <h1>500</h1>
-    <div class="alert alert-danger" role="alert">
-      <strong>{% trans 'An unexpected error occurred' %}</strong>
-    </div>
+  <div class="max-w-lg mx-auto px-4 py-24 text-center flex flex-col items-center gap-4">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="oklch(48% 0.13 35)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+    <h1 class="font-serif font-semibold text-2xl text-ink">500</h1>
+    <p class="text-sm text-ink-soft">{% trans 'An unexpected error occurred' %}</p>
+    <a href="{% url 'index' %}" class="inline-flex items-center gap-1.5 mt-2 bg-burgundy hover:bg-burgundy-hover text-paper px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
+      {% trans 'Map' %}
+    </a>
   </div>
-
 {% endblock %}

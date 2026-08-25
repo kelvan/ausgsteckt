@@ -2,7 +2,7 @@ var map;
 
 function onEachFeature(feature, layer) {
     "use strict";
-    layer.bindPopup("Loading ...");
+    layer.bindPopup("Loading ...", {minWidth: 220, maxWidth: 300});
     layer.getPopup();
     layer.bindTooltip(feature.properties.name, {closeButton: false});
     layer.on("click", function (e) {

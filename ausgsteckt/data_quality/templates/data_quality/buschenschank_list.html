@@ -3,73 +3,85 @@
 {% load i18n l10n data_quality %}
 
 {% block content %}
-  {% if object_list %}
-    <p class="text-center bg-info">
-      <strong>
-        {% blocktrans with displayed=object_list.count total=overall_buschenschank_count %}
-          {{ displayed }} of <abbr title="All entries in database including fully covered">{{ total }}</abbr> displayed.
-        {% endblocktrans %}
-      </strong>
-      {% if city %}
-        <a class="btn btn-warning btn-xs" href="{% url 'data_quality:fixme_buschenschank' %}">{% trans 'Remove city filter' %}</a>
-      {% endif %}
-    </p>
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>{% trans 'Name' %}</th>
-          <th>{% trans 'Address' %}</th>
-          <th>{% trans 'Website' %}</th>
-          <th>{% trans 'Fixme' %}</th>
-          <th>{% trans 'Coverage' %}</th>
-          <th>{% trans 'View details' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for buschenschank in object_list %}
-          <tr>
-            <td>{{ buschenschank }}</td>
-            <td>
-              {% if buschenschank.address %}
-                {{ buschenschank|fixme_address }}
-              {% else %}
-                <strong>MISSING</strong>
-              {% endif %}
-            </td>
-            <td>
-              {% if buschenschank.website %}
-                <a target="_blank" href="{{ buschenschank.website }}">{{ buschenschank.website }}</a>
-              {% else %}
-                <strong>MISSING</strong>
-              {% endif %}
-            </td>
-            <td>{{ buschenschank.tags.fixme }}</td>
-            <td>
-              {% localize off %}
-                {% trans 'Address' %}:
-                {% address_coverage buschenschank.tags percentage=True as coverage_addr %}
-                {% include 'includes/progressbar.html' with progress=coverage_addr %}
+  <div class="max-w-6xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-5">
+    <h1 class="font-serif font-semibold text-2xl text-ink">{% trans 'Data quality' %}</h1>
 
-                {% trans 'Contact' %}:
-                {% contact_coverage buschenschank.tags percentage=True as coverage_contact %}
-                {% include 'includes/progressbar.html' with progress=coverage_contact %}
-              {% endlocalize %}
-            </td>
-            <td>
-              <ul class="list-unstyled">
-                <li><a target="_blank" href="{{ buschenschank.get_osm_url }}">OpenStreetMap</span></a></li>
-                {% if user.is_staff %}<li><a target="_blank" href="{{ buschenschank.get_admin_url }}">Admin</span></a></li>{% endif %}
-              </ul>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <div class="container">
-      <div class="alert alert-warning">
+    {% if object_list %}
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div class="text-sm text-ink-soft">
+          {% blocktrans with displayed=object_list.count total=overall_buschenschank_count %}
+            {{ displayed }} of <abbr title="All entries in database including fully covered">{{ total }}</abbr> displayed.
+          {% endblocktrans %}
+        </div>
+        {% if city %}
+          <a href="{% url 'data_quality:fixme_buschenschank' %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold-tint text-gold text-xs font-semibold">
+            {% trans 'Remove city filter' %}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="bg-paper border border-border rounded-2xl overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-surface text-left text-xs text-ink-faint">
+              <th class="px-4 py-3 font-semibold">{% trans 'Name' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Address' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Website' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Fixme' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Coverage' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'View details' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for buschenschank in object_list %}
+              <tr class="border-t border-border hover:bg-surface/60">
+                <td class="px-4 py-3 font-semibold text-ink whitespace-nowrap">{{ buschenschank }}</td>
+                <td class="px-4 py-3 text-ink-soft">
+                  {% if buschenschank.address %}
+                    {{ buschenschank|fixme_address }}
+                  {% else %}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-terracotta-tint text-terracotta text-xs font-semibold">{% trans 'MISSING' %}</span>
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3 text-ink-soft max-w-xs">
+                  {% if buschenschank.website %}
+                    <a target="_blank" href="{{ buschenschank.website }}" title="{{ buschenschank.website }}" class="block truncate text-burgundy font-semibold">{{ buschenschank.website }}</a>
+                  {% else %}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-terracotta-tint text-terracotta text-xs font-semibold">{% trans 'MISSING' %}</span>
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3 text-ink-soft">{{ buschenschank.tags.fixme }}</td>
+                <td class="px-4 py-3">
+                  {% localize off %}
+                    <div class="flex flex-col gap-1.5">
+                      <div class="flex items-center gap-2 text-xs text-ink-faint">
+                        {% trans 'Address' %}:
+                        {% address_coverage buschenschank.tags percentage=True as coverage_addr %}
+                        {% include 'includes/progressbar.html' with progress=coverage_addr %}
+                      </div>
+                      <div class="flex items-center gap-2 text-xs text-ink-faint">
+                        {% trans 'Contact' %}:
+                        {% contact_coverage buschenschank.tags percentage=True as coverage_contact %}
+                        {% include 'includes/progressbar.html' with progress=coverage_contact %}
+                      </div>
+                    </div>
+                  {% endlocalize %}
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex flex-col gap-1 text-xs">
+                    <a target="_blank" href="{{ buschenschank.get_osm_url }}" class="text-burgundy font-semibold">OpenStreetMap</a>
+                    {% if user.is_staff %}<a target="_blank" href="{{ buschenschank.get_admin_url }}" class="text-burgundy font-semibold">Admin</a>{% endif %}
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="px-5 py-4 rounded-2xl bg-gold-tint text-gold text-sm font-semibold">
         {% trans 'Nothing found' %}
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 {% endblock %}

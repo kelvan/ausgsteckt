@@ -7,8 +7,10 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <h1>{{ flatpage.title }}</h1>
-    {{ flatpage.content }}
+  <div class="max-w-3xl mx-auto px-4 md:px-10 py-8">
+    <h1 class="font-serif font-semibold text-3xl text-ink mb-6">{{ flatpage.title }}</h1>
+    <div class="prose prose-sm sm:prose-base max-w-none prose-headings:font-serif prose-headings:text-ink prose-p:text-ink-soft prose-li:text-ink-soft prose-strong:text-ink prose-a:text-burgundy prose-a:font-semibold hover:prose-a:text-burgundy-hover">
+      {{ flatpage.content }}
+    </div>
   </div>
 {% endblock %}

@@ -3,17 +3,42 @@
 {% load i18n %}
 
 {% block content %}
-  <div class="container">
+  <div class="max-w-3xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-5">
+
+    <div>
+      <div class="text-xs text-ink-faint mb-1">{% trans 'Search results' %}</div>
+      <h1 class="font-serif font-semibold text-2xl md:text-[30px] text-ink">&ldquo;{{ request.GET.q }}&rdquo;</h1>
+    </div>
+
     {% if results.exists %}
-      <h4>{{ results.count|default:0 }} {% trans 'Search results' %}</h4>
-      <div class="row">
-        <div class="col-12">
-          {% include 'buschenschank/includes/buschenschank_list.html' with buschenschank_list=results %}
-        </div>
-      </div>
+      <div class="text-sm text-ink-soft">{{ results.count }} {% trans 'Buschenschank found' %}</div>
+      {% include 'buschenschank/includes/buschenschank_list.html' with buschenschank_list=results %}
     {% else %}
-      <div class="alert alert-warning" role="alert">
-        {% trans 'Nothing found' %}
+      <div class="flex flex-col items-center text-center gap-[18px] py-16 px-5">
+        <svg width="60" height="60" viewBox="0 0 72 72" fill="none">
+          <circle cx="36" cy="36" r="35" stroke="oklch(87% 0.02 70)" stroke-width="1.5"/>
+          <path d="M36 20c-2 6-2 9 0 12 2-3 2-6 0-12Z" fill="oklch(90% 0.04 78)"/>
+          <circle cx="28" cy="34" r="7" fill="oklch(93% 0.022 78)" stroke="oklch(87% 0.02 70)"/>
+          <circle cx="42" cy="34" r="7" fill="oklch(93% 0.022 78)" stroke="oklch(87% 0.02 70)"/>
+          <circle cx="35" cy="44" r="7" fill="oklch(91% 0.03 18)" stroke="oklch(87% 0.02 70)"/>
+          <path d="M24 52h24" stroke="oklch(62% 0.02 50)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 4"/>
+        </svg>
+        <div>
+          <h2 class="font-serif font-semibold text-xl text-ink mb-2">{% trans 'No Buschenschank found' %}</h2>
+          <p class="text-sm text-ink-soft max-w-sm">
+            {% blocktrans with query=request.GET.q %}We couldn&rsquo;t find anything for &ldquo;{{ query }}&rdquo;. Try a different spelling, or browse by region or the map instead.{% endblocktrans %}
+          </p>
+        </div>
+        <div class="flex gap-2.5 mt-1.5">
+          <a href="{% url 'buschenschank:region_list' %}" class="inline-flex items-center gap-1.5 bg-burgundy hover:bg-burgundy-hover text-paper px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            {% trans 'Browse regions' %}
+          </a>
+          <a href="{% url 'buschenschank:buschenschank_map' %}" class="inline-flex items-center gap-1.5 bg-paper border border-border hover:bg-surface text-ink px-5 py-2.5 rounded-full text-sm font-semibold transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            {% trans 'Open map' %}
+          </a>
+        </div>
       </div>
     {% endif %}
   </div>

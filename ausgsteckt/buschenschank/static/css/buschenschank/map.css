@@ -7,29 +7,5 @@
   transition: width 0.3s ease, margin 0.3s ease;
 }
 .map-small {
-    height: 250px;
-}
-.sidebar-close {
-  cursor: pointer;
-}
-.toggle {
-  cursor: pointer;
-}
-#buschenschank_details {
-  display: none;
-  padding-top: 5px;
-  padding-left: 2px;
-}
-.details-block {
-  margin-bottom: 1em;
-}
-dl.buschenschank-description {
-  min-height: 20em;
-  margin-bottom: 0.5em !important;
-}
-.buschenschank-description dd {
-  margin-left: 1em !important;
-}
-.details-block span.toggle {
-  margin-bottom: 0.5em !important;
+    height: 200px;
 }

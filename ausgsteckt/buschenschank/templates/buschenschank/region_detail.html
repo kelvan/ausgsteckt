@@ -3,60 +3,59 @@
 {% load i18n static thumbnail %}
 
 {% block content %}
-  <div class="container">
-    <h2>
-      {{ region.name }}
-      {% if user.is_staff %}
-        <a href="{{ region.get_admin_url }}">
-          <small><i class="fa fa-pencil" aria-hidden="true" title="{% trans 'edit' %}"></i></small>
-        </a>
-      {% endif %}
-    </h2>
-    <div class="row">
-      <div class="col-12 col-md-2 img_region">
+  <div class="max-w-4xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-6">
+
+    <a href="{% url 'buschenschank:region_list' %}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-soft hover:text-burgundy w-fit">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      {% trans 'Back to region list' %}
+    </a>
+
+    <div class="flex items-start gap-5 flex-wrap">
+      <div class="w-20 h-20 rounded-2xl bg-paper flex items-center justify-center border border-border shadow-sm overflow-hidden shrink-0 p-2">
         {% if region.region_image %}
-          {% thumbnail region.region_image "150" format="PNG" as thumb %}
-            <img src="{{ thumb.url }}" class="img-fluid">
+          {% thumbnail region.region_image "72x72" format="PNG" as thumb %}
+            <img src="{{ thumb.url }}" class="max-w-full max-h-full object-contain">
           {% endthumbnail %}
         {% else %}
-          <img src="{% static 'images/region_placeholder.png' %}" class="img-fluid"></img>
+          <img src="{% static 'images/region_placeholder.png' %}" class="max-w-full max-h-full object-contain">
         {% endif %}
       </div>
-      <div class="col-12 col-md-10">
-        {% if region.description %}
-          <div class="alert alert-secondary">
-            {{ region.description|linebreaks }}
+      <div class="flex-1 min-w-0">
+        <h1 class="font-serif font-semibold text-3xl text-ink flex items-center gap-2">
+          {{ region.name }}
+          {% if user.is_staff %}
+            <a href="{{ region.get_admin_url }}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(62% 0.02 50)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hover:stroke-ink"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </a>
+          {% endif %}
+        </h1>
+        {% if region.website or region.calendar_website %}
+          <div class="flex gap-4 mt-1.5 text-sm">
+            {% if region.website %}
+              <a href="{{ region.website }}" target="_blank" class="font-semibold text-burgundy">{% trans 'Website' %}</a>
+            {% endif %}
+            {% if region.calendar_website %}
+              <a href="{{ region.calendar_website }}" target="_blank" class="font-semibold text-burgundy">{% trans 'Calendar (external)' %}</a>
+            {% endif %}
           </div>
         {% endif %}
-        {% if region.website or region.calendar_website %}
-          <dl class="row">
-            {% if region.website %}
-              <dt class="col-sm-3">{% trans 'Website' %}</dt>
-              <dd class="col-sm-9"><a href="{{ region.website }}" target="_blank">{{ region.website }}</a></dd>
-            {% endif %}
-
-            {% if region.calendar_website %}
-              <dt class="col-sm-3">{% trans 'Calendar' %}</dt>
-              <dd class="col-sm-9">
-                <a href="{{ region.calendar_website }}" target="_blank">{% trans 'Calendar (external)' %}</a>
-              </dd>
-            {% endif %}
-          </dl>
-        {% endif %}
-        {% with buschenschank_list=region.get_buschenschank %}
-          {% if buschenschank_list.exists %}
-            <h2>{% trans 'Buschenschänken' %} ({{ region.get_buschenschank.count }})</h2>
-            {% include 'buschenschank/includes/buschenschank_list.html' %}
-          {% endif %}
-        {% endwith %}
-
-        <div class="bg-light clearfix">
-          <a class="btn btn-secondary float-start" href="{% url 'buschenschank:region_list' %}">
-            <i class="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;{% trans 'Back to region list' %}
-          </a>
-        </div>
-
       </div>
     </div>
+
+    {% if region.description %}
+      <div class="bg-paper border border-border rounded-2xl p-6 text-sm leading-relaxed text-ink-soft">
+        {{ region.description|linebreaks }}
+      </div>
+    {% endif %}
+
+    {% with buschenschank_list=region.get_buschenschank %}
+      {% if buschenschank_list.exists %}
+        <div>
+          <h2 class="font-serif font-semibold text-xl text-ink mb-4">{% trans 'Buschenschänken' %} ({{ region.get_buschenschank.count }})</h2>
+          {% include 'buschenschank/includes/buschenschank_list.html' %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
   </div>
 {% endblock %}

@@ -1,5 +1,12 @@
-{% load static %}
+{% load i18n %}
 
 {% if buschenschank.tags.smoking == 'no' or buschenschank.tags.smoking == 'outside' %}
-  <img class="inline" title="smoking: {{ buschenschank.tags.smoking }}" alt="smokefree" src="{% static 'images/no-smoking.svg' %}">
+  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface text-ink-soft text-xs font-semibold border border-border" title="{% trans 'smoking' %}: {{ buschenschank.tags.smoking }}">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+    {% if buschenschank.tags.smoking == 'outside' %}
+      {% trans 'Non-smoking · terrace outside' %}
+    {% else %}
+      {% trans 'Non-smoking' %}
+    {% endif %}
+  </span>
 {% endif %}
