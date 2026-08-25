@@ -20,7 +20,7 @@ class DjangoConfig(BaseConfig):
     static_url: str = "/static/"
     media_url: str = "/media/"
     cache_backend: AnyUrl = "locmemcache://"  # ty: ignore[invalid-assignment]
-    forwarded_proto: str = "http"
+    forwarded_proto: str = "https"
 
     CONFIG_SOURCES: ClassVar[list[ConfigSource]] = [
         EnvSource(prefix="DJANGO_"),
