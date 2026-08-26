@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from django import template
 from django.template.loader import render_to_string
 
@@ -6,10 +8,41 @@ register = template.Library()
 BADGE_TAGS = ["cuisine"]
 LIST_TAGS = ["opening_hours"]
 
+SAFE_URL_SCHEMES = {"http", "https"}
+
 
 @register.simple_tag
 def osmtag(node, tagname):
     return node.tags.get(tagname)
+
+
+@register.filter
+def external_url(value):
+    """
+    Return an osm tag value only if it is a safe http(s) URL, otherwise "".
+
+    Tag values are contributed by anyone editing OpenStreetMap, so a value
+    like ``contact:facebook=javascript:alert(1)`` would end up in an href and
+    execute when clicked. Autoescaping does not prevent this, it escapes the
+    value but not the URL scheme.
+    """
+    if not value:
+        return ""
+
+    url = str(value).strip()
+    if not url:
+        return ""
+
+    parsed = urlparse(url)
+    if not parsed.scheme and not url.startswith("//"):
+        # bare domain such as "example.com/page"
+        url = f"http://{url}"
+        parsed = urlparse(url)
+
+    if parsed.scheme not in SAFE_URL_SCHEMES or not parsed.netloc:
+        return ""
+
+    return url
 
 
 @register.filter

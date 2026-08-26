@@ -27,10 +27,12 @@
   {% endfor %}
 
   {% osmtag buschenschank 'contact:facebook' as fb %}
-  {% if fb %}
-    <li>
-      <i class="fa fa-facebook-official" aria-hidden="true" title="Facebook"></i>&nbsp;
-      <a href="{{ fb }}" target="_blank">Facebook</a>
-    </li>
-  {% endif %}
+  {% with fb_url=fb|external_url %}
+    {% if fb_url %}
+      <li>
+        <i class="fa fa-facebook-official" aria-hidden="true" title="Facebook"></i>&nbsp;
+        <a href="{{ fb_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>
+      </li>
+    {% endif %}
+  {% endwith %}
 </ul>

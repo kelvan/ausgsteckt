@@ -39,19 +39,21 @@
               {% endif %}
 
               {% osmtag buschenschank 'opening_hours' as opening_hours %}
-              {% osmtag buschenschank 'opening_hours:url' as opening_hours_url %}
+              {% osmtag buschenschank 'opening_hours:url' as opening_hours_url_raw %}
+              {% with opening_hours_url=opening_hours_url_raw|external_url %}
 
               {% if opening_hours or opening_hours_url %}
               <h5>{% trans 'Opening hours' %}</h5>
               <ul>
                 {% if opening_hours_url %}
                 <li>
-                  <a href="{{ opening_hours_url }}" target="_blank">{% trans 'Opening hours info (external)' %}</a>
+                  <a href="{{ opening_hours_url }}" target="_blank" rel="noopener noreferrer">{% trans 'Opening hours info (external)' %}</a>
                 </li>
                 {% endif %}
                 {% if opening_hours %}{% include 'buschenschank/includes/opening_hours.html' %}{% endif %}
               </ul>
               {% endif %}
+              {% endwith %}
             </dl>
           </div>
           <div class="col-sm">
