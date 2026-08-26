@@ -25,6 +25,12 @@ class BuschenschankAPIDetailView(HybridDetailView):
     queryset = Buschenschank.available_objects
     template_name = "buschenschank/api/buschenschank_detail.html"
 
+    def get_queryset(self) -> models.QuerySet[Any]:
+        queryset = super().get_queryset()
+        if not getattr(self.request.user, "is_staff", False):
+            queryset = queryset.filter(published=True)
+        return queryset
+
     def get_data(self, context):
         buschenschank = context["buschenschank"]
         return {"name": str(buschenschank), "osm_id": buschenschank.osm_id, "tags": buschenschank.tags}
