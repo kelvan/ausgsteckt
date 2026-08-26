@@ -1,5 +1,19 @@
-from django.http import JsonResponse
+from django.contrib.flatpages.views import flatpage
+from django.http import Http404, JsonResponse
+from django.utils.translation import get_language, get_supported_language_variant
 from django.views.generic.detail import BaseDetailView, SingleObjectTemplateResponseMixin
+
+
+def localized_flatpage(request, base_url):
+    """Resolves base_url="about" to FlatPage.url "/de/about/" or "/en/about/",
+    falling back to German if the current language has no translation yet."""
+    language = get_supported_language_variant(get_language())
+    try:
+        return flatpage(request, f"/{language}/{base_url}/")
+    except Http404:
+        if language == "de":
+            raise
+        return flatpage(request, f"/de/{base_url}/")
 
 
 class JSONResponseMixin:

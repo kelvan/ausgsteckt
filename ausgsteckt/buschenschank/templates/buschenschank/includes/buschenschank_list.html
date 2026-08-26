@@ -1,16 +1,32 @@
 {% load i18n %}
 
-<ul class="list-group">
+<div class="flex flex-col gap-3">
   {% for buschenschank in buschenschank_list %}
-    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-      <a href="{{ buschenschank.get_absolute_url }}" class="text-decoration-none">
-        {{ buschenschank }}
-        {% include 'buschenschank/includes/smoking.html' %}
-        {% if buschenschank.distance %}&nbsp;({{ buschenschank.distance.m|floatformat:0 }}m){% endif %}
-      </a>
-      <div class="d-flex flex-row">
+    <div class="relative flex items-center gap-4 px-5 py-4 bg-paper border border-border rounded-2xl hover:border-gold hover:shadow-md transition-all">
+      <a href="{{ buschenschank.get_absolute_url }}" class="absolute inset-0 rounded-2xl" aria-label="{{ buschenschank.name }}"></a>
+
+      <div class="relative flex-1 min-w-0 flex flex-col gap-1.5 pointer-events-none">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <span class="font-semibold text-base text-ink">{{ buschenschank.name }}</span>
+          {% if buschenschank.region %}
+            <span class="text-[11px] font-semibold text-gold bg-gold-tint px-2.5 py-0.5 rounded-full">{{ buschenschank.region.name }}</span>
+          {% endif %}
+          {% include 'buschenschank/includes/smoking.html' %}
+        </div>
+        {% if buschenschank.address %}
+          <div class="flex items-center gap-1.5 text-sm text-ink-soft">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            {{ buschenschank.address }}
+            {% if buschenschank.distance %}&middot; {{ buschenschank.distance.m|floatformat:0 }}m{% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="relative z-10 hidden sm:flex gap-2 shrink-0">
         {% include 'buschenschank/includes/contact_info_icons.html' %}
       </div>
-    </li>
+
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(62% 0.02 50)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="relative shrink-0"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
   {% endfor %}
-</ul>
+</div>

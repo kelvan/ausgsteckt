@@ -1,10 +1,16 @@
 {
+  "scripts": {
+    "build:css": "tailwindcss -c ausgsteckt/tailwind.config.js -i ausgsteckt/assets/tailwind.css -o ausgsteckt/ausgsteckt/static/css/tailwind.css --minify"
+  },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "bootstrap": "^5.3.3",
+    "alpinejs": "^3.16.3",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "leaflet-plugins": "^3.4.0",
     "leaflet-providers": "^1.13.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "tailwindcss": "^3.4.19"
   }
 }

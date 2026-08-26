@@ -1,1 +1,10 @@
-<a href="{% url 'impressum' %}">Impressum</a>
+{% load i18n %}
+
+<div class="flex flex-wrap items-center justify-between gap-3 px-4 md:px-10 py-5 border-t border-border text-xs text-ink-faint">
+  <span>
+    {% trans 'Data' %}
+    <a href="https://www.openstreetmap.org/copyright" target="_blank" class="font-semibold text-ink-soft hover:text-burgundy">OpenStreetMap</a>
+    {% trans 'contributors, ODbL' %}
+  </span>
+  <a href="{% url 'impressum' %}" class="font-semibold text-ink-soft hover:text-burgundy">{% trans 'Impressum' %}</a>
+</div>

@@ -1,10 +1,16 @@
 {% load i18n %}
 
-<form action="{% url 'buschenschank:search' %}" class="d-flex" method="GET">
-  <div class="input-group">
-    <input name="q" type="text" class="form-control" {% if request.GET.q %}value="{{ request.GET.q }}" {% endif %}placeholder="{% trans 'Search for buschenschank' %}" aria-label="{% trans 'Search' %}">
-    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" title="{% trans 'search' %}">
-      <i class="fa fa-search"></i>
-    </button>
-  </div>
+<form action="{% url 'buschenschank:search' %}" method="GET" class="flex items-center gap-2 bg-surface rounded-full pl-4 pr-1.5 py-1.5">
+  <input
+    name="q"
+    type="text"
+    {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %}
+    placeholder="{% trans 'Search name, address, host…' %}"
+    aria-label="{% trans 'Search' %}"
+    class="flex-1 min-w-0 bg-transparent outline-none text-sm text-ink placeholder:text-ink-faint py-1"
+  >
+  <button type="submit" title="{% trans 'search' %}" class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-ink-soft hover:bg-paper hover:text-ink transition-colors">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <span class="sr-only">{% trans 'Search' %}</span>
+  </button>
 </form>

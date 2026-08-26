@@ -3,41 +3,44 @@
 {% load i18n %}
 
 {% block content %}
-  {% if error_list|length == 0 %}
-    <p class="text-center bg-success">
-      <strong>
+  <div class="max-w-6xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-5">
+    <h1 class="font-serif font-semibold text-2xl text-ink">{% trans 'Broken websites' %}</h1>
+
+    {% if error_list|length == 0 %}
+      <div class="px-5 py-4 rounded-2xl bg-sage-tint text-sage text-sm font-semibold">
         {% trans 'No broken websites found' %}
-      </strong>
-    </p>
-  {% else %}
-    <p class="text-center bg-danger">
-      <strong>
+      </div>
+    {% else %}
+      <div class="px-5 py-4 rounded-2xl bg-terracotta-tint text-terracotta text-sm font-semibold">
         {% trans 'Error Count' %}: {{ error_list|length }} [{% trans 'Last updated' %}: {{ last_updated|date:'Y-m-d' }}]
-      </strong>
-    </p>
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th>{% trans 'Name' %}</th>
-          <th>{% trans 'Tag Key' %}</th>
-          <th>{% trans 'URL' %}</th>
-          <th>{% trans 'Status Code' %}</th>
-          <th>{% trans 'Error' %}</th>
-          <th>{% trans 'View details' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for error in error_list %}
-          <tr>
-            <td>{{ error.buschenschank_name }}</td>
-            <td>{{ error.tag_key }}</td>
-            <td><a href="{{ error.url }}" target="_blank">{{ error.url }}</a></td>
-            <td>{{ error.status_code }}</td>
-            <td>{{ error.error }}</td>
-            <td><a target="_blank" href="{{ error.osm_url }}">OpenStreetMap</a></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}
+      </div>
+
+      <div class="bg-paper border border-border rounded-2xl overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-surface text-left text-xs text-ink-faint">
+              <th class="px-4 py-3 font-semibold">{% trans 'Name' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Tag Key' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'URL' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Status Code' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'Error' %}</th>
+              <th class="px-4 py-3 font-semibold">{% trans 'View details' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for error in error_list %}
+              <tr class="border-t border-border hover:bg-surface/60">
+                <td class="px-4 py-3 font-semibold text-ink whitespace-nowrap">{{ error.buschenschank_name }}</td>
+                <td class="px-4 py-3 text-ink-soft">{{ error.tag_key }}</td>
+                <td class="px-4 py-3 text-ink-soft max-w-xs"><a href="{{ error.url }}" target="_blank" title="{{ error.url }}" class="block truncate text-burgundy font-semibold">{{ error.url }}</a></td>
+                <td class="px-4 py-3 text-ink-soft">{{ error.status_code }}</td>
+                <td class="px-4 py-3 text-ink-soft">{{ error.error }}</td>
+                <td class="px-4 py-3"><a target="_blank" href="{{ error.osm_url }}" class="text-burgundy font-semibold">OpenStreetMap</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

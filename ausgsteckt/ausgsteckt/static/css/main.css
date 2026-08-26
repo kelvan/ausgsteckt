@@ -1,91 +1,32 @@
-.img_region {
-  margin-bottom: 2em;
+[x-cloak] {
+  display: none !important;
 }
 
-main#content {
-  position: relative;
+html, body {
   height: 100%;
-  margin-bottom: -2em; /* Height of the footer */
-  padding-bottom: 2em; /* Height of the footer */
 }
 
-main#content > div.container {
-  padding-top: 1em;
-  min-height: 100%;
+/* Full map page: give #buschenschank_maps a definite height to fill,
+   without affecting normal-flow pages (mini-map uses .map-small, untouched). */
+body:has(#buschenschank_maps:not(.map-small)) {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-body {
-  height: 100%;
-  /* height of .navbar, customize with @navbar-height variable */
-  padding-top: 56px;
-  /* Margin bottom by footer height */
-  /* margin-bottom: 2em; */
+body:has(#buschenschank_maps:not(.map-small)) main#content {
+  flex: 1;
+  min-height: 0;
 }
 
-.navbar {
-  min-height: 56px;
-}
-
-.navbar-brand {
-  margin-bottom: 0.5em;
-  margin-right: 0.5em;
-  margin-left: 0.5em;
-  height: 30px;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  height: 100%
-}
-
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 2em;
-  line-height: 2em; /* Vertically center the text there */
-  background-color: #f5f5f5;
-  text-align: right;
-}
-
-.footer > a {
-  margin-right: 0.5em;
-}
-
-div.container {
-  padding-bottom: 2em;
+::selection {
+  background: oklch(90% 0.04 78);
 }
 
 a {
-  color: indigo;
+  color: oklch(34% 0.12 18);
 }
 
-.badge-raisin {
-  color: #fff;
-  background-color: indigo;
-}
-
-.badge-raisin-light {
-  color: indigo;
-  background-color: #f8f9fa;
-}
-
-ul.contact-list > #address {
-  margin-bottom: 1em;
-}
-
-div.btn-group-map {
-  padding-top: 2px;
-}
-
-.inline {
-  height: 1em;
-}
-
-.form-inline {
-  margin-bottom: 0;
+a:hover {
+  color: oklch(28% 0.12 18);
 }

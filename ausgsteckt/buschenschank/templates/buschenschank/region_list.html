@@ -3,30 +3,44 @@
 {% load i18n thumbnail %}
 
 {% block content %}
-  <div class="container">
-    <h1>{% trans 'Regions' %}</h1>
-    <ul class="list-group">
+  <div class="max-w-6xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-7">
+
+    <div>
+      <h1 class="font-serif font-semibold text-3xl md:text-4xl text-ink mb-1.5">{% trans 'Wine regions of Austria' %}</h1>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {% for region in regions %}
         {% if region.get_buschenschank.exists %}
-          <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
-            <div class="d-flex flex-row">
-              {% if region.region_image %}
-                <div class="p-1">
-                  {% thumbnail region.region_image "25x25" crop="center" format="PNG" as thumb %}
-                    <img src="{{ thumb.url }}" class="img-fluid" alt="Coat of arms {{ region.name }}">&nbsp;
+          <a href="{{ region.get_absolute_url }}" class="group flex flex-col bg-paper border border-border rounded-2xl overflow-hidden hover:border-gold hover:shadow-lg hover:-translate-y-0.5 transition-all">
+            <div class="h-[104px] bg-surface flex items-center justify-center">
+              <div class="w-16 h-16 rounded-xl bg-paper flex items-center justify-center border border-border shadow-sm overflow-hidden p-1.5">
+                {% if region.region_image %}
+                  {% thumbnail region.region_image "60x60" format="PNG" as thumb %}
+                    <img src="{{ thumb.url }}" alt="{{ region.name }}" class="max-w-full max-h-full object-contain">
                   {% endthumbnail %}
-                </div>
-              {% endif %}
-              <div class="p-1">
-                <a href="{{ region.get_absolute_url }}">{{ region }}</a>
+                {% else %}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="oklch(52% 0.11 75)" stroke-width="1.6"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                {% endif %}
               </div>
             </div>
-            <span class="badge badge-raisin rounded-pill" title="{% trans 'Buschenschank count' %}">
-              {{ region.get_buschenschank.count }}
-            </span>
-          </li>
+            <div class="p-5 flex flex-col gap-2 flex-1">
+              <div class="flex items-center justify-between gap-2.5">
+                <h3 class="font-serif font-semibold text-lg text-ink">{{ region.name }}</h3>
+                <span class="text-[11px] font-semibold text-gold bg-gold-tint px-2.5 py-0.5 rounded-full whitespace-nowrap">{{ region.get_buschenschank.count }}</span>
+              </div>
+              {% if region.description %}
+                <p class="text-[13.5px] leading-relaxed text-ink-soft line-clamp-2">{{ region.description }}</p>
+              {% endif %}
+              <div class="mt-1.5 flex items-center gap-1.5 text-sm font-semibold text-burgundy">
+                {% trans 'Explore region' %}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </div>
+            </div>
+          </a>
         {% endif %}
       {% endfor %}
-    </ul>
+    </div>
+
   </div>
 {% endblock %}

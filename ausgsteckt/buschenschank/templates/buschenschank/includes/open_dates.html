@@ -2,6 +2,8 @@
 
 {% localize %}
   {% for future_open_date in buschenschank.future_open_dates %}
-    <li>{{ future_open_date.date_start }} - {{ future_open_date.date_end }}</li>
+    <div class="px-4 py-2.5 rounded-lg bg-surface text-sm font-semibold text-ink">
+      {{ future_open_date.date_start }} &ndash; {{ future_open_date.date_end }}
+    </div>
   {% endfor %}
 {% endlocalize %}

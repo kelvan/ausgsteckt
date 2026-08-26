@@ -3,9 +3,27 @@
 {% load i18n %}
 
 {% block content %}
-  <h2>OSM Fixme</h2>
-  <ul>
-    <li><a href="{% url 'data_quality:fixme_buschenschank' %}">Buschenschank</a></li>
-    <li><a href="{% url 'data_quality:fixme_websites' %}">Websites</a></li>
-  </ul>
+  <div class="max-w-3xl mx-auto px-4 md:px-10 py-8 flex flex-col gap-6">
+    <div>
+      <h1 class="font-serif font-semibold text-3xl text-ink mb-1.5">{% trans 'Contribute' %}</h1>
+      <p class="text-sm text-ink-soft">{% trans 'Help keep OpenStreetMap data accurate and complete.' %}</p>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <a href="{% url 'data_quality:fixme_buschenschank' %}" class="flex items-center justify-between gap-4 px-5 py-4 bg-paper border border-border rounded-2xl hover:border-gold hover:shadow-md transition-all">
+        <div>
+          <div class="font-semibold text-ink">{% trans 'Data quality' %}</div>
+          <div class="text-sm text-ink-soft">{% trans 'Buschenschank with missing address, website, or an open fixme note' %}</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(62% 0.02 50)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+      <a href="{% url 'data_quality:fixme_websites' %}" class="flex items-center justify-between gap-4 px-5 py-4 bg-paper border border-border rounded-2xl hover:border-gold hover:shadow-md transition-all">
+        <div>
+          <div class="font-semibold text-ink">{% trans 'Broken websites' %}</div>
+          <div class="text-sm text-ink-soft">{% trans 'Websites that failed to load on the last check' %}</div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="oklch(62% 0.02 50)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
 {% endblock %}

@@ -1,38 +1,36 @@
 {% load i18n osm_tags %}
 
-<ul class="list-unstyled contact-list">
-  {% if buschenschank.address %}
-    <li id="address"><strong>{{ buschenschank.address }}</strong></li>
-  {% endif %}
-
-  {% for email in buschenschank.email_list %}
-    <li>
-      <i class="fa fa-envelope" aria-hidden="true" title="{% trans 'Email' %}{% if buschenschank.email_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
-      {{ email|urlize }}
-    </li>
+{% osmtag buschenschank 'contact:facebook' as fb %}
+{% with fb_url=fb|external_url %}
+{% if buschenschank.phone_list or buschenschank.email_list or buschenschank.website_list or fb_url %}
+<div class="bg-paper border-y sm:border border-border rounded-none sm:rounded-2xl p-2">
+  {% for phone in buschenschank.phone_list %}
+    <a href="tel:{{ phone|cut:' ' }}" class="flex items-center gap-3 px-3.5 py-3 rounded-lg hover:bg-surface transition-colors">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.79.63 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.2a2 2 0 0 1 2.11-.45c.86.3 1.75.51 2.65.63A2 2 0 0 1 22 16.92Z"/></svg>
+      <span class="text-sm text-ink">{{ phone }}</span>
+    </a>
   {% endfor %}
 
-  {% for phone in buschenschank.phone_list %}
-    <li>
-      <i class="fa fa-phone" aria-hidden="true" title="{% trans 'Phone' %}{% if buschenschank.phone_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
-      <a href="tel:{{ phone|cut:' ' }}">{{ phone }}</a>
-    </li>
+  {% for email in buschenschank.email_list %}
+    <a href="mailto:{{ email }}" class="flex items-center gap-3 px-3.5 py-3 rounded-lg hover:bg-surface transition-colors">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      <span class="text-sm text-ink break-all">{{ email }}</span>
+    </a>
   {% endfor %}
 
   {% for website in buschenschank.website_list %}
-    <li>
-      <i class="fa fa-globe" aria-hidden="true" title="{% trans 'Website' %}{% if buschenschank.website_list|length > 1 %} {{ forloop.counter }}{% endif %}"></i>&nbsp;
-      <a href="{{ website }}" target="_blank">{{ website }}</a>
-    </li>
+    <a href="{{ website }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3.5 py-3 rounded-lg hover:bg-surface transition-colors">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20Z"/></svg>
+      <span class="text-sm text-ink break-all">{{ website }}</span>
+    </a>
   {% endfor %}
 
-  {% osmtag buschenschank 'contact:facebook' as fb %}
-  {% with fb_url=fb|external_url %}
-    {% if fb_url %}
-      <li>
-        <i class="fa fa-facebook-official" aria-hidden="true" title="Facebook"></i>&nbsp;
-        <a href="{{ fb_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>
-      </li>
-    {% endif %}
-  {% endwith %}
-</ul>
+  {% if fb_url %}
+    <a href="{{ fb_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3.5 py-3 rounded-lg hover:bg-surface transition-colors">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="oklch(34% 0.12 18)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/></svg>
+      <span class="text-sm text-ink">Facebook</span>
+    </a>
+  {% endif %}
+</div>
+{% endif %}
+{% endwith %}
