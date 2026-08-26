@@ -7,7 +7,7 @@
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "leaflet-plugins": "^3.4.0",
-    "leaflet-providers": "^1.13.0"
+    "leaflet-providers": "^3.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
