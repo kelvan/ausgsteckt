@@ -3,7 +3,7 @@
     "build:css": "tailwindcss -c ausgsteckt/tailwind.config.js -i ausgsteckt/assets/tailwind.css -o ausgsteckt/ausgsteckt/static/css/tailwind.css --minify"
   },
   "dependencies": {
-    "alpinejs": "^3.16.3",
+    "alpinejs": "^3.17.1",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "leaflet-plugins": "^3.4.0",
