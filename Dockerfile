@@ -19,7 +19,6 @@ RUN npm install --prefix /usr/local
 COPY ausgsteckt $APP_HOME
 # Must run after the templates are copied, tailwind scans them for used classes.
 RUN /usr/local/node_modules/.bin/tailwindcss \
-    -c $APP_HOME/tailwind.config.js \
     -i $APP_HOME/assets/tailwind.css \
     -o $APP_HOME/ausgsteckt/static/css/tailwind.css \
     --minify

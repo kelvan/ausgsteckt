@@ -1,3 +1,32 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Paths are relative to this file so the same build works locally and
+   inside the container, where this directory is copied to /usr/local/app. */
+@source "../**/templates/**/*.html";
+
+@theme {
+  --font-serif: "Newsreader", ui-serif, Georgia, serif;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: oklch(96% 0.018 85);
+  --color-paper: oklch(99% 0.006 85);
+  --color-surface: oklch(93% 0.022 78);
+  --color-ink: oklch(23% 0.025 40);
+  --color-ink-soft: oklch(46% 0.03 45);
+  --color-ink-faint: oklch(62% 0.02 50);
+  --color-border: oklch(87% 0.02 70);
+
+  --color-burgundy: oklch(34% 0.12 18);
+  --color-burgundy-hover: oklch(28% 0.12 18);
+  --color-burgundy-tint: oklch(91% 0.03 18);
+
+  --color-gold: oklch(52% 0.11 75);
+  --color-gold-tint: oklch(90% 0.04 78);
+
+  --color-sage: oklch(46% 0.09 150);
+  --color-sage-tint: oklch(92% 0.045 150);
+
+  --color-terracotta: oklch(48% 0.13 35);
+  --color-terracotta-tint: oklch(92% 0.045 35);
+}

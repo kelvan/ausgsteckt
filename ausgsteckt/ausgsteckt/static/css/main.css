@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+button:not(:disabled), [role="button"] {
+  cursor: pointer;
+}
+
 html, body {
   height: 100%;
 }

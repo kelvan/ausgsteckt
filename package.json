@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build:css": "tailwindcss -c ausgsteckt/tailwind.config.js -i ausgsteckt/assets/tailwind.css -o ausgsteckt/ausgsteckt/static/css/tailwind.css --minify"
+    "build:css": "tailwindcss -i ausgsteckt/assets/tailwind.css -o ausgsteckt/ausgsteckt/static/css/tailwind.css --minify"
   },
   "dependencies": {
     "alpinejs": "^3.16.3",
@@ -10,7 +10,8 @@
     "leaflet-providers": "^4.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
-    "tailwindcss": "^3.4.19"
+    "tailwindcss": "^4.3.3"
   }
 }
