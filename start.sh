@@ -36,11 +36,11 @@ podman-compose up -d db
 # Wait for postgres to be ready
 echo "Waiting for database to be ready..."
 DB_CONTAINER=$(podman ps --filter "label=com.docker.compose.service=db" --format "{{.Names}}" | head -1)
-# The postgis image init sequence logs "ready to accept connections" twice:
-# once during init (runs init scripts, installs PostGIS), then shuts down and
-# restarts in normal mode. Wait for the second occurrence to avoid loading the
-# dump while postgres is mid-restart.
-until [ "$(podman logs "$DB_CONTAINER" 2>&1 | grep -c 'ready to accept connections')" -ge 2 ]; do
+# On a fresh volume the postgis image restarts once mid-init (runs init
+# scripts, installs PostGIS) before it's actually ready; on a warm volume
+# (persisted across runs) it comes up directly. pg_isready is accurate in
+# both cases, unlike counting "ready to accept connections" log lines.
+until podman exec "$DB_CONTAINER" pg_isready -U "$POSTGRES_USER" -d ausgsteckt >/dev/null 2>&1; do
     sleep 1
 done
 
