@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     "data_quality",
 ]
 
+# Django 6.0 changed the global default to BigAutoField; pin the field type
+# our existing migrations were generated with to avoid a mismatch warning.
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

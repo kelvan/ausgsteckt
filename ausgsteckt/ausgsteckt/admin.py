@@ -9,7 +9,7 @@ from django_prose_editor.widgets import AdminProseEditorWidget
 class FlatpageForm(FlatpageFormOld):
     content = forms.CharField(widget=AdminProseEditorWidget())
 
-    class Meta(FlatpageFormOld.Meta):  # ty: ignore[unresolved-attribute]
+    class Meta(FlatpageFormOld.Meta):
         pass
 
 
