@@ -3,7 +3,7 @@
 <nav
   x-data="{ mobileOpen: false, regionsOpen: false, contributeOpen: false, langOpen: false, mobileRegionsOpen: false, mobileContributeOpen: false }"
   @keydown.escape.window="mobileOpen = false; regionsOpen = false; contributeOpen = false; langOpen = false"
-  class="sticky top-0 z-40 bg-paper border-b border-border"
+  class="sticky top-0 z-[1001] bg-paper border-b border-border"
 >
   {% url 'buschenschank:buschenschank_map' as buschenschank_map_url %}
   {% get_current_language as CURRENT_LANGUAGE %}
