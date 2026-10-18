@@ -39,7 +39,7 @@ docs = [
 ]
 server = [
     "gunicorn>=23.0.0,<24",
-    "gevent>=24.11.1,<25",
+    "gevent>=24.11.1,<27",
 ]
 test = [
     "unittest-xml-reporting>=3.2.0,<4.0.0",
